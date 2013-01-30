@@ -2,3 +2,8 @@ set nocp
 set rtp+=~/.dotfiles/vim
 call pathogen#infect()
 
+" }}}
+" Color Scheme ----------------------------------------------------------- {{{
+syntax enable
+set background=dark
+colorscheme solarized
