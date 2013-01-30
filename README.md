@@ -4,7 +4,13 @@ My dotfiles. Primaraly set up to manage my vim config.
 
 ## Setup
 
-Write this!
+    cd ~
+    git clone https://github.com/olorton/dotfiles.git ~/.dotfiles
+    ln -s ~/.dotfiles/vim/vimrc ~/.vimrc
+
+    cd ~/.dotfiles
+    git submodule init
+    git submodule update
 
 ## Sources
 
