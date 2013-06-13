@@ -6,11 +6,13 @@ My dotfiles. Primaraly set up to manage my vim config.
 
     cd ~
     git clone https://github.com/olorton/dotfiles.git ~/.dotfiles
-    ln -s ~/.dotfiles/vim/vimrc ~/.vimrc
+    ln -s ~/.dotfiles/bashrc ~/.bashrc
+    ln -s ~/.dotfiles/bash_profile ~/.bash_profile
 
-    cd ~/.dotfiles
-    git submodule init
-    git submodule update
+## ToDo
+
+- Set up Vim
+- Nees more aliases
 
 ## Sources
 
