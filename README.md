@@ -12,7 +12,6 @@ My dotfiles. Primaraly set up to manage my vim config.
 ## ToDo
 
 - Set up Vim
-- Nees more aliases
 
 ## Sources
 

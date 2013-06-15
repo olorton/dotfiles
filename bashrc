@@ -1,3 +1,5 @@
+#!/bin/bash
+
 platform='unknown'
 unamestr=`uname`
 if [[ "$unamestr" == 'Linux' ]]; then
@@ -11,9 +13,9 @@ fi
 test -f ~/.dotfiles/aliases && source ~/.dotfiles/aliases
 
 # Load osx settings
-if [[ $platform == 'osx' ]]; then
-	test -f ~/.dotfiles/osx && source ~/.dotfiles/osx
-fi
+#if [[ $platform == 'osx' ]]; then
+#	test -f ~/.dotfiles/osx && source ~/.dotfiles/osx
+#fi
 
 
 # Color Constants
