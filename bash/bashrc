@@ -1,21 +1,20 @@
 #!/bin/bash
 
-platform='unknown'
-unamestr=`uname`
-if [[ "$unamestr" == 'Linux' ]]; then
-   platform='linux'
-elif [[ "$unamestr" == 'Darwin' ]]; then
-   platform='osx'
-fi
+# Ensure user-installed binaries take precedence
+export PATH=/usr/local/share/python:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin
 
+# platform='unknown'
+# unamestr=`uname`
+# if [[ "$unamestr" == 'Linux' ]]; then
+#    platform='linux'
+# elif [[ "$unamestr" == 'Darwin' ]]; then
+#    platform='osx'
+# fi
 
 # Load aliases
-test -f ~/.dotfiles/aliases && source ~/.dotfiles/aliases
-
-# Load osx settings
-#if [[ $platform == 'osx' ]]; then
-#	test -f ~/.dotfiles/osx && source ~/.dotfiles/osx
-#fi
+if [ -f ~/.dotfiles/bash/aliases ]; then
+    source ~/.dotfiles/bash/aliases
+fi
 
 
 # Color Constants
@@ -62,7 +61,7 @@ function parse_git_branch {
 function prompt_func() {
 	previous_return_value=$?;
 	# prompt="${TITLEBAR}$BLUE[$RED\w$GREEN$(__git_ps1)$YELLOW$(git_dirty_flag)$BLUE]$COLOR_NONE "
-	prompt="\w${GREEN}$(parse_git_branch)${COLOR_NONE}"
+	prompt="\u@\h  \w${GREEN}$(parse_git_branch)${COLOR_NONE}"
 	PS1="${prompt} $ "
 }
 
