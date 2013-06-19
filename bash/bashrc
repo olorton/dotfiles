@@ -16,6 +16,11 @@ if [ -f ~/.dotfiles/bash/aliases ]; then
     source ~/.dotfiles/bash/aliases
 fi
 
+# Load git-completion
+if [ -f ~/.dotfiles/git/git-completion.bash ]; then
+    source ~/.dotfiles/git/git-completion.bash
+fi
+
 
 # Color Constants
 RED="\[\033[0;31m\]"
