@@ -71,3 +71,5 @@ function prompt_func() {
 }
 
 PROMPT_COMMAND=prompt_func
+
+export EDITOR=vim
