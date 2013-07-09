@@ -6,7 +6,7 @@ echo "Re-enable key repeat"
 defaults write -g ApplePressAndHoldEnabled -bool false
 
 echo "Hide the dock"
-defaults write com.apple.Dock autohide-delay -float 10000 && killall Dock
+defaults write com.apple.Dock autohide-delay -float 0 && killall Dock
 
 echo "Show the ~/Library folder"
 chflags nohidden ~/Library
