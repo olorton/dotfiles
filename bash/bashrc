@@ -3,13 +3,13 @@
 # Ensure user-installed binaries take precedence
 export PATH=/usr/local/share/python:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin
 
-# platform='unknown'
-# unamestr=`uname`
-# if [[ "$unamestr" == 'Linux' ]]; then
-#    platform='linux'
-# elif [[ "$unamestr" == 'Darwin' ]]; then
-#    platform='osx'
-# fi
+platform='unknown'
+unamestr=`uname`
+if [[ "$unamestr" == 'Linux' ]]; then
+   platform='linux'
+elif [[ "$unamestr" == 'Darwin' ]]; then
+   platform='osx'
+fi
 
 # Load aliases
 if [ -f ~/.dotfiles/bash/aliases ]; then
@@ -38,9 +38,15 @@ function mark {
 function unmark {
     rm -i "$MARKPATH/$1"
 }
-function marks {
-    ls -l "$MARKPATH" | sed 's/  / /g' | cut -d' ' -f9- | sed 's/ -/\t-/g' && echo
-}
+if [ $platform == 'osx' ]; then
+	function marks {
+	    \ls -l "$MARKPATH" | tail -n +2 | sed 's/  / /g' | cut -d' ' -f9- | awk -F ' -> ' '{printf "%-10s -> %s\n", $1, $2}'
+	}
+else
+	function marks {
+	    ls -l "$MARKPATH" | sed 's/  / /g' | cut -d' ' -f9- | sed 's/ -/\t-/g' && echo
+	}
+fi
 
 
 # Color Constants
