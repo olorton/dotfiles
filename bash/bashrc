@@ -21,6 +21,11 @@ if [ -f ~/.dotfiles/git/git-completion.bash ]; then
     source ~/.dotfiles/git/git-completion.bash
 fi
 
+# Load global git ignore
+if [ -f ~/.dotfiles/git/gitignore_global ]; then
+	git config --global core.excludesfile ~/.dotfiles/git/gitignore_global
+fi
+
 
 # Color Constants
 RED="\[\033[0;31m\]"
