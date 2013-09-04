@@ -1,0 +1,42 @@
+#!/bin/bash
+#
+# This is the pre-commit file, don't forget to make it executable
+# Add the folder containing it to your global git commit template:
+#   git config --global init.templatedir '<INSERT HOOKS DIRECTORY>'
+# To update an existing local repo with this template run 'git init' again
+
+# Get current branch & git user name
+current_branch="`git branch | grep \* | cut -f2 -d' '`"
+diff="`git-diff-index -p -M --cached HEAD`"
+count_doto="`git grep TODO | wc -l | tr -d ' '`"
+fail_branches=(master develop)
+fail_words=(@wip cock penis)
+
+# Warn number of instances of:
+# TODO
+if [ $count_doto -gt 0 ]; then
+  echo "There are ${count_doto} TODOs"
+fi
+
+# # If the current branch is master or develop then fail
+for branch in ${fail_branches[*]}; do
+    if [ $current_branch == $branch ]; then
+      echo "You are on the **${current_branch}** branch."
+      echo "You told me not to let you commit to this branch. Do I won't. Don't do it again."
+      exit 1
+    fi
+done
+
+# Fail words prevent a commit, number of instances of:
+for item in ${fail_words[*]}; do
+    count_item="`grep -o "${item}" <<< "${diff}" | wc -l | tr -d ' '`"
+    if [ $count_item -gt 0 ]; then
+        echo "FAIL WORD ALERT...FAIL WORD ALERT...FAIL WORD ALERT..."
+        dont_commit=true
+        echo "    ${count_item} : ${item}"
+        exit 1
+    fi
+done
+
+exit 0
+
