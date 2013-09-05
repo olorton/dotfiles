@@ -22,7 +22,7 @@ fi
 for branch in ${fail_branches[*]}; do
     if [ $current_branch == $branch ]; then
       echo "You are on the **${current_branch}** branch."
-      echo "You told me not to let you commit to this branch. Do I won't. Don't do it again."
+      echo "You told me not to let you commit to this branch, so I won't. Don't do it again."
       exit 1
     fi
 done
