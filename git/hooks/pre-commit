@@ -9,20 +9,41 @@
 current_branch="`git branch | grep \* | cut -f2 -d' '`"
 diff="`git-diff-index -p -M --cached HEAD`"
 count_doto="`git grep TODO | wc -l | tr -d ' '`"
-fail_branches=(master develop)
-fail_words=(@wip cock penis)
+git_root="`git rev-parse --show-toplevel`"
+
+# Load fail branches & fail words
+if [ -f ${git_root}/fail_branches ];
+then
+    fail_branches_file=${git_root}/fail_branches
+else
+    fail_branches_file=~/.dotfiles/git/fail_branches
+fi
+while read line; do
+    fail_branches+=("$line")
+done < $fail_branches_file
+
+if [ -f ${git_root}/fail_words ];
+then
+    fail_words_file=${git_root}/fail_words
+else
+    fail_words_file=~/.dotfiles/git/fail_words
+fi
+while read line; do
+    fail_words+=("$line")
+done < $fail_words_file
 
 # Warn number of instances of:
 # TODO
 if [ $count_doto -gt 0 ]; then
-  echo "There are ${count_doto} TODOs"
+    echo "There are ${count_doto} TODOs"
 fi
 
-# # If the current branch is master or develop then fail
+# If the current branch is master or develop then fail
 for branch in ${fail_branches[*]}; do
     if [ $current_branch == $branch ]; then
       echo "You are on the **${current_branch}** branch."
       echo "You told me not to let you commit to this branch. Do I won't. Don't do it again."
+      echo -e "\007" # Terminal Bell
       exit 1
     fi
 done
@@ -33,10 +54,10 @@ for item in ${fail_words[*]}; do
     if [ $count_item -gt 0 ]; then
         echo "FAIL WORD ALERT...FAIL WORD ALERT...FAIL WORD ALERT..."
         dont_commit=true
-        echo "    ${count_item} : ${item}"
+        echo "    ${item} (${count_item})"
+        echo -e "\007" # Terminal Bell
         exit 1
     fi
 done
 
-exit 0
-
+exit 1
