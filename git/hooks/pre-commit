@@ -42,8 +42,12 @@ fi
 for branch in ${fail_branches[*]}; do
     if [ $current_branch == $branch ]; then
       echo "You are on the **${current_branch}** branch."
+<<<<<<< HEAD
       echo "You told me not to let you commit to this branch. Do I won't. Don't do it again."
       echo -e "\007" # Terminal Bell
+=======
+      echo "You told me not to let you commit to this branch, so I won't. Don't do it again."
+>>>>>>> 1b9fadcab833d713add833b42feaa213190d7dd3
       exit 1
     fi
 done
