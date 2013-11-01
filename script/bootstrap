@@ -1,0 +1,64 @@
+#!/usr/bin/env bash
+#
+# bootstrap installs the following:
+#  - symlinks files to the home directory
+#  - installs a basic brew setup
+#  - runs individual install.sh scripts
+#
+# This script is written with the idea that it can be run repeatably to maintain
+# a consistent state. ie running the script again should not break anything
+
+DOTFILES_ROOT="`pwd`"
+HOMEBREW_LOG="${HOME}/Desktop/homebrew.log"
+HOMEBREW_INFO="${HOME}/Desktop/homebrew-info.txt"
+
+# if [ "$(uname -s)" == "Darwin" ] ; then
+  echo "Do you want to do a full homebrew install?"
+  select yn in "Yes" "No"; do
+      case $yn in
+          Yes ) HOMEBREW_FULL_INSTALL=true; break;;
+          No ) HOMEBREW_FULL_INSTALL=false; break;;
+      esac
+  done
+fi
+
+# symlink files to the home directory
+for source in `find $DOTFILES_ROOT -maxdepth 2 -name \*.symlink`
+do
+  dest="$HOME/.`basename \"${source%.*}\"`"
+
+  rm -rf $dest
+  ln -s $source $dest
+  printf "symlinked $source to $dest\n"
+done
+
+# install basic brew setup
+if [ "$(uname -s)" == "Darwin" ] ; then
+  printf " ...things might get slow for a bit, you could try this tail for more info:\n        tail -f ${HOME}/Desktop/homebrew.log\n"
+  which -s brew
+  if [[ $? != 0 ]] ; then
+    printf "installing homebrew\n"
+    echo "********************************************************************************" >> ${HOMEBREW_LOG}
+    /usr/bin/ruby -e "$(curl -fsSL https://raw.github.com/mxcl/homebrew/go)" >> ${HOMEBREW_LOG}
+  else
+    printf "updating homebrew\n"
+    echo "********************************************************************************" >> ${HOMEBREW_LOG}
+    brew update >> ${HOMEBREW_LOG}
+  fi
+  if [ HOMEBREW_FULL_INSTALL ] ; then
+    printf "installing full homebrew install\n"
+    echo "********************************************************************************" >> ${HOMEBREW_LOG}
+    brew doctor >> ${HOMEBREW_LOG}
+    echo "********************************************************************************" >> ${HOMEBREW_LOG}
+    homebrew/full-install >> ${HOMEBREW_LOG}
+  fi
+fi
+
+
+# run individual install scripts for each folder
+for script in `find $DOTFILES_ROOT -maxdepth 2 -name install.sh`
+do
+  printf "running script $script \n"
+done
+
+printf '\n'
