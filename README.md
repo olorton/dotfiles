@@ -4,10 +4,19 @@ My dotfiles. Primaraly set up to manage my vim config.
 
 ## Setup
 
-    cd ~
+    xcode-select --install
     git clone https://github.com/olorton/dotfiles.git ~/.dotfiles
-    ln -s ~/.dotfiles/bashrc ~/.bashrc
-    ln -s ~/.dotfiles/bash_profile ~/.bash_profile
+    cd ~/.dotfiles
+    script/bootstrap
+
+Install homebrew
+
+    ruby -e "$(curl -fsSL https://raw.github.com/mxcl/homebrew/go)"
+
+Install apps
+
+    homebrew/install
+
 
 ## ToDo
 
