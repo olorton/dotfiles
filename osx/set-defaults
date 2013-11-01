@@ -1,7 +1,6 @@
-# Copied from @ghickman dotfiles/osx
+#!/bin/bash
+
 # Many settings taken from https://gist.github.com/2260182
-echo "Disable the Lion window effects"
-defaults write NSGlobalDomain NSAutomaticWindowAnimationsEnabled -bool NO
 
 echo "Re-enable key repeat"
 defaults write -g ApplePressAndHoldEnabled -bool false
@@ -16,8 +15,8 @@ echo "Require password immediately after sleep or screen saver begins"
 defaults write com.apple.screensaver askForPassword -int 1
 defaults write com.apple.screensaver askForPasswordDelay -int 0
 
-# echo "Enable tap to click (Trackpad)"
-# defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad Clicking -bool true
+echo "Enable tap to click (Trackpad)"
+defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad Clicking -bool true
 
 # echo "Map bottom right Trackpad corner to right-click"
 # defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad TrackpadCornerSecondaryClick -int 2
@@ -25,9 +24,6 @@ defaults write com.apple.screensaver askForPasswordDelay -int 0
 
 echo "Disable the warning when changing a file extension"
 defaults write com.apple.finder FXEnableExtensionChangeWarning -bool false
-
-echo "Enable AirDrop over Ethernet and on unsupported Macs running Lion"
-defaults write com.apple.NetworkBrowser BrowseAllInterfaces -bool true
 
 echo "Disable press-and-hold for keys in favor of key repeat"
 defaults write NSGlobalDomain ApplePressAndHoldEnabled -bool false
@@ -38,8 +34,8 @@ defaults write NSGlobalDomain KeyRepeat -int 0.02
 echo "Set a shorter Delay until key repeat"
 defaults write NSGlobalDomain InitialKeyRepeat -int 15
 
-echo "Disable auto-correct"
-defaults write NSGlobalDomain NSAutomaticSpellingCorrectionEnabled -bool false
+# echo "Disable auto-correct"
+# defaults write NSGlobalDomain NSAutomaticSpellingCorrectionEnabled -bool false
 
 echo "Show all filename extensions in Finder"
 defaults write NSGlobalDomain AppleShowAllExtensions -bool true
