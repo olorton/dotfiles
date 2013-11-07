@@ -1,7 +1,0 @@
-#!/bin/bash
-
-DOTFILES="${HOME}/.dotfiles"
-
-ln -fs "${DOTFILES}/vim/vimrc"          "${HOME}/.vimrc"
-ln -fs "${DOTFILES}/bash/bashrc"        "${HOME}/.bashrc"
-ln -fs "${DOTFILES}/bash/bash_profile"  "${HOME}/.bash_profile"
