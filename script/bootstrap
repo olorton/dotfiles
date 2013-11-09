@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+#
+# bootstrap installs the following:
+#  - symlinks files to the home directory
+#  - runs individual install.sh scripts
+#
+# This script is written with the idea that it can be run repeatably to maintain
+# a consistent state. ie running the script again should not break anything
+
+DOTFILES_ROOT="`pwd`"
+
+# symlink files to the home directory
+for source in `find $DOTFILES_ROOT -maxdepth 2 -name \*.symlink`
+do
+  dest="$HOME/.`basename \"${source%.*}\"`"
+
+  rm -rf $dest
+  ln -s $source $dest
+  printf "symlinked $source to $dest\n"
+done
+
+# run individual install scripts for each folder
+for script in `find $DOTFILES_ROOT -maxdepth 2 -name install.sh`
+do
+  printf "running script $script \n"
+done
+
+printf '\n'

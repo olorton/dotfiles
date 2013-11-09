@@ -1,0 +1,60 @@
+#!/usr/bin/env bash
+
+echo "performing full homebrew install"
+
+if test ! $(which brew)
+then
+  echo "  Installing Homebrew for you."
+  ruby -e "$(curl -fsSL https://raw.github.com/mxcl/homebrew/go)" >> /tmp/homebrew-install.log
+fi
+
+sudo -v
+
+brew update >> /tmp/homebrew-install.log
+brew upgrade >> /tmp/homebrew-install.log
+
+brew tap homebrew/versions >> /tmp/homebrew-install.log
+brew tap phinze/homebrew-cask >> /tmp/homebrew-install.log
+
+brew install ack >> /tmp/homebrew-install.log
+brew install bash >> /tmp/homebrew-install.log
+brew install brew-cask >> /tmp/homebrew-install.log
+brew install coreutils >> /tmp/homebrew-install.log
+brew install git >> /tmp/homebrew-install.log
+brew install htop-osx >> /tmp/homebrew-install.log
+brew install ssh-copy-id >> /tmp/homebrew-install.log
+brew install vim >> /tmp/homebrew-install.log
+brew install wget --enable-iri >> /tmp/homebrew-install.log
+
+brew cask install app-cleaner >> /tmp/homebrew-install.log
+brew cask install arq >> /tmp/homebrew-install.log
+brew cask install calibre >> /tmp/homebrew-install.log
+brew cask install dropbox >> /tmp/homebrew-install.log
+brew cask install firefox >> /tmp/homebrew-install.log
+brew cask install flash >> /tmp/homebrew-install.log
+brew cask install google-chrome >> /tmp/homebrew-install.log
+brew cask install gpgtools >> /tmp/homebrew-install.log
+brew cask install harvest >> /tmp/homebrew-install.log
+brew cask install iterm2 >> /tmp/homebrew-install.log
+brew cask install keyremap4macbook >> /tmp/homebrew-install.log
+brew cask install pc-keyboardhack >> /tmp/homebrew-install.log
+brew cask install lastfm >> /tmp/homebrew-install.log
+brew cask install minecraft >> /tmp/homebrew-install.log
+brew cask install mou >> /tmp/homebrew-install.log
+#brew cask install netbeans ### Not currently using until at version 7.4 see issue #7
+brew cask install sequel-pro >> /tmp/homebrew-install.log
+brew cask install skype >> /tmp/homebrew-install.log
+# brew cask install soundflower >> /tmp/homebrew-install.log
+brew cask install sourcetree >> /tmp/homebrew-install.log
+brew cask install spotify >> /tmp/homebrew-install.log
+brew cask install steam >> /tmp/homebrew-install.log
+brew cask install sublime-text-3 >> /tmp/homebrew-install.log
+brew cask install subtitles
+brew cask install things >> /tmp/homebrew-install.log
+brew cask install transmission >> /tmp/homebrew-install.log
+brew cask install transmit >> /tmp/homebrew-install.log
+brew cask install vagrant >> /tmp/homebrew-install.log
+brew cask install virtualbox >> /tmp/homebrew-install.log
+brew cask install vlc >> /tmp/homebrew-install.log
+
+brew cleanup >> /tmp/homebrew-install.log

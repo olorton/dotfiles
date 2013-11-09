@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Ensure user-installed binaries take precedence
-export PATH=/usr/local/share/python:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin
+export PATH="$HOME/.dotfiles/bin:$(brew --prefix josegonzalez/php/php54)/bin:/usr/local/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
 
 platform='unknown'
 unamestr=`uname`
