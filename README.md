@@ -6,9 +6,10 @@ Reminder to self: check on issues.
 
 ## Setup
 
+Install XCode first.
+
 Clone the repo
 
-    xcode-select --install
     git clone git@github.com:olorton/dotfiles.git ~/.dotfiles
 
 Run the script
@@ -24,6 +25,24 @@ Now install my preferred list of homebrew apps.
 
     homebrew/install
 
+###Remap Caps Lock to Launchpad
+
+The above ```homebrew/install``` script also installed:
+
+- PCKeyboardHack
+- KeyboardRemap4MacBook
+
+With these we can remap caps lock to a key combo to be used for Launchpad.
+
+Open PCKeyboardHack and change the Caps Lock key to 110 (the strange application key on PC keyboards that no one uses).
+
+Run this script to remap key 110 (now Caps Lock) to opt-space.
+
+	osx/keyremap-defaults.sh
+
+Unfortunately, KeyboardRemap4MacBook overrides the osx key repeat settings, so I have tweaked these numbers to my tastes.
+
+Now set up that key-combo to open launchpad. Open system prefs > keyboard > shortcut > launchpad & dock > and change the shortcut.
 
 ###OSX Settings
     

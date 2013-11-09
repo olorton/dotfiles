@@ -36,6 +36,8 @@ brew cask install google-chrome >> /tmp/homebrew-install.log
 brew cask install gpgtools >> /tmp/homebrew-install.log
 brew cask install harvest >> /tmp/homebrew-install.log
 brew cask install iterm2 >> /tmp/homebrew-install.log
+brew cask install keyremap4macbook >> /tmp/homebrew-install.log
+brew cask install pc-keyboardhack >> /tmp/homebrew-install.log
 brew cask install lastfm >> /tmp/homebrew-install.log
 brew cask install minecraft >> /tmp/homebrew-install.log
 brew cask install mou >> /tmp/homebrew-install.log
