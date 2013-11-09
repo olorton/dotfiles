@@ -45,3 +45,7 @@ Packages to install:
 Other stuff to look at:
 
 - [PHPCS](http://www.soulbroken.co.uk/code/sublimephpcs/)
+
+## Local PHP dev environment using homebrew
+
+I have not scripted a full configuration of a local php dev environment. Please refer to these docs for a detailed walkthrough: [docs](https://github.com/olorton/dotfiles/tree/master/docs)
