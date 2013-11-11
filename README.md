@@ -60,10 +60,35 @@ Packages to install:
 
 - GitGutter
 - PHP-Twig
+- PHPcs
 
-Other stuff to look at:
+#### Set up PHP Code Sniffer
 
-- [PHPCS](http://www.soulbroken.co.uk/code/sublimephpcs/)
+Install the dependencies:
+
+    brew install php-code-sniffer php-md php-cs-fixer
+
+Install the package ```phpcs``` in Sublime Text.
+
+Open the phpcs settings file in ST: Sublime Text > Preferences > Package Settings > PHP Code Sniffer > Settings - User 
+
+Add the following settings:
+
+    {
+        "phpcs_executable_path": "/usr/local/bin/phpcs",
+        "php_cs_fixer_executable_path": "/usr/local/bin/php-cs-fixer",
+        "phpmd_executable_path": "/usr/local/bin/phpmd"
+    }
+
+
+You can check your specific paths using these commands:
+
+    $ which phpcs
+    $ which phpmd
+    $ which php-cs-fixer
+
+
+[More details here](http://www.soulbroken.co.uk/code/sublimephpcs/)
 
 ## Local PHP dev environment using homebrew
 
