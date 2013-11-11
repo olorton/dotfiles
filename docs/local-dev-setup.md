@@ -2,8 +2,6 @@
 
 ###Set up Apache
 
-Use this apache conf: http://wiki.whiteoctober.co.uk/index.php?title=Apache
-
 Uncomment this line in: /etc/apache2/httpd.conf
 
     #Include /private/etc/apache2/extra/httpd-vhosts.conf
@@ -40,6 +38,7 @@ Paste this into: /etc/apache2/extra/httpd-vhosts.conf
         CustomLog "/private/var/log/apache2/%1-access.log" common
     </VirtualHost>
 
+If you need SSL follow [this guide](http://blog.andyhunt.info/2011/11/26/apache-ssl-on-max-osx-lion-10-7/).
 
 ###Install dnsmasq
 
@@ -110,7 +109,7 @@ To have launchd start mysql at login:
 
     npm install -g less #(might need sudo)
 
-###Exim for failing bambooh test
+###Exim
 
 Sooner or later we'll have an app that needs to send a mail.
 
