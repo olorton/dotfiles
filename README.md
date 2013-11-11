@@ -77,9 +77,13 @@ Add the following settings:
     {
         "phpcs_executable_path": "/usr/local/bin/phpcs",
         "php_cs_fixer_executable_path": "/usr/local/bin/php-cs-fixer",
-        "phpmd_executable_path": "/usr/local/bin/phpmd"
+        "phpmd_executable_path": "/usr/local/bin/phpmd",
+        "phpcs_additional_args": {
+            "--standard": "PSR2",
+            "": "",
+            "-n": ""
+        },
     }
-
 
 You can check your specific paths using these commands:
 
