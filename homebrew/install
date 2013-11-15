@@ -25,6 +25,9 @@ brew install htop-osx >> /tmp/homebrew-install.log
 brew install ssh-copy-id >> /tmp/homebrew-install.log
 brew install vim >> /tmp/homebrew-install.log
 brew install wget --enable-iri >> /tmp/homebrew-install.log
+brew install ffmpeg --enable-iri >> /tmp/homebrew-install.log
+brew install flac --enable-iri >> /tmp/homebrew-install.log
+brew install lame --enable-iri >> /tmp/homebrew-install.log
 
 brew cask install app-cleaner >> /tmp/homebrew-install.log
 brew cask install arq >> /tmp/homebrew-install.log
