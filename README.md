@@ -1,6 +1,6 @@
 # Dotfiles Readme
 
-My dotfiles. Very much a WIP.
+My dotfiles. Very much a WIP. Although I did not fork someone elses, [this post](http://zachholman.com/2010/08/dotfiles-are-meant-to-be-forked/) is my influence for my setup.
 
 Reminder to self: check on issues.
 
