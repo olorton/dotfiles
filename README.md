@@ -19,7 +19,7 @@ Run the script
 
 ###Install homebrew
 
-    ruby -e "$(curl -fsSL https://raw.github.com/mxcl/homebrew/go)"
+- [Install from here](http://brew.sh).
 
 Now install my preferred list of homebrew apps.
 
