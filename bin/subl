@@ -1,0 +1,4 @@
+#!/bin/bash
+
+path=`readlink /Users/oliver/Applications/Sublime\ Text.app`
+"${path}/Contents/SharedSupport/bin/subl" $1

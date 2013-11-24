@@ -15,6 +15,7 @@ brew upgrade >> /tmp/homebrew-install.log
 
 brew tap homebrew/versions >> /tmp/homebrew-install.log
 brew tap phinze/homebrew-cask >> /tmp/homebrew-install.log
+brew tap caskroom/versions
 
 brew install ack >> /tmp/homebrew-install.log
 brew install bash >> /tmp/homebrew-install.log
@@ -51,7 +52,7 @@ brew cask install skype >> /tmp/homebrew-install.log
 brew cask install sourcetree >> /tmp/homebrew-install.log
 brew cask install spotify >> /tmp/homebrew-install.log
 #brew cask install steam >> /tmp/homebrew-install.log
-#brew cask install sublime-text-3 >> /tmp/homebrew-install.log    # removed from cask (unknown reason)
+brew cask install sublime-text-3 >> /tmp/homebrew-install.log    # removed from cask (unknown reason)
 brew cask install subtitles
 brew cask install things >> /tmp/homebrew-install.log
 brew cask install transmission >> /tmp/homebrew-install.log
