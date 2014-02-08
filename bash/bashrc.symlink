@@ -93,7 +93,7 @@ function parse_git_branch {
 function prompt_func() {
 	previous_return_value=$?;
 	# prompt="${TITLEBAR}$BLUE[$RED\w$GREEN$(__git_ps1)$YELLOW$(git_dirty_flag)$BLUE]$COLOR_NONE "
-	prompt="\u@\h  \w${GREEN}$(parse_git_branch)${COLOR_NONE}"
+	prompt="\w${GREEN}$(parse_git_branch)${COLOR_NONE}"
 	PS1="${prompt} $ "
 }
 
