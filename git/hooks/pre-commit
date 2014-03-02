@@ -34,9 +34,7 @@ done < $fail_words_file
 
 # Warn number of instances of:
 # TODO
-if [ $count_doto -gt 0 ]; then
-    echo "There are ${count_doto} TODOs"
-fi
+echo "There are ${count_doto} TODOs"
 
 # If the current branch is master or develop then fail
 for branch in ${fail_branches[*]}; do

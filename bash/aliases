@@ -80,6 +80,19 @@ alias fuckingdsfiles="find . -type f -name '*.DS_Store' -ls -delete"
 
 # Ssh with bash profile
 function s() {
-  scp ~/.bashrc $1:/tmp/.bashrc_temp
-  ssh -t $1 "bash --rcfile /tmp/.bashrc_temp ; rm /tmp/.bashrc_temp"
+    scp ~/.bashrc $1:/tmp/.bashrc_temp
+    ssh -t $1 "bash --rcfile /tmp/.bashrc_temp ; rm /tmp/.bashrc_temp"
 }
+
+# Add TODO count to git status
+git() {
+    if [[ $@ == "status" ]]; then
+        count_doto="`git grep TODO | wc -l | tr -d ' '`"
+        command git status
+        command echo "There are ${count_doto} TODOs"
+    else
+        command git "$@";
+    fi;
+}
+
+
