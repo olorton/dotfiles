@@ -60,4 +60,4 @@ for item in ${fail_words[*]}; do
     fi
 done
 
-exit 1
+exit 0

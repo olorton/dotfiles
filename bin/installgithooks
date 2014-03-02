@@ -1,0 +1,27 @@
+#!/bin/bash
+
+gitroute=`git rev-parse --show-toplevel`;
+if [ -z "$gitroute" ]; then
+    echo "Not a git repository:$gitroute"
+    exit 0
+fi
+
+files=~/.dotfiles/git/hooks/*
+githooks="`git rev-parse --show-toplevel`/.git/hooks/"
+
+for source in $files
+do
+    target="${githooks}${source##*/}"
+    if [ ! -e $target ]; then
+        ln -s $source $target
+        if [ ! -e $target ]; then
+            echo "There was a problem installing ${source##*/}"
+        fi
+    else
+        if [ -L $target ]; then
+            echo "${source##*/} already installed."
+        else
+            echo "Existing hook for ${source##*/} - not installed!"
+        fi
+    fi
+done
