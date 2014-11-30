@@ -1,0 +1,95 @@
+---
+
+# Check that launch agents folder exists
+- file:
+    path={{ ansible_env.HOME }}/Library/LaunchAgents/
+    owner={{ ansible_env.USER }}
+    group=staff
+    state=directory
+
+
+### dnsmasq ###################################################################
+# Used to provide local dns for your domian, e.g. oliver.dev
+- homebrew:
+    name=dnsmasq
+    state=present
+- template:
+    src={{ ansible_env.HOME }}/.dotfiles/ansible/etc/dnsmasq.conf
+    dest=/usr/local/etc/dnsmasq.conf
+    owner={{ ansible_env.USER }}
+    group=admin
+    mode=0766
+- shell: if [[ ! -d /etc/resolver ]]; then sudo mkdir /etc/resolver; fi
+- file: path=/etc/resolver owner=root group=wheel state=directory
+  sudo: yes
+  sudo_user: "{{ ansible_env.USER }}"
+- shell: sudo bash -c 'echo "nameserver 127.0.0.1" > /etc/resolver/{{ local_dev_hostname }}'
+- shell: sudo rm /Library/LaunchDaemons/homebrew.mxcl.dnsmasq.plist
+  ignore_errors: true
+- shell: sudo cp -f /usr/local/opt/dnsmasq/homebrew.mxcl.dnsmasq.plist /Library/LaunchDaemons/homebrew.mxcl.dnsmasq.plist
+- shell: sudo chown root /Library/LaunchDaemons/homebrew.mxcl.dnsmasq.plist
+- shell: sudo chgrp wheel /Library/LaunchDaemons/homebrew.mxcl.dnsmasq.plist
+- shell: sudo chmod 0744 /Library/LaunchDaemons/homebrew.mxcl.dnsmasq.plist
+- shell: launchctl unload /Library/LaunchDaemons/homebrew.mxcl.dnsmasq.plist
+  sudo: yes
+  sudo_user: "{{ ansible_env.USER }}"
+- shell: launchctl load /Library/LaunchDaemons/homebrew.mxcl.dnsmasq.plist
+  sudo: yes
+  sudo_user: "{{ ansible_env.USER }}"
+
+
+### php55 ######################################################################
+- homebrew: name=php55 install_options="without-apache,with-fpm,with-mysql" state=present
+- homebrew: name=php55-xdebug state=present
+- lineinfile:
+    dest=/usr/local/etc/php/5.5/php.ini
+    line='date.timezone = "Europe/London"'
+    insertafter="^;date.timezone"
+- lineinfile:
+    dest=/usr/local/etc/php/5.5/conf.d/ext-xdebug.ini
+    line='xdebug.max_nesting_level=1000'
+    insertafter="^zend_extension="
+- shell: ln -sfv /usr/local/opt/php55/homebrew.mxcl.php55.plist ~/Library/LaunchAgents
+- shell: launchctl unload -w {{ ansible_env.HOME }}/Library/LaunchAgents/homebrew.mxcl.php55.plist
+  ignore_errors: true
+- shell: launchctl load -w {{ ansible_env.HOME }}/Library/LaunchAgents/homebrew.mxcl.php55.plist
+
+
+### mysql ######################################################################
+- homebrew: name=mysql state=present
+- shell: ln -sfv /usr/local/opt/mysql/*.plist ~/Library/LaunchAgents
+- shell: launchctl unload -w {{ ansible_env.HOME }}/Library/LaunchAgents/homebrew.mxcl.mysql.plist
+  ignore_errors: true
+- shell: launchctl load -w {{ ansible_env.HOME }}/Library/LaunchAgents/homebrew.mxcl.mysql.plist
+# User: root
+# Pass: <none>
+
+
+### nginx #####################################################################
+- homebrew: name=nginx state=present
+- shell: mkdir -p /usr/local/etc/nginx/logs
+- shell: mkdir -p /usr/local/etc/nginx/sites-available
+- shell: mkdir -p /usr/local/etc/nginx/sites-enabled
+- shell: mkdir -p ~/Code
+
+- template:
+    src={{ ansible_env.HOME }}/.dotfiles/ansible/etc/nginx/nginx.conf
+    dest=/usr/local/etc/nginx/nginx.conf
+- template:
+    src={{ ansible_env.HOME }}/.dotfiles/ansible/etc/nginx/sites-available/default
+    dest=/usr/local/etc/nginx/sites-available/default
+- file:
+    src=/usr/local/etc/nginx/sites-available/default
+    dest=/usr/local/etc/nginx/sites-enabled/default
+    state=link
+
+- shell: sudo cp /usr/local/opt/nginx/*.plist /Library/LaunchDaemons/
+- shell: sudo chown root:wheel /Library/LaunchDaemons/homebrew.mxcl.nginx.plist
+- shell: sudo launchctl unload /Library/LaunchDaemons/homebrew.mxcl.nginx.plist
+  ignore_errors: true
+- shell: sudo launchctl load /Library/LaunchDaemons/homebrew.mxcl.nginx.plist
+
+- shell: "/usr/bin/curl -ILs http://{{ local_dev_hostname }}| grep '^HTTP/1.1 200 OK' | head -n 1"
+  register: nginx_status
+  failed_when: "'200 OK' not in nginx_status.stdout"
+  ignore_errors: true

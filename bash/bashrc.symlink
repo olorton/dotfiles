@@ -9,7 +9,8 @@ fi
 
 # Ensure user-installed binaries take precedence
 if [[ $platform == 'osx' ]]; then
-	export PATH="$HOME/.dotfiles/bin:$(brew --prefix josegonzalez/php/php54)/bin:/usr/local/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
+    # TODO pick up the php version automatically
+	export PATH="$HOME/.dotfiles/bin:$(brew --prefix josegonzalez/php/php55)/bin:/usr/local/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
 fi
 
 # Load aliases
@@ -128,3 +129,5 @@ function prompt_func() {
 PROMPT_COMMAND=prompt_func
 
 export EDITOR=vim
+export XDEBUG_CONFIG="idekey=PHPSTORM"
+

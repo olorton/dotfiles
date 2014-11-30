@@ -1,99 +1,34 @@
 # Dotfiles Readme
 
-My dotfiles. Very much a WIP. Although I did not fork someone elses, [this post](http://zachholman.com/2010/08/dotfiles-are-meant-to-be-forked/) is my influence for my setup.
+This is more than just a standard dotfiles repo. Using ansible I can install a whole bunch of apps and set up a development environment.
 
-Reminder to self: check on issues.
+This is my dotfiles setup. There are many like it, but this one is mine. Do fork it and make it your own, but you want to make sure that you *do* read the source to ensure that my settings do not screw up your system. This is intended to be run on a fresh installation of Mac OSX Yosemite, it will probably not work on upgraded systems from Mavericks.
+
+Make sure that you have the latest os updates before starting.
 
 ## Setup
 
-Install XCode first.
+- Open the terminal and clone the dotfiles repo `git clone https://github.com:olorton/dotfiles.git ~/.dotfiles` then switch to that directory `cd ~`
+- [Install homebrew](http://brew.sh). Follow the instructions to install XCode Command line tools, or just install XCode before hand. Make sure that you run `brew doctor` before you start, it should say `Your system is ready to brew.` if everything is ok.
+- Run the inital setup script `bin/initialsetup`
+- Run the ansible script `bin/dotfiles provision`
 
-Clone the repo
-
-    git clone git@github.com:olorton/dotfiles.git ~/.dotfiles
-
-Run the script
-    
-    cd ~/.dotfiles
-    script/bootstrap
-
-###Install homebrew
-
-- [Install from here](http://brew.sh).
-
-Now install my preferred list of homebrew apps.
-
-    homebrew/install
-
-###Remap Caps Lock to Launchpad
-
-The above ```homebrew/install``` script also installed:
-
-- PCKeyboardHack
-- KeyboardRemap4MacBook
-
-With these we can remap caps lock to a key combo to be used for Launchpad.
-
-Open PCKeyboardHack and change the Caps Lock key to 110 (the strange application key on PC keyboards that no one uses).
-
-Run this script to remap key 110 (now Caps Lock) to opt-space.
-
-	osx/keyremap-defaults.sh
-
-Unfortunately, KeyboardRemap4MacBook overrides the osx key repeat settings, so I have tweaked these numbers to my tastes.
-
-Now set up that key-combo to open launchpad. Open system prefs > keyboard > shortcut > launchpad & dock > and change the shortcut.
-
-###OSX Settings
-    
-    osx/set-defaults
+You'll need to reboot after this. Some things won't work properly until them. E.g. dnsmasq
 
 ## Configure Apps
 
-Ideally all of this should be handled by the scripts above. For now I document here as a reminder of stuff to change.
+I'd like for all of this to be scripted. It's on my todo list. For now do the following:
 
-### Sublime Text
+### Sublime text
 
-Install package manager for ST3: https://sublime.wbond.net/installation
-
-Packages to install:
+Install [Package Control](https://packagecontrol.io/installation). Then install the following packages:
 
 - GitGutter
+- ApacheConf
+- Behat
+- INI
 - PHP-Twig
-- PHPcs
+- SideBarEnhancements
+- Theme Spacegray
 
-#### Set up PHP Code Sniffer
-
-Install the dependencies:
-
-    brew install php-code-sniffer php-md php-cs-fixer
-
-Install the package ```phpcs``` in Sublime Text.
-
-Open the phpcs settings file in ST: Sublime Text > Preferences > Package Settings > PHP Code Sniffer > Settings - User 
-
-Add the following settings:
-
-    {
-        "phpcs_executable_path": "/usr/local/bin/phpcs",
-        "php_cs_fixer_executable_path": "/usr/local/bin/php-cs-fixer",
-        "phpmd_executable_path": "/usr/local/bin/phpmd",
-        "phpcs_additional_args": {
-            "--standard": "PSR2",
-            "": "",
-            "-n": ""
-        },
-    }
-
-You can check your specific paths using these commands:
-
-    $ which phpcs
-    $ which phpmd
-    $ which php-cs-fixer
-
-
-[More details here](http://www.soulbroken.co.uk/code/sublimephpcs/)
-
-## Local PHP dev environment using homebrew
-
-I have not scripted a full configuration of a local php dev environment. Please refer to these docs for a detailed walkthrough: [docs](https://github.com/olorton/dotfiles/tree/master/docs)
+You'll also want the [M+1m console font](http://sourceforge.jp/projects/mplus-fonts/downloads/62344/mplus-TESTFLIGHT-059.tar.xz/)

@@ -1,0 +1,3 @@
+---
+
+- shell: "{{ansible_env.HOME}}/.dotfiles/bin/set-osx-defaults"

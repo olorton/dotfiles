@@ -1,0 +1,69 @@
+server {
+    listen  80;
+    server_name   ~^(.*)\.{{ local_dev_hostname | replace(".", "\.") }}$;
+
+    if (!-d {{ ansible_env.HOME }}/Code/$1) {
+        rewrite . {{ local_dev_hostname }} redirect;
+    }
+
+    set $curdir {{ ansible_env.HOME }}/Code/$1;
+    if (-d {{ ansible_env.HOME }}/Code/$1/web) {
+        set $curdir {{ ansible_env.HOME }}/Code/$1/web;
+    }
+
+    root $curdir;
+
+    access_log  /usr/local/etc/nginx/logs/default.access.log  main;
+
+    # strip app.php/ prefix if it is present
+    rewrite ^/app_dev\.php/?(.*)$ /$1 permanent;
+
+    location / {
+        index app_dev.php;
+        try_files $uri @rewriteapp;
+    }
+
+    location @rewriteapp {
+        set $indexfile index.php;
+        if (-f $curdir/app_dev.php) {
+            set $indexfile app_dev.php;
+        }
+        rewrite ^(.*)$ /$indexfile/$1 last;
+    }
+
+    # pass the PHP scripts to FastCGI server from upstream phpfcgi
+    location ~ \.php(/|$) {
+        fastcgi_pass   127.0.0.1:9000;
+        fastcgi_split_path_info ^(.+\.php)(/.*)$;
+        include fastcgi_params;
+        fastcgi_param  SCRIPT_FILENAME $document_root$fastcgi_script_name;
+        fastcgi_param  HTTPS off;
+    }
+}
+
+server {
+    listen       80;
+    server_name  {{ local_dev_hostname }};
+    root       {{ ansible_env.HOME }}/Code;
+
+    access_log  /usr/local/etc/nginx/logs/default.access.log  main;
+
+    location / {
+        location ~ \.php$ {
+            try_files      $uri = 404;
+            fastcgi_pass   127.0.0.1:9000;
+            fastcgi_split_path_info ^(.+\.php)(/.*)$;
+            fastcgi_param  SCRIPT_FILENAME $document_root$fastcgi_script_name;
+            include        fastcgi_params;
+        }
+    }
+
+    location = /info {
+        allow   127.0.0.1;
+        deny    all;
+        rewrite (.*) /.info.php;
+    }
+
+    error_page  404     /404.html;
+    error_page  403     /403.html;
+}
