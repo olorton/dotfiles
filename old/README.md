@@ -1,50 +1,17 @@
 # Dotfiles Readme
 
-For Yosemite, TODO - list what this does!
+My dotfiles. Very much a WIP. Although I did not fork someone elses, [this post](http://zachholman.com/2010/08/dotfiles-are-meant-to-be-forked/) is my influence for my setup.
 
-Make sure that you have the latest os updates before starting.
-
-This is intended to be run on a fresh installation of Mac OSX Yosemite, it will probably not work on upgraded systems from Mavericks.
+Reminder to self: check on issues.
 
 ## Setup
 
-- Open the terminal and clone the dotfiles repo `git clone https://github.com:olorton/dotfiles.git ~/.dotfiles` then switch to that directory `cd ~`
-- [Install homebrew](http://brew.sh). Follow the instructions to install XCode Command line tools, or just install XCode before hand. Make sure that you run `brew doctor` before you start, it should say `Your system is ready to brew.` if everything is ok.
-- Run the inital setup script `bin/initialsetup`
+Install XCode first.
 
-You can either run selected provisioner tasks, or the whole lot, take your pick.
+Clone the repo
 
-	bin/provision basic-apps
-	bin/provision dev-tools
-	bin/provision php-dev
-	bin/provision games
-	bin/provision home
+    git clone git@github.com:olorton/dotfiles.git ~/.dotfiles
 
-Or install everything
-
-	bin/provision all
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
----------------------------------------------------------------------
 Run the script
     
     cd ~/.dotfiles
@@ -58,6 +25,24 @@ Now install my preferred list of homebrew apps.
 
     homebrew/install
 
+###Remap Caps Lock to Launchpad
+
+The above ```homebrew/install``` script also installed:
+
+- PCKeyboardHack
+- KeyboardRemap4MacBook
+
+With these we can remap caps lock to a key combo to be used for Launchpad.
+
+Open PCKeyboardHack and change the Caps Lock key to 110 (the strange application key on PC keyboards that no one uses).
+
+Run this script to remap key 110 (now Caps Lock) to opt-space.
+
+	osx/keyremap-defaults.sh
+
+Unfortunately, KeyboardRemap4MacBook overrides the osx key repeat settings, so I have tweaked these numbers to my tastes.
+
+Now set up that key-combo to open launchpad. Open system prefs > keyboard > shortcut > launchpad & dock > and change the shortcut.
 
 ###OSX Settings
     

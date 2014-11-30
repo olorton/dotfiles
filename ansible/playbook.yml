@@ -1,0 +1,55 @@
+---
+- hosts: all
+  vars_files:
+    - vars/{{ env }}.yml
+  vars:
+    application_dir: /Applications
+    caskroom_dir: /usr/local/caskroom
+    applications:
+      # Comment out any apps that you do not want to install using a '#'
+      - alfred
+      # - appcleaner
+      # - dropbox
+      # - firefox
+      # - google-chrome
+      # - harvest
+      # - skype
+      # - slack
+      # - spotify
+      # - things
+      # - lastfm
+      # - vlc
+      # - tinygrab
+      # - sequel-pro
+      # - sublime-text3
+      # - iterm2
+      # - mou
+      # - phpstorm
+      # - sourcetree
+      # - transmission
+      # - transmit
+      # - vagrant
+      # - virtualbox
+      # - minecraft
+      # - arq
+      # - subtitles
+      # - steam
+    homebrew_apps:
+      - { name: curl, options: }
+      - { name: git, options: }
+      - { name: htop, options: }
+    local_dev_hostname: oliver.dev
+  tasks:
+    # - include: tasks/homebrew.yml
+    - include: tasks/php-dev.yml
+  # handlers:
+  #   - name: restart php5-fpm
+  #     service:  name=php5-fpm state=restarted
+  #   - name: restart nginx
+  #     service: name=nginx state=restarted
+  #   - name: restart varnish
+  #     service: name=varnish state=restarted
+  #   - name: restart newrelic-sysmond
+  #     service: name=newrelic-sysmond state=restarted
+  #   - name: restart jetty
+  #     service: name=jetty state=restarted

@@ -1,0 +1,12 @@
+#!/bin/bash
+
+if [ "$#" -lt 1 ]; then
+    echo "Missing arguments"
+    exit 1
+fi
+
+if [[ "$1" == "provision" ]]; then
+    cmd="ansible-playbook -i ${HOME}/.dotfiles/ansible/hosts ${HOME}/.dotfiles/ansible/playbook.yml"
+    echo $cmd
+    $cmd
+fi
