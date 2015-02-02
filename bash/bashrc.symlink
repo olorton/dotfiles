@@ -130,4 +130,3 @@ PROMPT_COMMAND=prompt_func
 
 export EDITOR=vim
 export XDEBUG_CONFIG="idekey=PHPSTORM"
-
