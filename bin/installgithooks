@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 gitroute=`git rev-parse --show-toplevel`;
 if [ -z "$gitroute" ]; then

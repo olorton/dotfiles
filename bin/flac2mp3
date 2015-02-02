@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # Requires flac & lame
 # Based on: https://wiki.archlinux.org/index.php/Convert_Flac_to_Mp3
