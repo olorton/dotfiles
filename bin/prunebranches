@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+
+
+# Based on @peterjwest's script https://gist.github.com/peterjwest/cdb9ec06240b84f3a628
+
+# Identify branch to switch to
+SWITCH_BRANCH=master
+if [[ `git branch --list develop` ]]; then
+   SWITCH_BRANCH=develop
+fi
+
+BRANCHES_TO_PRUNE=`git checkout $SWITCH_BRANCH &> /dev/null && git fetch --prune &> /dev/null && git branch --merged | grep -E -v "^((\* )|\s*(develop|master)$)"`
+echo $BRANCHES_TO_PRUNE
+
+read -p "Are you sure that you want to delete these branches? " -n 1 -r
+echo "" # Echo line break after input question
+
+if [[ ! $REPLY =~ ^[Yy]$ ]]; then
+    exit 1
+fi
+
+git checkout $SWITCH_BRANCH && git fetch --prune && git branch --merged | grep -E -v "^((\* )|\s*(develop|master)$)" | xargs git branch -d
