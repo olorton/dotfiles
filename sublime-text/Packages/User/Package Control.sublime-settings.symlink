@@ -1,0 +1,17 @@
+{
+	"in_process_packages":
+	[
+	],
+	"installed_packages":
+	[
+		"ApacheConf.tmLanguage",
+		"Behat",
+		"Dayle Rees Color Schemes",
+		"GitGutter",
+		"INI",
+		"Package Control",
+		"PHP-Twig",
+		"SideBarEnhancements",
+		"Theme - Spacegray"
+	]
+}

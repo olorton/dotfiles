@@ -1,0 +1,79 @@
+{
+	"binary_file_patterns":
+	[
+		"*.jpg",
+		"*.jpeg",
+		"*.png",
+		"*.gif",
+		"*.ttf",
+		"*.tga",
+		"*.dds",
+		"*.ico",
+		"*.eot",
+		"*.pdf",
+		"*.swf",
+		"*.jar",
+		"*.zip"
+	],
+	"color_scheme": "Packages/Color Scheme - Default/Monokai.tmTheme",
+	"enable_telemetry": "false",
+	"ensure_newline_at_eof_on_save": true,
+	"file_exclude_patterns":
+	[
+		"*.pyc",
+		"*.pyo",
+		"*.exe",
+		"*.dll",
+		"*.obj",
+		"*.o",
+		"*.a",
+		"*.lib",
+		"*.so",
+		"*.dylib",
+		"*.ncb",
+		"*.sdf",
+		"*.suo",
+		"*.pdb",
+		"*.idb",
+		".DS_Store",
+		"*.class",
+		"*.psd",
+		"*.db",
+		"*.sublime-workspace"
+	],
+	"folder_exclude_patterns":
+	[
+		".svn",
+		".git",
+		".hg",
+		"CVS"
+	],
+	"font_face": "M+ 1m",
+	"font_options":
+	[
+		"no_bold"
+	],
+	"font_size": 16,
+	"gpu_window_buffer": "true",
+	"ignored_packages":
+	[
+		"Vintage"
+	],
+	"index_exclude_patterns":
+	[
+		"*.log",
+		"*.sql"
+	],
+	"rulers":
+	[
+		100,
+		120
+	],
+	"show_encoding": true,
+	"show_line_endings": true,
+	"theme": "Spacegray Eighties.sublime-theme",
+	"translate_tabs_to_spaces": true,
+	"trim_trailing_white_space_on_save": true,
+	"use_simple_full_screen": true,
+	"word_separators": "./\\()\"'-:,.;<>~!@#$%^&*|+=[]{}`~?"
+}
