@@ -1,4 +1,0 @@
----
-
-- shell: git config --global {{ item }}
-  with_items: git_config
