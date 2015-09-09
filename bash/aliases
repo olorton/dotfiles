@@ -86,11 +86,13 @@ function s() {
 
 # Add TODO count to git status
 git() {
-    if [[ $@ == "status" ]]; then
+    if [[ $@ == "status" ]] || [[ $@ == "s" ]]; then
         count_doto="`git grep TODO | wc -l | tr -d ' '`"
-        command git status
+        command git $@
         command echo "There are ${count_doto} TODOs"
     else
         command git "$@";
     fi;
 }
+
+alias rbdevelop="git checkout develop && git pull && git checkout - && git rebase develop"
