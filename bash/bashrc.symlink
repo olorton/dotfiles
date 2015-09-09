@@ -10,7 +10,7 @@ fi
 # Ensure user-installed binaries take precedence
 if [[ $platform == 'osx' ]]; then
     # TODO pick up the php version automatically
-	export PATH="$HOME/.dotfiles/bin:$(brew --prefix josegonzalez/php/php55)/bin:/usr/local/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
+	export PATH="$HOME/.dotfiles/bin:$(brew --prefix homebrew/php/php56)/bin:/usr/local/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
 fi
 
 # Load aliases

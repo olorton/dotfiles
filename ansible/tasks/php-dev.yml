@@ -38,21 +38,24 @@
   sudo_user: "{{ ansible_env.USER }}"
 
 
-### php55 ######################################################################
-- homebrew: name=php55 install_options="without-apache,with-fpm,with-mysql" state=present
-- homebrew: name=php55-xdebug state=present
+### php56 ######################################################################
+- homebrew: name=php56 install_options="without-apache,with-fpm,with-mysql" state=present
+- homebrew: name=php56-xdebug state=present
+- homebrew: name=php56-mcrypt state=present
+- homebrew: name=php56-opcache state=present
+- homebrew: name=php56-ssh2 state=present
 - lineinfile:
-    dest=/usr/local/etc/php/5.5/php.ini
+    dest=/usr/local/etc/php/5.6/php.ini
     line='date.timezone = "Europe/London"'
     insertafter="^;date.timezone"
 - lineinfile:
-    dest=/usr/local/etc/php/5.5/conf.d/ext-xdebug.ini
+    dest=/usr/local/etc/php/5.6/conf.d/ext-xdebug.ini
     line='xdebug.max_nesting_level=1000'
     insertafter="^zend_extension="
-- shell: ln -sfv /usr/local/opt/php55/homebrew.mxcl.php55.plist ~/Library/LaunchAgents
-- shell: launchctl unload -w {{ ansible_env.HOME }}/Library/LaunchAgents/homebrew.mxcl.php55.plist
+- shell: ln -sfv /usr/local/opt/php56/homebrew.mxcl.php56.plist ~/Library/LaunchAgents
+- shell: launchctl unload -w {{ ansible_env.HOME }}/Library/LaunchAgents/homebrew.mxcl.php56.plist
   ignore_errors: true
-- shell: launchctl load -w {{ ansible_env.HOME }}/Library/LaunchAgents/homebrew.mxcl.php55.plist
+- shell: launchctl load -w {{ ansible_env.HOME }}/Library/LaunchAgents/homebrew.mxcl.php56.plist
 
 
 ### mysql ######################################################################
