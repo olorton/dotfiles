@@ -2,6 +2,8 @@
 
 if [ "$#" -lt 1 ]; then
     echo "Missing arguments"
+    echo "Options:"
+    echo "    provision"
     exit 1
 fi
 
