@@ -10,7 +10,7 @@ if [[ `git branch --list develop` ]]; then
 fi
 
 BRANCHES_TO_PRUNE=`git checkout $SWITCH_BRANCH &> /dev/null && git fetch --prune &> /dev/null && git branch --merged | grep -E -v "^((\* )|\s*(develop|master)$)"`
-echo $BRANCHES_TO_PRUNE
+printf '%s\n' $BRANCHES_TO_PRUNE
 
 read -p "Are you sure that you want to delete these branches? " -n 1 -r
 echo "" # Echo line break after input question
