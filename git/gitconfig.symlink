@@ -7,6 +7,7 @@
 	excludesfile = ~/.dotfiles/git/gitignore_global
 [alias]
     s = status -s
+    d = diff
     c = commit
     p = push
     ls = log --pretty=format:"%C(yellow)%h\\ %ad%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --date=short
