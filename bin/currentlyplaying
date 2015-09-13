@@ -1,0 +1,42 @@
+#!/usr/bin/env bash
+
+while [[ $# > 1 ]]; do
+    key="$1"
+
+    case $key in
+        -t|--trim)
+        TRIM="$2"
+        shift
+        ;;
+    esac
+    shift
+done
+
+if [[ $(banshee --query-current-state | sed 's/^current-state:\s//g') == 'idle' ]]; then
+    exit 0
+fi
+
+STATUS="▶"
+if [[ $(banshee --query-current-state | sed 's/^current-state:\s//g') == 'paused' ]]; then
+    STATUS="▮▮"
+fi
+
+ARTIST=$(banshee --query-artist | sed 's/^artist:\s//g')
+TITLE=$(banshee --query-title | sed 's/^title:\s//g')
+SUMMARY="$(echo $TITLE | sed 's/\s$//g') - $(echo $ARTIST | sed 's/\s$//g')"
+MAXSUMMARYLEN=$(expr $TRIM - ${#STATUS} - 1)
+
+if [[ $TRIM > 0 ]]; then
+
+    while [[ ${#SUMMARY} -gt $MAXSUMMARYLEN ]]; do
+        if [[ ${#TITLE} -gt ${#ARTIST} ]]; then
+            TITLE=${TITLE:0:-1}
+        else
+            ARTIST=${ARTIST:0:-1}
+        fi
+            SUMMARY="$(echo $TITLE | sed 's/\s$//g') - $(echo $ARTIST | sed 's/\s$//g')"
+    done
+
+fi
+
+echo -e "$STATUS $SUMMARY"
