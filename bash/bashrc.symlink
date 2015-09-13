@@ -11,6 +11,9 @@ fi
 if [[ $platform == 'osx' ]]; then
     # TODO pick up the php version automatically
 	export PATH="$HOME/.dotfiles/bin:$(brew --prefix homebrew/php/php56)/bin:/usr/local/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
+else
+	# TODO add php to path
+	export PATH="$HOME/.dotfiles/bin:/usr/local/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
 fi
 
 # Load aliases
