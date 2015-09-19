@@ -1,7 +1,20 @@
 #!/bin/bash
 
+platform='unknown'
+unamestr=`uname`
+if [[ "$unamestr" == 'Linux' ]]; then
+   platform='linux'
+elif [[ "$unamestr" == 'Darwin' ]]; then
+   platform='osx'
+fi
+
 # ls
-alias ls="ls -AGFlhi --color=always"
+if [[ $platform == 'osx' ]]; then
+    alias ls="ls -AGFlhi"
+else
+    alias ls="ls -AGFlhi --color=always"
+fi
+
 
 # Easier navigation:
 cd() { builtin cd "$@"; ls; }
