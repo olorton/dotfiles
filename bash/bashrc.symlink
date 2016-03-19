@@ -10,7 +10,7 @@ fi
 # Ensure user-installed binaries take precedence
 if [[ $platform == 'osx' ]]; then
     # TODO pick up the php version automatically
-	export PATH="$HOME/.dotfiles/bin:$(brew --prefix homebrew/php/php56)/bin:/usr/local/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
+	export PATH="$HOME/.dotfiles/bin:$(brew --prefix homebrew/php/php56)/bin:/usr/local/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Applications/Sublime Text.app/Contents/SharedSupport/bin/"
 else
 	# TODO add php to path
 	export PATH="$HOME/.dotfiles/bin:/usr/local/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
@@ -72,64 +72,33 @@ complete -F _complete_hosts ssh
 complete -F _complete_hosts host
 
 
-# Color Constants
-RED="\[\033[0;31m\]"
-YELLOW="\[\033[0;33m\]"
-GREEN="\[\033[0;32m\]"
-BLUE="\[\033[0;34m\]"
-LIGHT_RED="\[\033[1;31m\]"
-LIGHT_GREEN="\[\033[1;32m\]"
-WHITE="\[\033[0;37m\]"
-LIGHT_GRAY="\[\033[0;37m\]"
-COLOR_NONE="\[\e[0m\]"
+# Color Consta?
 
-# Functions to build prompt with git branch info
-function parse_git_branch {
+# function prompt_func() {
+# 	previous_return_value=$?;
+# 	# prompt="${TITLEBAR}$BLUE[$RED\w$GREEN$(__git_ps1)$YELLOW$(git_dirty_flag)$BLUE]$COLOR_NONE "
+# 	prompt="${WHITE}\w${GREEN}$(parse_git_branch)${COLOR_NONE}"
 
-	git rev-parse --git-dir &> /dev/null
-	git_status="$(git status 2> /dev/null)"
-	branch_pattern="^#?\s?On branch ([^${IFS}]*)"
-	remote_pattern="#?\s?Your branch is (.*) of"
-	diverge_pattern="#?\s?Your branch and (.*) have diverged"
+# 	if [ "$SSH_CONNECTION" ]; then
+# 		if [ $(whoami) == "root" ]; then
+# 			PS1="${RED}\u@\h ${prompt} # "
+# 		else
+# 			PS1="${BLUE}\u@\h ${prompt} $ "
+# 		fi
+# 	else
+# 	    PS1="${prompt} $ "
+# 	fi
+# }
 
-	if [[ ! ${git_status} =~ "working directory clean" ]]; then
-		state="${RED}⚡"
-	fi
+# PROMPT_COMMAND=prompt_func
 
-	# add an else if or two here if you want to get more specific
-	if [[ ${git_status} =~ ${remote_pattern} ]]; then
-		if [[ ${BASH_REMATCH[1]} == "ahead" ]]; then
-			remote="${YELLOW}↑"
-		elif [[ ${BASH_REMATCH[1]} == "behind" ]]; then
-			remote="${YELLOW}↓"
-		fi
-	fi
-	if [[ ${git_status} =~ ${diverge_pattern} ]]; then
-		remote="${YELLOW}↕"
-	fi
-	if [[ ${git_status} =~ ${branch_pattern} ]]; then
-		branch=${BASH_REMATCH[1]}
-		echo " (${branch})${remote}${state}"
-	fi
+function _update_ps1() {
+    PS1="$(~/.dotfiles/powerline-shell.py $? 2> /dev/null)"
 }
 
-function prompt_func() {
-	previous_return_value=$?;
-	# prompt="${TITLEBAR}$BLUE[$RED\w$GREEN$(__git_ps1)$YELLOW$(git_dirty_flag)$BLUE]$COLOR_NONE "
-	prompt="${WHITE}\w${GREEN}$(parse_git_branch)${COLOR_NONE}"
-
-	if [ "$SSH_CONNECTION" ]; then
-		if [ $(whoami) == "root" ]; then
-			PS1="${RED}\u@\h ${prompt} # "
-		else
-			PS1="${BLUE}\u@\h ${prompt} $ "
-		fi
-	else
-	    PS1="${prompt} $ "
-	fi
-}
-
-PROMPT_COMMAND=prompt_func
+if [ "$TERM" != "linux" ]; then
+    PROMPT_COMMAND="_update_ps1; $PROMPT_COMMAND"
+fi
 
 export EDITOR=vim
 export XDEBUG_CONFIG="idekey=PHPSTORM"
