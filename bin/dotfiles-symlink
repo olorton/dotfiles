@@ -7,7 +7,7 @@
 # This script is written with the idea that it can be run repeatably to maintain
 # a consistent state. ie running the script again should not break anything
 
-DOTFILES_ROOT="${HOME}/.dotfiles"
+DOTFILES_ROOT="${HOME}/Code/dotfiles"
 
 # symlink files to the home directory
 for source in `find $DOTFILES_ROOT -maxdepth 2 -name \*.symlink`
