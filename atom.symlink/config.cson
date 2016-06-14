@@ -2,7 +2,7 @@
   core:
     themes: [
       "spacegray-eighties-ui"
-      "twilight-syntax-spacegray-eighties"
+      "base16-eighties-one-dark"
     ]
   editor: {}
   "exception-reporting":
