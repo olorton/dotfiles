@@ -106,3 +106,4 @@ export XDEBUG_CONFIG="idekey=PHPSTORM"
 # See: https://superuser.com/questions/830149/os-x-yosemite-too-many-files-open
 ulimit -n 65536
 ulimit -u 2048
+
