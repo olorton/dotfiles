@@ -87,3 +87,8 @@ alias atomsave-package-list="apm list --installed --bare > ~/Code/dotfiles/atom-
 alias atominstall-package-list="apm install --packages-file ~/Code/dotfiles/atom-package-list.txt"
 
 DEFAULT_USER=`whoami`
+
+# Git
+if [ -f ~/Code/dotfiles/git/gitignore_global ]; then
+	git config --global core.excludesfile ~/Code/dotfiles/git/gitignore_global
+fi
