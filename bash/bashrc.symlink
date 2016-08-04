@@ -11,15 +11,15 @@ fi
 # Ensure user-installed binaries take precedence
 if [[ $platform == 'osx' ]]; then
     # TODO pick up the php version automatically
-	export PATH="$HOME/.dotfiles/bin:$(brew --prefix homebrew/php/php70)/bin:/usr/local/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Applications/Sublime Text.app/Contents/SharedSupport/bin/"
+	export PATH="$HOME/Code/dotfiles/bin:$(brew --prefix homebrew/php/php70)/bin:/usr/local/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Applications/Sublime Text.app/Contents/SharedSupport/bin/"
 else
 	# TODO add php to path
-	export PATH="$HOME/.dotfiles/bin:/usr/local/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
+	export PATH="$HOME/Code/dotfiles/bin:/usr/local/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
 fi
 
 # Load aliases
-if [ -f ~/.dotfiles/bash/aliases ]; then
-    source ~/.dotfiles/bash/aliases
+if [ -f ~/Code/dotfiles/bash/aliases ]; then
+    source ~/Code/dotfiles/bash/aliases
 fi
 
 # Load git-completion
@@ -28,8 +28,8 @@ if [ -f ~/.dotfiles/git/git-completion.bash ]; then
 fi
 
 # Load global git ignore
-if [ -f ~/.dotfiles/git/gitignore_global ]; then
-	git config --global core.excludesfile ~/.dotfiles/git/gitignore_global
+if [ -f ~/Code/dotfiles/git/gitignore_global ]; then
+	git config --global core.excludesfile ~/Code/dotfiles/git/gitignore_global
 fi
 
 

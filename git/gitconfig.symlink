@@ -4,7 +4,7 @@
     email = oliverlorton@gmail.com
     name = Oliver Lorton
 [core]
-	excludesfile = ~/.dotfiles/git/gitignore_global
+	excludesfile = /Users/oliver/Code/dotfiles/git/gitignore_global
 [alias]
     s = status -s
     d = diff
