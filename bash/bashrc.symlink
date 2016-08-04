@@ -22,9 +22,9 @@ if [ -f ~/Code/dotfiles/bash/aliases ]; then
     source ~/Code/dotfiles/bash/aliases
 fi
 
-# Load git-completion
-if [ -f ~/.dotfiles/git/git-completion.bash ]; then
-    source ~/.dotfiles/git/git-completion.bash
+# Bash completion (install using `brew install bash-completion`)
+if [ -f $(brew --prefix)/etc/bash_completion ]; then
+. $(brew --prefix)/etc/bash_completion
 fi
 
 # Load global git ignore
