@@ -83,3 +83,38 @@ source $ZSH/oh-my-zsh.sh
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
+
+platform='unknown'
+unamestr=`uname`
+if [[ "$unamestr" == 'Linux' ]]; then
+   platform='linux'
+elif [[ "$unamestr" == 'Darwin' ]]; then
+   platform='osx'
+fi
+
+# Ensure user-installed binaries take precedence
+if [[ $platform == 'osx' ]]; then
+    # TODO pick up the php version automatically
+    export PATH="$HOME/Code/dotfiles/bin:$(brew --prefix homebrew/php/php70)/bin:/usr/local/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Applications/Sublime Text.app/Contents/SharedSupport/bin/"
+else
+    # TODO add php to path
+    export PATH="$HOME/Code/dotfiles/bin:/usr/local/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
+fi
+
+# Load aliases
+if [ -f ~/Code/dotfiles/bash/aliases ]; then
+    source ~/Code/dotfiles/bash/aliases
+fi
+
+export EDITOR=vim
+export XDEBUG_CONFIG="idekey=PHPSTORM"
+
+# See: https://superuser.com/questions/830149/os-x-yosemite-too-many-files-open
+ulimit -n 65536
+ulimit -u 2048
+
+# The next line updates PATH for the Google Cloud SDK.
+source '/Users/oliver/Downloads/google-cloud-sdk 2/path.bash.inc'
+
+# The next line enables shell command completion for gcloud.
+source '/Users/oliver/Downloads/google-cloud-sdk 2/completion.bash.inc'
