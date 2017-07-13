@@ -118,6 +118,9 @@ ulimit -u 2048
 source '/opt/homebrew-cask/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc'
 source '/opt/homebrew-cask/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc'
 
+# Unset shared zsh history
+unsetopt share_history
+
 # Add alt-left/alt-right to jump words
 bindkey -e
 bindkey '[C' forward-word
