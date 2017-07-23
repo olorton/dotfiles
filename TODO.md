@@ -1,27 +1,30 @@
-### Remaining tasks for 'new' dotfiles
+# Remaining tasks for dotfiles
 
-* Readme
-    * Enable filevault
-* Add keybase
-* Add subl settings
-* Automatically set up php dev env using nginx (scrit these instructions: docs/local-dev-setup.php)
-* Be able to quickly switch between php env
-* Add existing dotfiles to ansible
-    * Bash settings (review rc)
-    * Remove old homebrew
-    * OSX settings
-    * vim (also investigate .vimrc improvements)
-    * bin/ (also review these scripts)
-* Edit docs -- wtf does this mean?
-* Configure apps
-    * Alfred
-    * iTerm2
-    * LastFm
-    * Spotify
-    * Sourcetree
-    * Things
-* Disable DS_Store files - what was this program called?
-* Map Caps-Lock to Ctrl
-* Set Defaults
-    * Check with https://mths.be/osx
-    * Fix TODOs
+## Focus of this repo
+
+- These dotfiles should be agnistoc for now, then add Mac/Linux specific stuff in later.
+- Start with just the basics: zsh, vim, tmux.
+- Don't put dev setup stuff for services in here, e.g. nginx/php these should be in a different repo.
+
+## TODOs
+
+### Stage One
+
+- Create/Copy install script
+- Themes (Start with just one, any added must work in Zsh/Vim/Tmux)
+    - Monokai
+    - Solarized Dark
+    - [Gruvbox](https://github.com/morhetz/gruvbox)
+- Zsh
+- Tmux
+- Vim
+    - Package manger
+        - NerdTree
+        - Ctrl-p
+        - Ensure new line before EOF
+- Basic readme
+
+### Stage Two
+
+- Keybase?
+- Sublime Dotfiles?
