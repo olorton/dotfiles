@@ -1,8 +1,8 @@
 [push]
     default = current
 [user]
-    email = oliverlorton@gmail.com
-    name = Oliver Lorton
+	email = oliverlorton@gmail.com
+	name = Oliver Lorton
 [core]
 	excludesfile = /Users/oliver/Code/dotfiles/git/gitignore_global
 [alias]
