@@ -1,6 +1,6 @@
 # Bind escape to copy mode
-unbind [
-bind Escape copy-mode
+#unbind [
+#bind Escape copy-mode
 
 # p = paste
 unbind p
