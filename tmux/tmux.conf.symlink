@@ -83,7 +83,7 @@ set -g display-panes-time 1200
 set -g status-left-length 40
 
 # Simplify status bar display.
-set -g status-left '[#S]'
+set -g status-left '[#S]#{?pane_synchronized, #[bg=red]   !!!SYNC!!!   #[default],}'
 # set -g status-right "#(~/.dotfiles/bin/currentlyplaying)   %I:%M %p "
 # set -g status-right "#[fg=red][44%%]#[default]   -  %I:%M %p "
 set -g status-right "#{?pane_synchronized, #[bg=red]   !!!SYNC!!!   #[default],}#[fg=yellow]#(~/.dotfiles/bin/currentlyplaying --trim 30)#[default] %I:%M %p "
