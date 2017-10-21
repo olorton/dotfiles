@@ -19,6 +19,7 @@ Plugin 'VundleVim/Vundle.vim'
 
 Plugin 'kien/ctrlp.vim'
 Plugin 'tpope/vim-fugitive'
+Plugin 'airblade/vim-gitgutter'
 Bundle 'christoomey/vim-tmux-navigator'
 Plugin 'itchyny/lightline.vim'
 Plugin 'shinchu/lightline-gruvbox.vim'
@@ -37,7 +38,6 @@ syntax on
 
 " Enable file type detection and do language-dependent indenting.
 filetype plugin indent on
-
 
 set encoding=utf-8
 
