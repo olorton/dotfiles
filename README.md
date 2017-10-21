@@ -10,6 +10,14 @@ Make sure that you have the latest os updates before starting.
 - [Install homebrew](http://brew.sh). Follow the instructions to install XCode Command line tools, or just install XCode before hand. Make sure that you run `brew doctor` before you start, it should say `Your system is ready to brew.` if everything is ok.
 - Run: `~/.dotfiles/bin/dotfiles-symlink`
 
+### OSX defaults
+
+TODO - fix the damn `bin/set-osx-defaults` file.
+
+Currently using:
+
+    defaults write NSGlobalDomain KeyRepeat -int 1
+    defaults write NSGlobalDomain InitialKeyRepeat -int 25
 ## Configure Apps
 
 I'd like for all of this to be scripted. It's on my todo list. For now do the following:
