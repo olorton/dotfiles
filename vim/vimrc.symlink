@@ -48,4 +48,4 @@ set shiftwidth=4
 set expandtab
 
 set number                     " Show current line number
-set relativenumber             " Show relative line numbers
+"set relativenumber             " Show relative line numbers
