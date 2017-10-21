@@ -1,5 +1,0 @@
-base16-eighties-one-dark@0.2.2
-set-syntax@0.3.0
-spacegray-eighties-ui@1.2.0
-
-
