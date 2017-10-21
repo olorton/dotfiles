@@ -73,8 +73,8 @@ bind -n C-\ run "(tmux display-message -p '#{pane_current_command}' | grep -iq v
 # Secondary binding for C-l to retain redraw
 bind C-l send-keys 'C-l'
 
-# # Easy rotating of panes
-# bind C-k swap-pane -U
+# Easy rotating of panes
+bind C-k swap-pane -U
 
 # increase display time
 set -g display-panes-time 1200
