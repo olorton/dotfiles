@@ -23,3 +23,5 @@
 	trustExitCode = true
 [diff]
 	tool = vimdiff
+[tag]
+	sort = version:refname
