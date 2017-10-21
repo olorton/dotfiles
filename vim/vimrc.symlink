@@ -20,9 +20,14 @@ Plugin 'VundleVim/Vundle.vim'
 Plugin 'kien/ctrlp.vim'
 Plugin 'tpope/vim-fugitive'
 Bundle 'christoomey/vim-tmux-navigator'
+Plugin 'itchyny/lightline.vim'
+Plugin 'shinchu/lightline-gruvbox.vim'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
+
+" Lightline
+set laststatus=2
 
 " Make backspace behave in a sane manner.
 set backspace=indent,eol,start
