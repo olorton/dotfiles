@@ -5,6 +5,7 @@
 # force a reload of the config file
 unbind r
 bind r source-file ~/.tmux.conf
+
 # p = paste
 unbind p
 bind p paste-buffer
@@ -36,10 +37,10 @@ set -g status-fg '#aaaaaa'
 set -g history-limit 10000
 
 # mouse
-set -g mouse-resize-pane on
-set -g mouse-select-pane on
-set -g mouse-select-window on
-setw -g mode-mouse on
+#set -g mouse-resize-pane on
+#set -g mouse-select-pane on
+#set -g mouse-select-window on
+#setw -g mode-mouse on
 
 # bind m split-window -h 'reattach-to-user-namespace mutt'
 
