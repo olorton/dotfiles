@@ -1,5 +1,5 @@
 [push]
-    default = current
+	default = current
 [user]
 	email = oliverlorton@gmail.com
 	name = Oliver Lorton
@@ -25,3 +25,5 @@
 	tool = vimdiff
 [tag]
 	sort = version:refname
+[pull]
+	default = current
