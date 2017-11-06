@@ -5,7 +5,6 @@ brew "ack"
 brew "ansible"
 brew "bash"
 brew "bash-completion"
-brew "composer"
 brew "curl"
 brew "git"
 brew "git-flow"
@@ -30,6 +29,7 @@ brew "wget"
 brew "zsh"
 
 brew "mysql@5.6", restart_service: true, link: true, conflicts_with: ["mysql"]
+
 
 cask "firefox"
 cask "google-chrome"
