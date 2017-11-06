@@ -97,7 +97,7 @@ fi
 # Ensure user-installed binaries take precedence
 if [[ $platform == 'osx' ]]; then
     # TODO pick up the php version automatically
-    export PATH="$HOME/Code/dotfiles/bin:$(brew --prefix homebrew/php/php70)/bin:/usr/local/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Applications/Sublime Text.app/Contents/SharedSupport/bin/"
+    export PATH="$HOME/Code/dotfiles/bin:$(brew --prefix homebrew/php/php71)/bin:/usr/local/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Applications/Sublime Text.app/Contents/SharedSupport/bin/"
 else
     # TODO add php to path
     export PATH="$HOME/Code/dotfiles/bin:/usr/local/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
