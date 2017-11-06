@@ -1,10 +1,12 @@
 cask_args appdir: "/Applications"
 tap "caskroom/cask"
+tap "homebrew/homebrew-php"
 
 brew "ack"
 brew "ansible"
 brew "bash"
 brew "bash-completion"
+brew "composer"
 brew "curl"
 brew "git"
 brew "git-flow"
@@ -29,6 +31,12 @@ brew "wget"
 brew "zsh"
 
 brew "mysql@5.6", restart_service: true, link: true, conflicts_with: ["mysql"]
+brew "php71", restart_service: true
+brew "php71-intl"
+brew "php71-mcrypt"
+brew "php71-opcache"
+brew "php71-xdebug"
+brew "nginx", restart_service: true
 
 cask "firefox"
 cask "google-chrome"
