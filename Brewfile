@@ -31,12 +31,12 @@ brew "wget"
 brew "zsh"
 
 brew "mysql@5.6", restart_service: true, link: true, conflicts_with: ["mysql"]
+brew "nginx", restart_service: true
 brew "php71", restart_service: true
 brew "php71-intl"
 brew "php71-mcrypt"
 brew "php71-opcache"
 brew "php71-xdebug"
-brew "nginx", restart_service: true
 
 cask "firefox"
 cask "google-chrome"
