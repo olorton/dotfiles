@@ -8,10 +8,12 @@ brew "bash"
 brew "bash-completion"
 brew "composer"
 brew "curl"
+brew "docker"
 brew "git"
 brew "git-flow"
 brew "htop"
 brew "jq"
+brew "kubectl"
 brew "lynx"
 brew "mas"
 brew "mtr"
@@ -32,20 +34,24 @@ brew "wget"
 brew "youtube-dl"
 brew "zsh"
 
-brew "mysql@5.6", restart_service: true, link: true, conflicts_with: ["mysql"]
-brew "nginx", restart_service: true
-brew "php71", restart_service: true
+brew "mysql@5.6", restart_service: "changed", link: true, conflicts_with: ["mysql"]
+brew "nginx", restart_service: "changed"
+brew "php71", restart_service: "changed"
 brew "php71-intl"
 brew "php71-mcrypt"
 brew "php71-opcache"
 brew "php71-xdebug"
 
+cask "alfred2"
 cask "appcleaner"
 cask "bettertouchtool"
+cask "cheatsheet"
 cask "firefox"
 cask "google-chrome"
-cask "java" unless system "/usr/libexec/java_home --failfast"
+cask "java8" unless system "/usr/libexec/java_home --failfast"
+cask "libreoffice"
 cask "phpstorm"
+cask "pycharm"
 cask "sequel-pro"
 cask "skype"
 cask "slack"
@@ -53,6 +59,15 @@ cask "spotify"
 cask "sublime-text"
 cask "the-unarchiver"
 cask "transmission"
+cask "transmit4"
+cask "vagrant"
+cask "virtualbox"
 cask "vlc"
+cask "whatsapp"
 
+mas "Gestimer", id: 990588172
+mas "Markoff", id: 1084713122
 mas "iA Writer", id: 775737590
+mas "TweetBot", id: 557168941
+mas "Telephone", id: 406825478
+
