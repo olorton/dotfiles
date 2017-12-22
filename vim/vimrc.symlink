@@ -33,6 +33,7 @@ map <C-n> :NERDTreeToggle<CR>
 
 " Lightline
 set laststatus=2
+set noshowmode
 
 " Make backspace behave in a sane manner.
 set backspace=indent,eol,start
