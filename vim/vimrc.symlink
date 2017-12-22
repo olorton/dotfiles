@@ -23,9 +23,13 @@ Plugin 'airblade/vim-gitgutter'
 Bundle 'christoomey/vim-tmux-navigator'
 Plugin 'itchyny/lightline.vim'
 Plugin 'shinchu/lightline-gruvbox.vim'
+Plugin 'scrooloose/nerdtree'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
+
+" Nerdtree
+map <C-n> :NERDTreeToggle<CR>
 
 " Lightline
 set laststatus=2
