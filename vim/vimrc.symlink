@@ -64,3 +64,9 @@ set backup
 set backupdir=/tmp
 " tell vim where to put swap files
 set dir=/tmp
+
+" Break the habit, you stupid boy!
+noremap <Up> <Nop>
+noremap <Down> <Nop>
+noremap <Left> <Nop>
+noremap <Right> <Nop>
