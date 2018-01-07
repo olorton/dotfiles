@@ -54,3 +54,7 @@ set expandtab
 
 set number                     " Show current line number
 "set relativenumber             " Show relative line numbers
+
+" Fix timeout issues (https://www.johnhawthorn.com/2012/09/vi-escape-delays/)
+set timeoutlen=1000 ttimeoutlen=0
+
