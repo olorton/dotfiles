@@ -1,6 +1,7 @@
 cask_args appdir: "/Applications"
 tap "caskroom/cask"
 tap "homebrew/homebrew-php"
+tap "thefox/brewery"
 
 brew "ack"
 brew "ansible"
@@ -9,6 +10,8 @@ brew "bash-completion"
 brew "composer"
 brew "curl"
 brew "docker"
+brew "ffmpeg"
+brew "cmus", args: ['with-ffmpeg', 'HEAD']
 brew "git"
 brew "git-flow"
 brew "heroku"
@@ -35,6 +38,7 @@ brew "wget"
 brew "youtube-dl"
 brew "zsh"
 
+brew "cmus-control", restart_service: "changed"
 brew "mysql@5.6", restart_service: "changed", link: true, conflicts_with: ["mysql"]
 brew "nginx", restart_service: "changed"
 brew "php71", restart_service: "changed"
