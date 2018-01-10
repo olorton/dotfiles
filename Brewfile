@@ -47,7 +47,7 @@ brew "php71-mcrypt"
 brew "php71-opcache"
 brew "php71-xdebug"
 
-cask "alfred2"
+cask "alfred"
 cask "appcleaner"
 cask "bettertouchtool"
 cask "cheatsheet"
