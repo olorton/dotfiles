@@ -37,7 +37,6 @@ brew "watch"
 brew "wget"
 brew "youtube-dl"
 brew "zsh"
-brew "zsh-autosuggestions"
 
 brew "cmus-control", restart_service: "changed"
 brew "mysql@5.6", restart_service: "changed", link: true, conflicts_with: ["mysql"]

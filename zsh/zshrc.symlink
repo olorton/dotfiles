@@ -131,4 +131,3 @@ bindkey -e
 bindkey '[C' forward-word
 bindkey '[D' backward-word
 
-source /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh
