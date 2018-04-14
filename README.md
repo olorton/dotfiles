@@ -1,8 +1,6 @@
 # Dotfiles Readme
 
-This is my dotfiles setup. There are many like it, but this one is mine. Do fork it and make it your own, but you want to make sure that you *do* read the source to ensure that my settings do not screw up your system. This is intended to be run on a fresh installation of Mac OSX Yosemite, it will probably not work on upgraded systems from Mavericks.
-
-Make sure that you have the latest os updates before starting.
+My dotfiles: Don't fork these directly, create your own, but steal shamelessly.
 
 ## Setup
 
@@ -18,20 +16,7 @@ Currently using:
 
     defaults write NSGlobalDomain KeyRepeat -int 1
     defaults write NSGlobalDomain InitialKeyRepeat -int 25
-## Configure Apps
 
-I'd like for all of this to be scripted. It's on my todo list. For now do the following:
-
-### Sublime text
-
-Install [Package Control](https://packagecontrol.io/installation). Then install the following packages:
-
-- GitGutter
-- ApacheConf
-- Behat
-- INI
-- PHP-Twig
-- SideBarEnhancements
-- Theme Spacegray
-
-You'll also want the [M+1m console font](http://sourceforge.jp/projects/mplus-fonts/downloads/62344/mplus-TESTFLIGHT-059.tar.xz/)
+Terminal typefaces I've used:
+- Current: [DOSEGA](https://sourceforge.net/projects/dosega/)
+- [M+1m console font](http://sourceforge.jp/projects/mplus-fonts/downloads/62344/mplus-TESTFLIGHT-059.tar.xz/)
