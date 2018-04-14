@@ -22,7 +22,7 @@ Plugin 'tpope/vim-fugitive'
 Plugin 'airblade/vim-gitgutter'
 Bundle 'christoomey/vim-tmux-navigator'
 Plugin 'itchyny/lightline.vim'
-Plugin 'shinchu/lightline-gruvbox.vim'
+Plugin 'morhetz/gruvbox'
 Plugin 'scrooloose/nerdtree'
 
 " All of your Plugins must be added before the following line
@@ -30,6 +30,9 @@ call vundle#end()            " required
 
 " Nerdtree
 map <C-n> :NERDTreeToggle<CR>
+
+colorscheme gruvbox
+set bg=dark    " Setting dark mode
 
 " Lightline
 set laststatus=2
