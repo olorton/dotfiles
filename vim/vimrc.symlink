@@ -93,3 +93,7 @@ inoremap <right> <nop>
 
 " Paste shit
 set pastetoggle=<F2>
+
+" Cycle through buffers
+:nnoremap <Tab> :bnext<CR>
+:nnoremap <S-Tab> :bprevious<CR>
