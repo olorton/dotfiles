@@ -37,6 +37,19 @@ set bg=dark    " Setting dark mode
 " Lightline
 set laststatus=2
 set noshowmode
+let g:lightline = {
+      \ 'colorscheme': 'gruvbox',
+      \ 'active': {
+      \   'left': [ [ 'mode', 'paste' ],
+      \             [ 'gitbranch', 'readonly', 'filename', 'modified', 'helloworld' ] ]
+      \ },
+      \ 'component': {
+      \   'helloworld': 'Hello, world!',
+      \ },
+      \ 'component_function': {
+      \   'gitbranch': 'fugitive#head',
+      \ },
+  \ }
 
 " Make backspace behave in a sane manner.
 set backspace=indent,eol,start
