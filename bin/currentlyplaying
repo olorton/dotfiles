@@ -1,42 +1,33 @@
 #!/usr/bin/env bash
-
-while [[ $# > 1 ]]; do
-    key="$1"
-
-    case $key in
-        -t|--trim)
-        TRIM="$2"
-        shift
-        ;;
-    esac
-    shift
-done
-
-if [[ $(banshee --query-current-state | sed 's/^current-state:\s//g') == 'idle' ]]; then
-    exit 0
+if [[ $1 =~ ^[[:digit:]]+$ ]]; then
+  MAX_TITLE_WIDTH=$1
+else
+  MAX_TITLE_WIDTH=$(($(tmux display -p '#{window_width}' 2> /dev/null || echo 120) - 80))
 fi
 
-STATUS="▶"
-if [[ $(banshee --query-current-state | sed 's/^current-state:\s//g') == 'paused' ]]; then
-    STATUS="▮▮"
+if cmus-remote -Q > /dev/null 2> /dev/null; then
+  CMUS_STATUS=$(cmus-remote -Q)
+  STATUS=$(echo "$CMUS_STATUS" | grep status | head -n 1 | cut -d' ' -f2-)
+  ARTIST=$(echo "$CMUS_STATUS" | grep 'tag artist' | head -n 1 | cut -d' ' -f3-)
+  TRACK_NUMBER=$(echo "$CMUS_STATUS" | grep 'tag tracknumber' | head -n 1 | cut -d' ' -f3-)
+  if [ -n "$TRACK_NUMBER" ]; then
+      TRACK_NUMBER="${TRACK_NUMBER}."
+  fi
+  TITLE=$(echo "$CMUS_STATUS" | grep 'tag title' | cut -d' ' -f3-)
+  if [ -n "$TITLE" ]; then
+    if [ "$STATUS" = "playing" ]; then
+      PLAY_STATE=">"
+    else
+      PLAY_STATE="||"
+    fi
+    OUTPUT="$PLAY_STATE $ARTIST $TRACK_NUMBER $TITLE"
+
+    # Only show the song title if we are over $MAX_TITLE_WIDTH characters
+    if [ "${#OUTPUT}" -ge $MAX_TITLE_WIDTH ]; then
+      OUTPUT="${TITLE:0:$MAX_TITLE_WIDTH-1}… $PLAY_STATE"
+    fi
+  else
+    OUTPUT=''
+  fi
 fi
-
-ARTIST=$(banshee --query-artist | sed 's/^artist:\s//g')
-TITLE=$(banshee --query-title | sed 's/^title:\s//g')
-SUMMARY="$(echo $TITLE | sed 's/\s$//g') - $(echo $ARTIST | sed 's/\s$//g')"
-MAXSUMMARYLEN=$(expr $TRIM - ${#STATUS} - 1)
-
-if [[ $TRIM > 0 ]]; then
-
-    while [[ ${#SUMMARY} -gt $MAXSUMMARYLEN ]]; do
-        if [[ ${#TITLE} -gt ${#ARTIST} ]]; then
-            TITLE=${TITLE:0:-1}
-        else
-            ARTIST=${ARTIST:0:-1}
-        fi
-            SUMMARY="$(echo $TITLE | sed 's/\s$//g') - $(echo $ARTIST | sed 's/\s$//g')"
-    done
-
-fi
-
-echo -e "$STATUS $SUMMARY"
+echo $OUTPUT
