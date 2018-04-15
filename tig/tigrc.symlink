@@ -1,0 +1,5 @@
+# Manual http://jonas.nitro.dk/tig/tigrc.5.html
+
+set mouse = false
+set refresh-mode = periodic
+set refresh-interval = 1

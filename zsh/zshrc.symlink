@@ -1,3 +1,4 @@
+# Path to dotfiles source directory
 export DOTFILES=$(builtin cd $(dirname "$(readlink ~/.zshrc)") && git rev-parse --show-toplevel)
 
 
