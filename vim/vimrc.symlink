@@ -71,6 +71,10 @@ set expandtab
 set number                     " Show current line number
 "set relativenumber             " Show relative line numbers
 
+" Set the number of lines to keep viewable on the screen. Default = 0;
+" Centered cursor = 999
+:set scrolloff=20
+
 " Fix timeout issues (https://www.johnhawthorn.com/2012/09/vi-escape-delays/)
 set timeoutlen=1000 ttimeoutlen=0
 
