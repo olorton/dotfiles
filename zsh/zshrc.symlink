@@ -1,3 +1,6 @@
+export DOTFILES=$(builtin cd $(dirname "$(readlink ~/.zshrc)") && git rev-parse --show-toplevel)
+
+
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
@@ -47,7 +50,7 @@ DISABLE_AUTO_TITLE="true"
 # HIST_STAMPS="mm/dd/yyyy"
 
 # Would you like to use another custom folder than $ZSH/custom?
-ZSH_CUSTOM=~/Code/dotfiles/zsh-custom
+ZSH_CUSTOM=$DOTFILES/zsh-custom
 
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
@@ -107,8 +110,8 @@ else
 fi
 
 # Load aliases
-if [ -f ~/Code/dotfiles/bash/aliases ]; then
-    source ~/Code/dotfiles/bash/aliases
+if [ -f $DOTFILES/bash/aliases ]; then
+    source $DOTFILES/bash/aliases
 fi
 
 export EDITOR=vim
