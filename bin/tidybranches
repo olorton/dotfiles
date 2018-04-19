@@ -1,0 +1,40 @@
+#!/bin/bash
+
+# Source: https://gist.github.com/Drarok/8602419
+
+# PR been merged on github?  This will checkout $1 || develop, git pull, and then delete the branch you were on.
+
+# Thanks http://stackoverflow.com/a/1593487/328817
+branch_name="$(git symbolic-ref HEAD 2>/dev/null)" || branch_name="(unnamed branch)"; # detached HEAD
+branch_name=${branch_name##refs/heads/};
+
+if [ "$branch_name" = "develop" ] || [ "$branch_name" = "master" ]
+then
+    echo "Only for feature branches!";
+    exit 1;
+fi
+
+target_branch="$1"
+if [ -z "$target_branch" ]
+then
+    target_branch="develop";
+fi
+
+git checkout $target_branch
+if [ "$?" != "0" ]
+then
+    exit 1;
+fi
+
+git pull
+git branch -d $branch_name
+if [ "$?" != "0" ]
+then
+    exit 1;
+fi
+
+git remote prune origin
+
+echo
+echo 'Remaining branches:'
+git branch
