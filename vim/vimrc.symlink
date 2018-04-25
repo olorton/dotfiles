@@ -24,6 +24,7 @@ Bundle 'christoomey/vim-tmux-navigator'
 Plugin 'itchyny/lightline.vim'
 Plugin 'morhetz/gruvbox'
 Plugin 'scrooloose/nerdtree'
+Plugin 'bling/vim-bufferline'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
