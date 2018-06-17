@@ -4,9 +4,15 @@ My dotfiles: Don't fork these directly, create your own, but steal shamelessly.
 
 ## Setup
 
-- Open the terminal and clone the dotfiles repo `git clone https://github.com:olorton/dotfiles.git ~/.dotfiles` then switch to that directory `cd ~`
-- [Install homebrew](http://brew.sh). Follow the instructions to install XCode Command line tools, or just install XCode before hand. Make sure that you run `brew doctor` before you start, it should say `Your system is ready to brew.` if everything is ok.
-- Run: `~/.dotfiles/bin/dotfiles-symlink`
+[Install homebrew](http://brew.sh). Follow the instructions to install XCode Command line tools, or just install XCode before hand. 
+
+```bash
+git clone git@github.com:olorton/dotfiles.git ~/Code/dotfiles
+~/Code/dotfiles/bin/dotfiles-symlink
+git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+```
+
+When running Vim for the first time, also run `:PluginInstall`.
 
 ### OSX defaults
 
