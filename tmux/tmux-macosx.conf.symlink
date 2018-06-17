@@ -1,0 +1,6 @@
+# Copy/paste (https://blog.carbonfive.com/2017/08/17/copying-and-pasting-with-tmux-2-4/)
+
+set-option -g default-command "reattach-to-user-namespace -l $SHELL"
+bind-key -T copy-mode-vi 'v' send -X begin-selection
+bind-key -T copy-mode-vi 'y' send -X copy-pipe-and-cancel "reattach-to-user-namespace pbcopy"
+
