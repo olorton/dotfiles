@@ -1,7 +1,6 @@
 # Path to dotfiles source directory
 export DOTFILES=$(builtin cd $(dirname "$(readlink ~/.zshrc)") && git rev-parse --show-toplevel)
 
-
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
@@ -108,6 +107,10 @@ if [[ "$unamestr" == 'Linux' ]]; then
    platform='linux'
 elif [[ "$unamestr" == 'Darwin' ]]; then
    platform='osx'
+fi
+
+if [[ "$platform" == 'linux' ]]; then
+    export TERMINAL=/usr/local/bin/alacritty
 fi
 
 # Ensure user-installed binaries take precedence
