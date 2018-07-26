@@ -60,9 +60,9 @@ ZSH_TMUX_AUTOSTART_ONCE="true"
 # When running tmux automatically connect to the currently running tmux session if it exits, otherwise start a new session. Set to true by default.
 ZSH_TMUX_AUTOCONNECT="true"
 # Close the terminal session when tmux exits. Set to the value of ZSH_TMUX_AUTOSTART by default.
-ZSH_TMUX_AUTOQUIT="true" 
+ZSH_TMUX_AUTOQUIT="true"
 # When running tmux, the variable $TERM is supposed to be set to screen or one of its derivatives. This option will set the default-terminal option of tmux to screen-256color if 256 color terminal support is detected, and screen otherwise. The term values it uses can be overridden by changing the ZSH_TMUX_FIXTERM_WITH_256COLOR and ZSH_TMUX_FIXTERM_WITHOUT_256COLOR variables respectively. Set to true by default.
-ZSH_TMUX_FIXTERM="true" 
+ZSH_TMUX_FIXTERM="true"
 
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
@@ -118,7 +118,7 @@ if [[ $platform == 'osx' ]]; then
     export PATH="/usr/local/sbin:$PATH"                 # Homebrew stuff
     export PATH="$(brew --prefix php@7.1)/bin:$PATH"    # PHP path - TODO pick this up automatically
     export PATH="$(pyenv root)/shims:$PATH"             # pyenv stuff
-    export PATH="$HOME/.local/bin:$PATH"                # pipsi stuff   
+    export PATH="$HOME/.local/bin:$PATH"                # pipsi stuff
     export PATH="$HOME/Code/dotfiles/bin:$PATH"         # dotfiles scripts
 else
     # TODO add php to path
@@ -152,4 +152,3 @@ unsetopt share_history
 bindkey -e
 bindkey '[C' forward-word
 bindkey '[D' backward-word
-
