@@ -125,6 +125,10 @@ else
     export PATH="$HOME/Code/dotfiles/bin:/usr/local/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
 fi
 
+if command -v pyenv 1>/dev/null 2>&1; then
+    eval "$(pyenv init -)"
+fi
+
 # Load aliases
 if [ -f $DOTFILES/bash/aliases ]; then
     source $DOTFILES/bash/aliases
