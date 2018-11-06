@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+rm -rf ~/.config/cmus/cache
+rm -rf ~.cmus/cache
+cmus
