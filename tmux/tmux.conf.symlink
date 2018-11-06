@@ -57,6 +57,9 @@ bind C-l send-keys 'C-l'
 # Easy rotating of panes
 bind C-k swap-pane -U
 
+# Swap the current window with the first
+bind C-w swap-window -t 1
+
 # increase display time
 set -g display-panes-time 1200
 
