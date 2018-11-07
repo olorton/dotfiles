@@ -48,7 +48,6 @@ cask "spotify"
 cask "sublime-text"
 cask "the-unarchiver"
 cask "transmission"
-cask "transmit"
 cask "vagrant"
 # cask "virtualbox" // Doesn't currently work, retry later
 cask "vlc"
