@@ -56,4 +56,3 @@ cask "whatsapp"
 mas "Gestimer", id: 990588172
 mas "iA Writer", id: 775737590
 mas "Telephone", id: 406825478
-
