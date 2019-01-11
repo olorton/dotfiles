@@ -1,28 +1,30 @@
 #!/usr/bin/env bash
-#
-# bootstrap installs the following:
-#  - symlinks files to the home directory
-#  - runs individual install.sh scripts
-#
-# This script is written with the idea that it can be run repeatably to maintain
-# a consistent state. ie running the script again should not break anything
 
-DOTFILES_ROOT="${HOME}/Code/dotfiles"
+DOTFILES_ROOT="${HOME}/Code/dotfiles/"
 
-# symlink files to the home directory
-for source in `find $DOTFILES_ROOT -maxdepth 2 -name \*.symlink`
-do
-  dest="$HOME/.`basename \"${source%.*}\"`"
+symlink_dotfile () {
+    SOURCE="${1}"
+    TARGET="${2}"
 
-  rm -rf $dest
-  ln -s $source $dest
-  printf "symlinked $source to $dest\n"
-done
+    if [ ! -L ${TARGET} ] && [ -f ${TARGET} ]; then
+        echo "Backing up file ${TARGET} to ${TARGET}.backup before creating symlink"
+        mv ${TARGET} ${TARGET}.backup
+    elif [ -L ${TARGET} ] && [ -f ${TARGET} ]; then
+        echo "Target link already exists, replacing linked file: ${DOTFILES_ROOT}${SOURCE} -> ${TARGET}"
+        rm -f ${TARGET}
+    elif [ -e ${TARGET} ]; then
+        echo "Cannot overwrite because the destination exists, and is not a file or a link: ${TARGET}"
+        exit 1
+    else
+        echo "Target link does not exist, linking file from dotfiles to: ${TARGET}"
+    fi
 
-# run individual install scripts for each folder
-for script in `find $DOTFILES_ROOT -maxdepth 2 -name install.sh`
-do
-  printf "running script $script \n"
-done
+    ln -s ${DOTFILES_ROOT}${SOURCE} ${TARGET}
+}
 
-printf '\n'
+symlink_dotfile bash/bashrc.symlink ~/.bashrc
+symlink_dotfile git/gitconfig.symlink ~/.gitconfig
+symlink_dotfile tig/tigrc.symlink ~/.tigrc
+symlink_dotfile tmux/tmux.conf.symlink ~/.tmux.conf
+symlink_dotfile vim/vimrc.symlink ~/.vimrc
+symlink_dotfile zsh/zshrc.symlink ~/.zshrc
