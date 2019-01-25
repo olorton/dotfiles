@@ -3,3 +3,6 @@
 set mouse = false
 set refresh-mode = periodic
 set refresh-interval = 1
+
+bind status a !?git commit --amend
+
