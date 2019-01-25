@@ -121,6 +121,7 @@ if [[ $platform == 'osx' ]]; then
     export PATH="$(pyenv root)/shims:$PATH"             # pyenv stuff
     export PATH="$HOME/.local/bin:$PATH"                # pipsi stuff
     export PATH="$HOME/Code/dotfiles/bin:$PATH"         # dotfiles scripts
+    export PATH="/usr/local/opt/mysql@5.7/bin:$PATH"
 else
     # TODO add php to path
     export PATH="$HOME/Code/dotfiles/bin:/usr/local/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
@@ -157,6 +158,7 @@ unsetopt share_history
 bindkey -e
 bindkey '[C' forward-word
 bindkey '[D' backward-word
+
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
