@@ -1,20 +1,5 @@
-#!/bin/bash
-
-platform='unknown'
-unamestr=`uname`
-if [[ "$unamestr" == 'Linux' ]]; then
-   platform='linux'
-elif [[ "$unamestr" == 'Darwin' ]]; then
-   platform='osx'
-fi
-
-# ls
-if [[ $platform == 'osx' ]]; then
-    alias ls="ls -AGFlhi"
-else
-    alias ls="ls -AGFlhi --color=always"
-fi
-
+[ "$IS_OSX" = true ] && alias ls="ls -AGFlhi"
+[ "$IS_LINUX" = true ] && alias ls="ls -AGFlhi --color=always"
 
 # Easier navigation:
 cd() { builtin cd "$@"; ls; }
@@ -37,21 +22,22 @@ alias mv='mv -iv'
 
 # IP addresses
 alias ip="dig +short myip.opendns.com @resolver1.opendns.com"
-alias localip="ipconfig getifaddr en1"
+# TODO fix localip alias
+#alias localip="ipconfig getifaddr en1"
 
 # Copy my public key to the pasteboard
-alias pubkey="more ~/.ssh/id_rsa.pub | pbcopy | printf '=> Public key copied to pasteboard.\n'"
+[ "$IS_OSX" = true ] && alias pubkey="more ${SSH_KEY_PATH}.pub | pbcopy | printf '=> Public key copied to pasteboard.\n'"
 
 # Flush DNS cache
-alias flushdns="dscacheutil -flushcache"
+[ "$IS_OSX" = true ] && alias flushdns="dscacheutil -flushcache"
 
 # Show/hide hidden files in Finder
-alias showdotfiles="defaults write com.apple.finder AppleShowAllFiles -bool true && killall Finder"
-alias hidedotfiles="defaults write com.apple.finder AppleShowAllFiles -bool false && killall Finder"
+[ "$IS_OSX" = true ] && alias showdotfiles="defaults write com.apple.finder AppleShowAllFiles -bool true && killall Finder"
+[ "$IS_OSX" = true ] && alias hidedotfiles="defaults write com.apple.finder AppleShowAllFiles -bool false && killall Finder"
 
 # Hide/show all desktop icons (useful when presenting)
-alias showdeskicons="defaults write com.apple.finder CreateDesktop -bool true && killall Finder"
-alias hidedeskicons="defaults write com.apple.finder CreateDesktop -bool false && killall Finder"
+[ "$IS_OSX" = true ] && alias showdeskicons="defaults write com.apple.finder CreateDesktop -bool true && killall Finder"
+[ "$IS_OSX" = true ] && alias hidedeskicons="defaults write com.apple.finder CreateDesktop -bool false && killall Finder"
 
 # extract most know archives with one command
 extract () {
@@ -89,20 +75,14 @@ ii() {
 }
 
 # fucking .DS_Store files
-alias fuckingdsfiles="find . -type f -name '*.DS_Store' -ls -delete"
-
-# Ssh with bash profile
-function s() {
-    scp ~/.bashrc $1:/tmp/.bashrc_temp
-    ssh -t $1 "bash --rcfile /tmp/.bashrc_temp ; rm /tmp/.bashrc_temp"
-}
+[ "$IS_OSX" = true ] && alias fuckingdsfiles="find . -type f -name '*.DS_Store' -ls -delete"
 
 # Add TODO count to git status
 git() {
     if [[ $@ == "status" ]] || [[ $@ == "s" ]]; then
         count_doto="`git grep TODO | wc -l | tr -d ' '`"
         command git $@
-        command echo "There are ${count_doto} TODOs"
+        command echo "There are ${count_doto} TODOs in the codebase"
     else
         command git "$@";
     fi;
