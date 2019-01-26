@@ -11,9 +11,6 @@ else
     echo "~~~~ ~~~~ ~~~~ Error, could not detect OS type ~~~~ ~~~~ ~~~~"
 fi
 
-if [[ "$platform" == 'linux' ]]; then
-    export TERMINAL=/usr/local/bin/alacritty
-fi
-
 export EDITOR=vim
+export TERMINAL=/usr/local/bin/alacritty
 export XDEBUG_CONFIG="idekey=PHPSTORM"
