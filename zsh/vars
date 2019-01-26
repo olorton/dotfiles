@@ -13,6 +13,8 @@ fi
 
 export EDITOR=vim
 export XDEBUG_CONFIG="idekey=PHPSTORM"
+export LANG=en_GB.UTF-8
+export SSH_KEY_PATH="~/.ssh/id_rsa"
 
 # Figure out why I added this in the first place!
 # [ "$IS_OSX" = true ] && export TERMINAL=/Applications/Alacritty.app/Contents/MacOS/alacritty
