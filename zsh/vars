@@ -1,9 +1,14 @@
-platform='unknown'
 unamestr=`uname`
 if [[ "$unamestr" == 'Linux' ]]; then
-   platform='linux'
+    export IS_LINUX=true
+    export IS_OSX=false
 elif [[ "$unamestr" == 'Darwin' ]]; then
-   platform='osx'
+    export IS_LINUX=false
+    export IS_OSX=true
+else
+    export IS_LINUX=false
+    export IS_OSX=false
+    echo "~~~~ ~~~~ ~~~~ Error, could not detect OS type ~~~~ ~~~~ ~~~~"
 fi
 
 if [[ "$platform" == 'linux' ]]; then
