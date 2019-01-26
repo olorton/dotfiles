@@ -1,4 +1,5 @@
 # Add alt-left/alt-right to jump words
-bindkey -e
-bindkey '[C' forward-word
-bindkey '[D' backward-word
+# TODO this isn't needed on alacritty/OSX, needs checking on linux before removing
+# bindkey -e
+# bindkey '[C' forward-word
+# bindkey '[D' backward-word
