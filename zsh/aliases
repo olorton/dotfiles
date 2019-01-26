@@ -95,6 +95,7 @@ git() {
 alias rbdevelop="git checkout develop && git pull && git checkout - && git rebase develop"
 
 alias dotedit="vim -c 'set autochdir' $DOTFILES/README.md"
+alias dedit="dotedit"
 
 shhh() {
     if [[ -s $DOTFILES/short-help/$@ ]]; then
