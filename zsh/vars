@@ -1,0 +1,14 @@
+platform='unknown'
+unamestr=`uname`
+if [[ "$unamestr" == 'Linux' ]]; then
+   platform='linux'
+elif [[ "$unamestr" == 'Darwin' ]]; then
+   platform='osx'
+fi
+
+if [[ "$platform" == 'linux' ]]; then
+    export TERMINAL=/usr/local/bin/alacritty
+fi
+
+export EDITOR=vim
+export XDEBUG_CONFIG="idekey=PHPSTORM"

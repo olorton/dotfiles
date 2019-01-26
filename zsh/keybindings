@@ -1,0 +1,4 @@
+# Add alt-left/alt-right to jump words
+bindkey -e
+bindkey '[C' forward-word
+bindkey '[D' backward-word
