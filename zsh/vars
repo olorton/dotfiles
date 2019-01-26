@@ -12,5 +12,8 @@ else
 fi
 
 export EDITOR=vim
-export TERMINAL=/usr/local/bin/alacritty
 export XDEBUG_CONFIG="idekey=PHPSTORM"
+
+# Figure out why I added this in the first place!
+# [ "$IS_OSX" = true ] && export TERMINAL=/Applications/Alacritty.app/Contents/MacOS/alacritty
+# [ "$IS_LINUX" = true ] && export TERMINAL=/usr/local/bin/alacritty
