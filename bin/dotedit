@@ -1,2 +1,0 @@
-#!/usr/bin/env bash
-vim -c 'set autochdir' $DOTFILES/README.md
