@@ -1,6 +1,0 @@
-/atom.symlink/*
-!/atom.symlink/config.cson
-!/atom.symlink/keymap.cson
-!/atom.symlink/packages.cson
-!/atom.symlink/snippets.cson
-!/atom.symlink/styles.less
