@@ -83,6 +83,10 @@ git() {
         count_doto="`git grep TODO | wc -l | tr -d ' '`"
         command git $@
         command echo "There are ${count_doto} TODOs in the codebase"
+        if [[ -f "$(git rev-parse --show-toplevel)/TODO.md" ]]; then
+            echo "Also found a TODO.md file"
+            cat $(git rev-parse --show-toplevel)/TODO.md | grep -v -e '^$' | grep -v -e '^#' | head
+        fi
     else
         command git "$@";
     fi;
