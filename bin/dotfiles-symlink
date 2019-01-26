@@ -22,7 +22,6 @@ symlink_dotfile () {
     ln -s ${DOTFILES_ROOT}${SOURCE} ${TARGET}
 }
 
-symlink_dotfile bash/bashrc.symlink ~/.bashrc
 symlink_dotfile git/gitconfig.symlink ~/.gitconfig
 symlink_dotfile tig/tigrc.symlink ~/.tigrc
 symlink_dotfile tmux/tmux.conf.symlink ~/.tmux.conf

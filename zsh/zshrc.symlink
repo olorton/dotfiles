@@ -7,5 +7,5 @@ source ${DOTFILES}/zsh/tmux
 source ${DOTFILES}/zsh/path
 source ${DOTFILES}/zsh/python
 source ${DOTFILES}/zsh/javascript
-source ${DOTFILES}/bash/aliases
+source ${DOTFILES}/zsh/aliases
 source ${DOTFILES}/zsh/keybindings
