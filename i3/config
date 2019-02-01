@@ -168,3 +168,6 @@ bindsym $mod+r mode "resize"
 bar {
         status_command i3status
 }
+
+# Load custom keyboard mappings
+exec --no-startup-id xmodmap ~/.Xmodmap
