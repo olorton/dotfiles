@@ -29,4 +29,5 @@ symlink_dotfile tmux/tmux.conf.symlink ~/.tmux.conf
 symlink_dotfile vim/vimrc.symlink ~/.vimrc
 symlink_dotfile zsh/zshrc.symlink ~/.zshrc
 [ "$IS_LINUX" = true ] && symlink_dotfile alacritty/alacritty.yml ~/.config/alacritty/alacritty.yml
+[ "$IS_LINUX" = true ] && symlink_dotfile i3/config ~/.config/i3/config
 
