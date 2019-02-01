@@ -1,5 +1,57 @@
 From: https://github.com/robbyrussell/oh-my-zsh/wiki/Plugin:git
 
+Common aliases
+==============
+
+Alias			Command
+ga			git add
+gaa			git add --all
+gc			git commit -v
+gc!			git commit -v --amend
+gca			git commit -v -a
+gca!			git commit -v -a --amend
+gcb			git checkout -b
+gcm			git checkout master
+gcd			git checkout develop
+gco			git checkout
+gd			git diff
+gdw			git diff --word-diff
+gf			git fetch
+ggl			git pull origin $(current_branch)
+ggp			git push origin $(current_branch)
+ggsup			git branch --set-upstream-to = origin/$(current_branch)
+gpsup			git push --set-upstream origin $(current_branch)
+gl			git pull
+glg			git log --stat --color
+glgg			git log --graph --color
+glo			git log --oneline --decorate --color
+glog			git log --oneline --decorate --color --graph
+glol			git log --graph --pretty = format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+gp			git push
+gpv			git push -v
+grb			git rebase
+grbi			git rebase -i
+grh			git reset HEAD
+grhh			git reset HEAD --hard
+gsb			git status -sb
+gsps			git show --pretty = short --show-signature
+gss			git status -s
+gst			git status
+gsta			git stash save
+gstd			git stash drop
+gstl			git stash list
+gstp			git stash pop
+gstc			git stash clear
+gsts			git stash show --text
+gup			git pull --rebase
+gupv			git pull --rebase -v
+gupa			git pull --rebase --autostash
+gupav			git pull --rebase --autostash -v
+gwch			git whatchanged -p --abbrev-commit --pretty = medium
+
+All aliases
+===========
+
 Alias			Command
 g			git
 ga			git add
