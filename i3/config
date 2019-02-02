@@ -188,3 +188,4 @@ bindsym XF86AudioPrev exec cmus-remote --prev    #playerctl previous
 # Start apps
 exec --no-startup-id synology-drive
 exec --no-startup-id nm-applet
+exec_always feh --bg-fill ~/pictures/wallpaper/Morning\ Sunlight\ Buttermere-lowres.jpg
