@@ -33,7 +33,7 @@ floating_modifier $mod
 bindsym $mod+Return exec i3-sensible-terminal
 
 # lock i3
-bindsym $mod+shift+x exec i3lock
+bindsym $mod+shift+x exec i3lock -ei ~/pictures/wallpaper/current.png
 
 # kill focused window
 bindsym $mod+Shift+q kill
@@ -216,5 +216,5 @@ bindsym XF86AudioPrev exec cmus-remote --prev    #playerctl previous
 # Start apps
 exec --no-startup-id synology-drive
 exec --no-startup-id nm-applet
-exec_always feh --bg-fill ~/pictures/wallpaper/Morning\ Sunlight\ Buttermere-lowres.jpg
+exec_always feh --bg-fill ~/pictures/wallpaper/current.png
 exec compton -f
