@@ -30,5 +30,6 @@ symlink_dotfile vim/vimrc.symlink ~/.vimrc
 symlink_dotfile zsh/zshrc.symlink ~/.zshrc
 [ "$IS_LINUX" = true ] && symlink_dotfile alacritty/alacritty.yml ~/.config/alacritty/alacritty.yml
 [ "$IS_LINUX" = true ] && symlink_dotfile i3/config ~/.config/i3/config
+[ "$IS_LINUX" = true ] && symlink_dotfile i3/i3blocks.conf ~/.config/i3/i3blocks.conf
 [ "$IS_LINUX" = true ] && symlink_dotfile x/Xmodmap ~/.Xmodmap
 [ "$IS_LINUX" = true ] && symlink_dotfile x/xsessionrc ~/.xsessionrc

@@ -190,7 +190,7 @@ hide_edge_borders both
 # finds out, if available)
 bar {
     position top
-    status_command i3status
+    status_command i3blocks -c ~/.config/i3/i3blocks.conf
     colors {
         background  $bg-colour
         separator   $gray-dark-colour
