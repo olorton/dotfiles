@@ -59,6 +59,9 @@ set backspace=indent,eol,start
 " Switch syntax highlighting on
 syntax on
 
+" Show one long line of text rather than wrapping lines
+set nowrap
+
 " Enable file type detection and do language-dependent indenting.
 filetype plugin indent on
 
