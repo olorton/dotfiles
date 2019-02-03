@@ -38,8 +38,18 @@ bindsym $mod+shift+x exec i3lock
 # kill focused window
 bindsym $mod+Shift+q kill
 
+# colours  -- TODO add all colours from here to make it easy to switch things around: https://github.com/morhetz/gruvbox
+set $bg-colour          #282828
+set $fg-colour          #ebdbb2
+set $gray-dark-colour   #928374
+set $bright-red         #fb4934
+set $bright-green       #b8bb26
+set $purple-dark-colour #b16286
+
+# start rofi
+bindsym $mod+d exec rofi -show run -lines 8 -eh 2 -width 100 -padding 800 -opacity "85" -bw 0 -bc "$bg-colour" -bg "$bg-colour" -fg "$fg-colour" -hlbg "$bg-colour" -hlfg "$purple-dark-colour" -font "SF-Pro-Display 18"
 # start dmenu (a program launcher)
-bindsym $mod+d exec dmenu_run
+#bindsym $mod+d exec dmenu_run
 # There also is the (new) i3-dmenu-desktop which only displays applications
 # shipping a .desktop file. It is a wrapper around dmenu, so you need that
 # installed.
@@ -166,12 +176,6 @@ mode "resize" {
 
 bindsym $mod+r mode "resize"
 
-# colours  -- TODO add all colours from here to make it easy to switch things around: https://github.com/morhetz/gruvbox
-set $bg-colour          #282828
-set $fg-colour          #ebdbb2
-set $gray-dark-colour   #928374
-set $bright-red         #fb4934
-set $bright-green       #b8bb26
 
 # window colours
 #                       border      background  text                indicator
