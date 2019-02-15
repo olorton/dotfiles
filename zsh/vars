@@ -16,6 +16,8 @@ export XDEBUG_CONFIG="idekey=PHPSTORM"
 export LANG=en_GB.UTF-8
 export SSH_KEY_PATH="~/.ssh/id_rsa"
 
+export PYTHON_CONFIGURE_OPTS="--enable-shared"  # Required for YouCompleteMe/Vim
+
 # Figure out why I added this in the first place!
 # [ "$IS_OSX" = true ] && export TERMINAL=/Applications/Alacritty.app/Contents/MacOS/alacritty
 # [ "$IS_LINUX" = true ] && export TERMINAL=/usr/local/bin/alacritty
