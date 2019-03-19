@@ -24,6 +24,7 @@ symlink_dotfile () {
 }
 
 symlink_dotfile git/gitconfig.symlink ~/.gitconfig
+symlink_dotfile git/gitignore_global ~/.gitignore_global
 symlink_dotfile tig/tigrc.symlink ~/.tigrc
 symlink_dotfile tmux/tmux.conf.symlink ~/.tmux.conf
 symlink_dotfile vim/vimrc.symlink ~/.vimrc
