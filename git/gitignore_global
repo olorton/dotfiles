@@ -39,7 +39,6 @@ Thumbs.db
 
 # IDEs              #
 #####################
-# PHPStorm
 .idea
 *.sublime-project
 *.sublime-workspace
