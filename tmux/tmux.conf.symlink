@@ -116,15 +116,12 @@ bind -r L resize-pane -R 5
 set -g status-right-length 150
 
 set-window-option -g status-left " #S "
-set-window-option -g status-left-fg black
-set-window-option -g status-left-bg white
+set-window-option -g status-left-style fg=black,bg=white
 
 set-window-option -g status-right " #($DOTFILES/bin/currentlyplaying --trim 30) %H:%M %d-%b-%y "
-set-window-option -g status-right-fg black
-set-window-option -g status-right-bg white
+set-window-option -g status-right-style fg=black,bg=white
 
 set-window-option -g window-status-format " #I: #W "
 
 set-window-option -g window-status-current-format " #I: #W "
-set-window-option -g window-status-current-fg green
-set-window-option -g window-status-current-bg black
+set-window-option -g window-status-current-style fg=green,bg=black
