@@ -4,26 +4,23 @@ My dotfiles: Don't fork these directly, create your own, but steal shamelessly.
 
 ## Setup
 
-[Install homebrew](http://brew.sh). Follow the instructions to install XCode Command line tools, or just install XCode before hand. 
-
-```bash
-sudo brew install zsh git
-```
-
-or on Debian:
-
-```bash
-sudo apt install zsh git
-```
+* [Install homebrew](http://brew.sh)
+* [Install oh-my-zsh](https://github.com/robbyrussell/oh-my-zsh) (zsh comes with macOS Catalina)
 
 Then:
 
 ```bash
-sh -c "$(wget https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O -)"
 git clone git@github.com:olorton/dotfiles.git ~/Code/dotfiles
-~/Code/dotfiles/bin/dotfiles-symlink
+cd ~/Code/dotfiles
+brew bundle
+cat ~/.python-version | pyenv install -
 git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+bin/dotfiles-symlink
 ```
+
+TODO:
+* pyenv file
+* pipsi
 
 When running Vim for the first time, also run `:PluginInstall` and restart vim.
 
