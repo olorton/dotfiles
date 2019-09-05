@@ -25,7 +25,6 @@ Plugin 'itchyny/lightline.vim'
 Plugin 'morhetz/gruvbox'
 Plugin 'scrooloose/nerdtree'
 Plugin 'bling/vim-bufferline'
-Bundle 'Valloric/YouCompleteMe'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -53,10 +52,6 @@ let g:lightline = {
       \   'gitbranch': 'fugitive#head',
       \ },
   \ }
-
-" YouCompleteMe
-let g:ycm_autoclose_preview_window_after_completion=1
-map <leader>g  :rightbelow vertical YcmCompleter GoToDefinitionElseDeclaration<CR>
 
 " Make backspace behave in a sane manner.
 set backspace=indent,eol,start
