@@ -18,6 +18,7 @@ symlink_dotfile () {
         exit 1
     else
         echo "Target link does not exist, linking file from dotfiles to: ${TARGET}"
+        mkdir -p "$(dirname "${TARGET}")"
     fi
 
     ln -s ${DOTFILES_ROOT}${SOURCE} ${TARGET}
