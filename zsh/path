@@ -2,12 +2,8 @@
 if [[ $IS_OSX == true ]]; then
     export PATH="/usr/local/bin:$PATH"                  # Homebrew stuff
     export PATH="/usr/local/sbin:$PATH"                 # Homebrew stuff
-    export PATH="$(brew --prefix php@7.2)/bin:$PATH"    # PHP path - TODO pick this up automatically
-    export PATH="$(brew --prefix php@7.2)/sbin:$PATH"   # PHP path - TODO pick this up automatically
     export PATH="$(pyenv root)/shims:$PATH"             # pyenv stuff
-    export PATH="$HOME/.local/bin:$PATH"                # pipsi stuff
     export PATH="$HOME/Code/dotfiles/bin:$PATH"         # dotfiles scripts
-    export PATH="/usr/local/opt/mysql@5.7/bin:$PATH"    # MySQL homebrew bins
 else
     export PATH="/usr/local/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
     export PATH="/home/oliver/.pyenv/bin:$PATH"         # pyenv
