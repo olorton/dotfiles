@@ -38,3 +38,8 @@ symlink_dotfile pyenv/python-version ~/.python-version
 [ "$IS_LINUX" = true ] && symlink_dotfile x/xsessionrc ~/.xsessionrc
 [ "$IS_LINUX" = true ] && symlink_dotfile tmux/tmux-linux.conf.symlink ~/.tmux.os.conf
 [ "$IS_OSX" = true ] && symlink_dotfile tmux/tmux-macosx.conf.symlink ~/.tmux.os.conf
+
+
+# Create folders for vim
+mkdir -p ~/.vim/tmp/backup
+mkdir -p ~/.vim/tmp/undo
