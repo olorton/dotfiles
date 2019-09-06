@@ -57,6 +57,11 @@ set backupdir=~/.vim/tmp/backup//
 
 
 " Leader ---------------------------------------------------------------------
+
+" TODO Change default?
+
+
+
 " Colour scheme --------------------------------------------------------------
 
 colorscheme gruvbox
@@ -85,8 +90,12 @@ let g:lightline = {
 
 
 
-" Buffer/Window width --------------------------------------------------------
 " Trailing whitespace --------------------------------------------------------
+
+" TODO Auto-trim trailing whitespace
+
+
+
 " Highlight cursor -----------------------------------------------------------
 
 augroup CursorLine
@@ -125,6 +134,11 @@ set scrolloff=20
 
 
 " Search ---------------------------------------------------------------------
+
+" TODO Add project search
+
+
+
 " TODO (possibly remove) -----------------------------------------------------
 
 " Nerdtree
