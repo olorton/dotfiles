@@ -129,12 +129,12 @@ map <C-n> :NERDTreeToggle<CR>
 let NERDTreeQuitOnOpen=1  " Close nerdtree after a file is opened
 
 " Enable file type detection and do language-dependent indenting.
-filetype plugin indent on
+"filetype plugin indent on
 
-set encoding=utf-8
+"set encoding=utf-8
 
 " Better indenting
-set smartindent
+"set smartindent
 
 " Fix timeout issues (https://www.johnhawthorn.com/2012/09/vi-escape-delays/)
-set timeoutlen=1000 ttimeoutlen=0
+"set timeoutlen=1000 ttimeoutlen=0
