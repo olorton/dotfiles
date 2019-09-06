@@ -30,10 +30,8 @@ call vundle#end()            " required
 
 " Basics ---------------------------------------------------------------------
 
-" Make backspace behave in a sane manner.
 set backspace=indent,eol,start
-
-set number                     " Show current line number
+set number
 
 
 
@@ -63,8 +61,7 @@ set dir=/tmp
 " Colour scheme --------------------------------------------------------------
 
 colorscheme gruvbox
-set bg=dark    " Setting dark mode
-" Switch syntax highlighting on
+set bg=dark
 syntax on
 
 
@@ -94,7 +91,6 @@ let g:lightline = {
 " Highlight cursor -----------------------------------------------------------
 " Keybindings ----------------------------------------------------------------
 
-" Paste shit
 set pastetoggle=<F2>
 
 
@@ -116,7 +112,6 @@ inoremap <right> <nop>
 :nnoremap <S-Tab> :bprevious<CR>
 
 " Set the number of lines to keep viewable on the screen. Default = 0;
-" Centered cursor = 999
 :set scrolloff=20
 
 
