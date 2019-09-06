@@ -1,5 +1,4 @@
-
-" ---------- Vundle setup ----------------------------------------------------
+" Plugin manager -------------------------------------------------------------
 
 " set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim
@@ -27,14 +26,51 @@ Plugin 'djoshea/vim-autoread'
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 
-" Nerdtree
-map <C-n> :NERDTreeToggle<CR>
-let NERDTreeQuitOnOpen=1  " Close nerdtree after a file is opened
+
+
+" Basics ---------------------------------------------------------------------
+
+" Make backspace behave in a sane manner.
+set backspace=indent,eol,start
+
+set number                     " Show current line number
+
+
+
+" Spacing --------------------------------------------------------------------
+
+set nowrap
+set tabstop=4
+set shiftwidth=4
+set softtabstop=4
+set expandtab
+set textwidth=0
+
+
+
+" Backups --------------------------------------------------------------------
+
+" tell vim to keep a backup file
+set backup
+" tell vim where to put its backup files
+set backupdir=/tmp
+" tell vim where to put swap files
+set dir=/tmp
+
+
+
+" Leader ---------------------------------------------------------------------
+" Colour scheme --------------------------------------------------------------
 
 colorscheme gruvbox
 set bg=dark    " Setting dark mode
+" Switch syntax highlighting on
+syntax on
 
-" Lightline
+
+
+" Lightline ------------------------------------------------------------------
+
 set laststatus=2
 set noshowmode
 let g:lightline = {
@@ -51,42 +87,19 @@ let g:lightline = {
       \ },
   \ }
 
-" Make backspace behave in a sane manner.
-set backspace=indent,eol,start
 
-" Switch syntax highlighting on
-syntax on
 
-" Show one long line of text rather than wrapping lines
-set nowrap
+" Buffer/Window width --------------------------------------------------------
+" Trailing whitespace --------------------------------------------------------
+" Highlight cursor -----------------------------------------------------------
+" Keybindings ----------------------------------------------------------------
 
-" Enable file type detection and do language-dependent indenting.
-filetype plugin indent on
+" Paste shit
+set pastetoggle=<F2>
 
-set encoding=utf-8
 
-" Better indenting
-set smartindent
-set tabstop=4
-set shiftwidth=4
-set expandtab
 
-set number                     " Show current line number
-"set relativenumber             " Show relative line numbers
-
-" Set the number of lines to keep viewable on the screen. Default = 0;
-" Centered cursor = 999
-:set scrolloff=20
-
-" Fix timeout issues (https://www.johnhawthorn.com/2012/09/vi-escape-delays/)
-set timeoutlen=1000 ttimeoutlen=0
-
-" tell vim to keep a backup file
-set backup
-" tell vim where to put its backup files
-set backupdir=/tmp
-" tell vim where to put swap files
-set dir=/tmp
+" Movement -------------------------------------------------------------------
 
 " Break the habit, you stupid boy!
 noremap <Up> <Nop>
@@ -98,9 +111,30 @@ inoremap <down> <nop>
 inoremap <left> <nop>
 inoremap <right> <nop>
 
-" Paste shit
-set pastetoggle=<F2>
-
 " Cycle through buffers
 :nnoremap <Tab> :bnext<CR>
 :nnoremap <S-Tab> :bprevious<CR>
+
+" Set the number of lines to keep viewable on the screen. Default = 0;
+" Centered cursor = 999
+:set scrolloff=20
+
+
+
+" Search ---------------------------------------------------------------------
+" TODO (possibly remove) -----------------------------------------------------
+
+" Nerdtree
+map <C-n> :NERDTreeToggle<CR>
+let NERDTreeQuitOnOpen=1  " Close nerdtree after a file is opened
+
+" Enable file type detection and do language-dependent indenting.
+filetype plugin indent on
+
+set encoding=utf-8
+
+" Better indenting
+set smartindent
+
+" Fix timeout issues (https://www.johnhawthorn.com/2012/09/vi-escape-delays/)
+set timeoutlen=1000 ttimeoutlen=0
