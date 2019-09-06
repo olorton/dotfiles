@@ -49,12 +49,10 @@ set textwidth=0
 
 " Backups --------------------------------------------------------------------
 
-" tell vim to keep a backup file
 set backup
-" tell vim where to put its backup files
-set backupdir=/tmp
-" tell vim where to put swap files
-set dir=/tmp
+set noswapfile
+set undodir=~/.vim/tmp/undo//
+set backupdir=~/.vim/tmp/backup//
 
 
 
