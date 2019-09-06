@@ -88,6 +88,15 @@ let g:lightline = {
 " Buffer/Window width --------------------------------------------------------
 " Trailing whitespace --------------------------------------------------------
 " Highlight cursor -----------------------------------------------------------
+
+augroup CursorLine
+  au!
+  au VimEnter,WinEnter,BufWinEnter * setlocal cursorline
+  au WinLeave * setlocal nocursorline
+augroup END
+
+
+
 " Keybindings ----------------------------------------------------------------
 
 set pastetoggle=<F2>
