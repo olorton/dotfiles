@@ -108,11 +108,11 @@ inoremap <left> <nop>
 inoremap <right> <nop>
 
 " Cycle through buffers
-:nnoremap <Tab> :bnext<CR>
-:nnoremap <S-Tab> :bprevious<CR>
+nnoremap <Tab> :bnext<CR>
+nnoremap <S-Tab> :bprevious<CR>
 
 " Set the number of lines to keep viewable on the screen. Default = 0;
-:set scrolloff=20
+set scrolloff=20
 
 
 
