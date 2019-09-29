@@ -55,6 +55,7 @@ cask "virtualbox"
 cask "vagrant"
 cask "vlc"
 cask "whatsapp"
+cask "xld"
 
 mas "Gestimer", id: 990588172
 mas "iA Writer", id: 775737590
