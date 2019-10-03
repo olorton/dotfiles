@@ -7,6 +7,7 @@ brew "composer"
 brew "curl"
 brew "direnv"
 brew "ffmpeg"
+brew "fzf"
 brew "cmus", args: ['with-ffmpeg', 'HEAD']
 brew "git"
 brew "git-flow"

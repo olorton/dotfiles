@@ -2,7 +2,6 @@
 
 call plug#begin('~/.vim/plugged')
 
-Plug 'kien/ctrlp.vim'
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
 Plug 'christoomey/vim-tmux-navigator'
@@ -11,6 +10,8 @@ Plug 'morhetz/gruvbox'
 Plug 'scrooloose/nerdtree'
 Plug 'bling/vim-bufferline'
 Plug 'djoshea/vim-autoread'
+Plug '/usr/local/opt/fzf'
+Plug 'junegunn/fzf.vim'
 
 call plug#end()
 
@@ -97,6 +98,9 @@ augroup END
 " Keybindings ----------------------------------------------------------------
 
 set pastetoggle=<F2>
+nnoremap <C-p> :Files<Cr>
+nmap ; :Buffers<CR>
+nmap <Leader>t :Tags<CR>
 
 
 
