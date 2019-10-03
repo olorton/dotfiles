@@ -1,30 +1,18 @@
 " Plugin manager -------------------------------------------------------------
 
-" set the runtime path to include Vundle and initialize
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
+call plug#begin('~/.vim/plugged')
 
-" let Vundle manage Vundle, required
-Plugin 'VundleVim/Vundle.vim'
+Plug 'kien/ctrlp.vim'
+Plug 'tpope/vim-fugitive'
+Plug 'airblade/vim-gitgutter'
+Plug 'christoomey/vim-tmux-navigator'
+Plug 'itchyny/lightline.vim'
+Plug 'morhetz/gruvbox'
+Plug 'scrooloose/nerdtree'
+Plug 'bling/vim-bufferline'
+Plug 'djoshea/vim-autoread'
 
-" Brief help
-" :PluginList       - lists configured plugins
-" :PluginInstall    - installs plugins; append `!` to update or just :PluginUpdate
-" :PluginSearch foo - searches for foo; append `!` to refresh local cache
-" :PluginClean      - confirms removal of unused plugins; append `!` to auto-approve removal
-
-Plugin 'kien/ctrlp.vim'
-Plugin 'tpope/vim-fugitive'
-Plugin 'airblade/vim-gitgutter'
-Bundle 'christoomey/vim-tmux-navigator'
-Plugin 'itchyny/lightline.vim'
-Plugin 'morhetz/gruvbox'
-Plugin 'scrooloose/nerdtree'
-Plugin 'bling/vim-bufferline'
-Plugin 'djoshea/vim-autoread'
-
-" All of your Plugins must be added before the following line
-call vundle#end()            " required
+call plug#end()
 
 
 
