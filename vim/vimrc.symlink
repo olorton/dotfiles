@@ -98,6 +98,7 @@ augroup END
 " Keybindings ----------------------------------------------------------------
 
 set pastetoggle=<F2>
+nnoremap <C-g> :Rg<Cr>
 nnoremap <C-p> :Files<Cr>
 nmap ; :Buffers<CR>
 nmap <Leader>t :Tags<CR>
@@ -122,12 +123,6 @@ nnoremap <S-Tab> :bprevious<CR>
 
 " Set the number of lines to keep viewable on the screen. Default = 0;
 set scrolloff=20
-
-
-
-" Search ---------------------------------------------------------------------
-
-" TODO Add project search
 
 
 
