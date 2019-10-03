@@ -4,12 +4,13 @@ if [[ $IS_OSX == true ]]; then
     export PATH="/usr/local/sbin:$PATH"                 # Homebrew stuff
     export PATH="/usr/local/opt/ruby/bin:$PATH"         # Ruby
     export PATH="$(pyenv root)/shims:$PATH"             # pyenv stuff
+    export PATH="$HOME/.local/bin:$PATH"                # pipx stuff
     export PATH="$HOME/Code/dotfiles/bin:$PATH"         # dotfiles scripts
 else
     export PATH="/usr/local/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
     export PATH="/home/oliver/.pyenv/bin:$PATH"         # pyenv
     export PATH="$(pyenv root)/shims:$PATH"             # pyenv stuff
-    export PATH="$HOME/.local/bin:$PATH"                # pipsi stuff
+    export PATH="$HOME/.local/bin:$PATH"                # pipx stuff
     export PATH="$HOME/Code/dotfiles/bin:$PATH"         # dotfiles scripts
 fi
 
