@@ -13,6 +13,7 @@ Plug 'djoshea/vim-autoread'
 Plug '/usr/local/opt/fzf'
 Plug 'junegunn/fzf.vim'
 Plug 'psf/black'
+Plug 'tpope/vim-commentary'
 
 call plug#end()
 
