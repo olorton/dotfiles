@@ -25,6 +25,11 @@ set autoindent
 set backspace=indent,eol,start
 set number
 
+" Time out on key codes but not mappings.
+set notimeout
+set ttimeout
+set ttimeoutlen=10
+
 
 
 " Spacing --------------------------------------------------------------------
@@ -158,6 +163,3 @@ let NERDTreeQuitOnOpen=1  " Close nerdtree after a file is opened
 
 " Better indenting
 "set smartindent
-
-" Fix timeout issues (https://www.johnhawthorn.com/2012/09/vi-escape-delays/)
-"set timeoutlen=1000 ttimeoutlen=0
