@@ -9,3 +9,9 @@ source ${DOTFILES}/zsh/python
 source ${DOTFILES}/zsh/javascript
 source ${DOTFILES}/zsh/aliases
 source ${DOTFILES}/zsh/keybindings
+
+function precmd() {
+     if [[ "$(pwd | awk -F/ '{print $(NF-1)}')" == "Code" ]]; then
+         tmux rename-window -t${TMUX_PANE} "$(pwd | awk -F/ '{print $NF}')"
+     fi
+}
