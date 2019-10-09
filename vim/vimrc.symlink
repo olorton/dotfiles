@@ -122,6 +122,12 @@ augroup END
 
 
 
+" Commands -------------------------------------------------------------------
+
+command! MakeTags ! /usr/local/bin/ctags -R --exclude=.git --exclude=node_modules .
+
+
+
 " Keybindings ----------------------------------------------------------------
 
 set pastetoggle=<F2>
