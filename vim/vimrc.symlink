@@ -34,6 +34,11 @@ set notimeout
 set ttimeout
 set ttimeoutlen=10
 
+" Show a visual representation of tabs
+set list
+set listchars=tab:>-
+" use :retab to replace these
+
 
 
 " Spacing --------------------------------------------------------------------
