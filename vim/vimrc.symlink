@@ -189,6 +189,7 @@ inoremap <tab> <c-r>=InsertTabWrapper()<cr>
 " Nerdtree
 map <C-n> :NERDTreeToggle<CR>
 let NERDTreeQuitOnOpen=1  " Close nerdtree after a file is opened
+let NERDTreeIgnore = ['\.pyc$', '__pycache__']
 
 " Enable file type detection and do language-dependent indenting.
 "filetype plugin indent on
