@@ -1,5 +1,5 @@
 cask_args appdir: "/Applications"
-tap "caskroom/cask"
+tap "homebrew/cask"
 tap "thefox/brewery"
 
 brew "ansible"
