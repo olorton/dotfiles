@@ -54,9 +54,6 @@ bind -n C-\ run "(tmux display-message -p '#{pane_current_command}' | grep -iq v
 # Secondary binding for C-l to retain redraw
 bind C-l send-keys 'C-l'
 
-# Easy rotating of panes
-bind C-k swap-pane -U
-
 # Move the current window tab
 bind -n S-Left swap-window -t -1
 bind -n S-Right swap-window -t +1
