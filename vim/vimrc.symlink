@@ -40,6 +40,10 @@ set listchars=tab:>-
 " use :retab to replace these
 
 
+" Only do case-sensitive search when caps in search string
+set ignorecase
+set smartcase
+
 
 " Spacing --------------------------------------------------------------------
 
