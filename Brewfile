@@ -66,3 +66,4 @@ cask "xld"
 mas "Gestimer", id: 990588172
 mas "iA Writer", id: 775737590
 mas "Logic Pro X", id: 634148309
+mas "Things 3", id: 904280696
