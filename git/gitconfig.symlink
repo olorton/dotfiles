@@ -1,10 +1,10 @@
 [push]
-	default = current
+    default = current
 [user]
-	email = oliverlorton@gmail.com
-	name = Oliver Lorton
+    email = oliverlorton@gmail.com
+    name = Oliver Lorton
 [core]
-	excludesfile = ~/.gitignore_global
+    excludesfile = ~/.gitignore_global
 [alias]
     s = status -s
     d = diff
@@ -16,8 +16,8 @@
     b = "!git for-each-ref --sort='-authordate' --format='%(authordate)%09%(objectname:short)%09%(refname)' refs/heads | sed -e 's-refs/heads/--'"
     tl = for-each-ref --sort='*authordate' --format='%(taggerdate:short) | %(taggername) | %(tag) | %(contents:subject)' refs/tags
 [diff]
-	tool = vimdiff
+    tool = vimdiff
 [tag]
-	sort = version:refname
+    sort = version:refname
 [pull]
-	default = current
+    default = current
