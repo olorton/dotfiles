@@ -21,3 +21,4 @@
     sort = version:refname
 [pull]
     default = current
+    ff = only
