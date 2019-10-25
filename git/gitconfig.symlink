@@ -17,6 +17,7 @@
     b = "!git for-each-ref --sort='-authordate' --format='%(authordate)%09%(objectname:short)%09%(refname)' refs/heads | sed -e 's-refs/heads/--'"
     tl = for-each-ref --sort='*authordate' --format='%(taggerdate:short) | %(taggername) | %(tag) | %(contents:subject)' refs/tags
     who = shortlog --numbered --summary --email --no-merges
+    nuke = !sh -c 'git branch -D $1 && git push origin :$1' -
 [diff]
     tool = vimdiff
 [tag]
