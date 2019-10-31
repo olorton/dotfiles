@@ -10,6 +10,10 @@ source ${DOTFILES}/zsh/javascript
 source ${DOTFILES}/zsh/aliases
 source ${DOTFILES}/zsh/keybindings
 
+if ! { [ -n "$TMUX" ]; } then
+  	cd ~/Code
+fi
+
 function precmd() {
      if [[ "$(pwd | awk -F/ '{print $(NF-1)}')" == "Code" ]]; then
          tmux rename-window -t${TMUX_PANE} "$(pwd | awk -F/ '{print $NF}')"
