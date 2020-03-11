@@ -129,6 +129,14 @@ prompt_git() {
   fi
 }
 
+rprompt_git() {
+  c=$(git rev-list --walk-reflogs --count refs/stash 2> /dev/null)
+  [[ -n "$c" ]] && (
+    prompt_segment yellow black
+    echo "$c stash "
+  )
+}
+
 prompt_bzr() {
     (( $+commands[bzr] )) || return
     if (bzr status >/dev/null 2>&1); then
@@ -227,4 +235,10 @@ build_prompt() {
   prompt_end
 }
 
+## Right prompt
+build_rprompt() {
+  rprompt_git
+}
+
 PROMPT='%{%f%b%k%}$(build_prompt) '
+RPROMPT='$(build_rprompt)'
