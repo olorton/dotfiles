@@ -13,8 +13,8 @@ Then:
 git clone git@github.com:olorton/dotfiles.git ~/Code/dotfiles
 cd ~/Code/dotfiles
 brew bundle
-cat ~/.python-version | pyenv install -
 bin/dotfiles-symlink
+cat ~/.python-version | pyenv install -
 ```
 
 TODO:
