@@ -152,7 +152,7 @@ nnoremap <C-g> :Rg<Cr>
 nnoremap <C-p> :Files<Cr>
 nmap ; :Buffers<CR>
 nmap <Leader>t :Tags<CR>
-map <leader>w :w\|bd<cr>
+map <leader>w :up\|bd<cr>
 
 
 
