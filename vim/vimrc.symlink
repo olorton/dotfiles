@@ -190,6 +190,13 @@ inoremap <tab> <c-r>=InsertTabWrapper()<cr>
 
 
 
+" Commentary -----------------------------------------------------------------
+
+nmap <leader>c gcc
+xmap <leader>c gc
+
+
+
 " TODO (possibly remove) -----------------------------------------------------
 
 " Nerdtree
