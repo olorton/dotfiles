@@ -69,7 +69,7 @@ set backupdir=~/.vim/tmp/backup//
 
 " Leader ---------------------------------------------------------------------
 
-" TODO Change default?
+let mapleader = ","
 
 
 
