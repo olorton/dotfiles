@@ -1,3 +1,6 @@
+# Disable verification of insecure directories
+ZSH_DISABLE_COMPFIX="true"
+
 unamestr=`uname`
 if [[ "$unamestr" == 'Linux' ]]; then
     export IS_LINUX=true
