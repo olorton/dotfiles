@@ -6,8 +6,7 @@ Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'itchyny/lightline.vim'
-"Plug 'morhetz/gruvbox'
-Plug 'lifepillar/vim-solarized8'
+Plug 'morhetz/gruvbox'
 Plug 'scrooloose/nerdtree'
 Plug 'bling/vim-bufferline'
 Plug 'djoshea/vim-autoread'
@@ -76,8 +75,8 @@ let mapleader = ","
 
 " Colour scheme --------------------------------------------------------------
 
-colorscheme solarized8_flat
-set bg=light
+colorscheme gruvbox
+set bg=dark
 syntax on
 
 
@@ -87,7 +86,7 @@ syntax on
 set laststatus=2
 set noshowmode
 let g:lightline = {
-      \ 'colorscheme': 'solarized',
+      \ 'colorscheme': 'gruvbox',
       \ 'active': {
       \   'left': [ [ 'mode', 'paste' ],
       \             [ 'filename', 'gitbranch', 'readonly', 'modified'] ]
