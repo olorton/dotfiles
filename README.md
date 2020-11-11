@@ -21,7 +21,7 @@ TODO:
 * pyenv file
 * pipsi
 
-When running Vim for the first time, also run `:PluginInstall` and restart vim.
+When running Vim for the first time, install plugins using [vim-plug instructions](https://github.com/junegunn/vim-plug#installation).
 
 ### OSX defaults
 
