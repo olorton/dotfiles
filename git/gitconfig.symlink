@@ -37,8 +37,6 @@
 [branch "master"]
     remote = origin
     merge = refs/heads/master
-    mergeoptions = --ff-only
 [branch "develop"]
     remote = origin
     merge = refs/heads/develop
-    mergeoptions = --ff-only
