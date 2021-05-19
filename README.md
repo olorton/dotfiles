@@ -21,7 +21,7 @@ TODO:
 * pyenv file
 * pipsi
 
-When running Vim for the first time, install plugins using [vim-plug instructions](https://github.com/junegunn/vim-plug#installation).
+When running Vim for the first time, install plugins using [vim-plug instructions](https://github.com/junegunn/vim-plug#installation). Because of how I have configured vim you will also need to create the following dirs: `mkdir -p ~/.vim/tmp/{undo,backup}`
 
 ### OSX defaults
 
