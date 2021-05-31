@@ -1,4 +1,6 @@
 {
+    "theme": "Spacegray Eighties.sublime-theme",
+    "color_scheme": "Packages/Theme - Spacegray/base16-eighties.dark.tmTheme",
     "font_size": 13,
     "rulers": [88],
     "scroll_past_end": true,
