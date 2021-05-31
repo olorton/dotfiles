@@ -44,6 +44,7 @@ symlink_dotfile pyenv/python-version ~/.python-version
 [ "$IS_LINUX" = true ] && symlink_dotfile x/xsessionrc ~/.xsessionrc
 [ "$IS_LINUX" = true ] && symlink_dotfile tmux/tmux-linux.conf.symlink ~/.tmux.os.conf
 [ "$IS_OSX" = true ] && symlink_dotfile tmux/tmux-macosx.conf.symlink ~/.tmux.os.conf
+[ "$IS_OSX" = true ] && [ -d ~/Library/Application\ Support/Sublime\ Text\ 3 ] && symlink_dotfile sublime_text/User/ ~/Library/Application\ Support/Sublime\ Text\ 3/Packages/User
 
 
 # Create folders for vim

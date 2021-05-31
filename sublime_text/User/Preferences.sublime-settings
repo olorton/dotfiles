@@ -1,0 +1,8 @@
+{
+    "font_size": 13,
+    "rulers": [88],
+    "scroll_past_end": true,
+    "trim_trailing_white_space_on_save": true,
+    "ensure_newline_at_eof_on_save": true,
+    "save_on_focus_lost": true,
+}

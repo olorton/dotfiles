@@ -1,0 +1,14 @@
+{
+	"bootstrapped": true,
+	"in_process_packages":
+	[
+	],
+	"installed_packages":
+	[
+		"nginx",
+		"Package Control",
+		"Pretty JSON",
+		"SideBarEnhancements",
+		"Twig"
+	],
+}
