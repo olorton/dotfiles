@@ -7,21 +7,27 @@ symlink_dotfile () {
     SOURCE="${1}"
     TARGET="${2}"
 
-    if [ ! -L ${TARGET} ] && [ -f ${TARGET} ]; then
+    if [ ! -L "${TARGET}" ] && [ -f "${TARGET}" ]; then
         echo "Backing up file ${TARGET} to ${TARGET}.backup before creating symlink"
-        mv ${TARGET} ${TARGET}.backup
-    elif [ -L ${TARGET} ] && [ -f ${TARGET} ]; then
+        mv "${TARGET}" "${TARGET}.backup"
+    elif [ -L "${TARGET}" ] && [ -f "${TARGET}" ]; then
         echo "Target link already exists, replacing linked file: ${DOTFILES_ROOT}${SOURCE} -> ${TARGET}"
-        rm -f ${TARGET}
-    elif [ -e ${TARGET} ]; then
+        rm -f "${TARGET}"
+    elif [ -L "${TARGET}" ] && [ -d "${TARGET}" ]; then
+        echo "Target link dir already exists, replacing linked file: ${DOTFILES_ROOT}${SOURCE} -> ${TARGET}"
+        rm -f "${TARGET}"
+    elif [ ! -L "${TARGET}" ] && [ -d "${TARGET}" ]; then
+        echo "Backing up dir ${TARGET} to ${TARGET}.backup before creating symlink"
+        mv "${TARGET}" "${TARGET}.backup"
+    elif [ -e "${TARGET}" ]; then
         echo "Cannot overwrite because the destination exists, and is not a file or a link: ${TARGET}"
         exit 1
-    else
+
         echo "Target link does not exist, linking file from dotfiles to: ${TARGET}"
         mkdir -p "$(dirname "${TARGET}")"
     fi
 
-    ln -s ${DOTFILES_ROOT}${SOURCE} ${TARGET}
+    ln -s "${DOTFILES_ROOT}${SOURCE}" "${TARGET}"
 }
 
 symlink_dotfile git/gitconfig.symlink ~/.gitconfig
