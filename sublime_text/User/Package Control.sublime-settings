@@ -5,6 +5,7 @@
 	],
 	"installed_packages":
 	[
+		"Dockerfile Syntax Highlighting",
 		"nginx",
 		"Package Control",
 		"Pretty JSON",
