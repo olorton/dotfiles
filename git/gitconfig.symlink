@@ -44,3 +44,5 @@
 	defaultBranch = main
 [fetch]
 	prune = true
+[commit]
+	verbose = true
