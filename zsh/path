@@ -1,5 +1,6 @@
 # Ensure user-installed binaries take precedence
 if [[ $IS_OSX == true ]]; then
+    export PATH="$HOME/.cargo/bin:$PATH"                # Rust
     export PATH="/usr/local/bin:$PATH"                  # Homebrew stuff
     export PATH="/usr/local/sbin:$PATH"                 # Homebrew stuff
     # Ruby
