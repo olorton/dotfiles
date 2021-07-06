@@ -44,8 +44,8 @@
     remote = origin
     merge = refs/heads/develop
 [init]
-	defaultBranch = main
+    defaultBranch = main
 [fetch]
-	prune = true
+    prune = true
 [commit]
-	verbose = true
+    verbose = true
