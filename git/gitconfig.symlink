@@ -18,9 +18,9 @@
     col = checkout -
     cob = checkout -b
     cod = checkout develop
-    com = checkout master
+    com = !git checkout master || git checkout main
     bd = branch -d $1
-    fr = !git fetch origin && git rebase origin/master
+    fr = !git fetch origin && git rebase origin/master || git rebase origin/main
     ls = log --pretty=format:"%C(yellow)%h\\ %ad%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --date=short
     ll = log --pretty=format:"%C(yellow)%h%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --numstat
     b = "!git for-each-ref --sort='-authordate' --format='%(authordate)%09%(objectname:short)%09%(refname)' refs/heads | sed -e 's-refs/heads/--'"
