@@ -2,13 +2,13 @@
 export DOTFILES=$(builtin cd $(dirname "$(readlink ~/.zshrc)") && git rev-parse --show-toplevel)
 
 source ${DOTFILES}/zsh/vars
-source ${DOTFILES}/zsh/zsh
 source ${DOTFILES}/zsh/tmux
 source ${DOTFILES}/zsh/path
 source ${DOTFILES}/zsh/python
 source ${DOTFILES}/zsh/javascript
 source ${DOTFILES}/zsh/aliases
 source ${DOTFILES}/zsh/keybindings
+source ${DOTFILES}/zsh/zsh
 
 if ! { [ -n "$TMUX" ]; } then
   	cd ~/Code
