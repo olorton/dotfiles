@@ -1,15 +1,15 @@
 {
-	"theme": "Spacegray Eighties.sublime-theme",
-	"color_scheme": "Packages/Theme - Spacegray/base16-eighties.dark.tmTheme",
-	"font_size": 13,
-	"rulers": [88],
-	"scroll_past_end": true,
-	"trim_trailing_white_space_on_save": true,
-	"ensure_newline_at_eof_on_save": true,
-	"save_on_focus_lost": true,
-	"dictionary": "Packages/Language - English/en_GB.dic",
-	"ignored_packages":
-	[
-		"Vintage",
-	],
+    "theme": "Spacegray Eighties.sublime-theme",
+    "color_scheme": "Packages/Theme - Spacegray/base16-eighties.dark.tmTheme",
+    "font_size": 13,
+    "rulers": [88],
+    "scroll_past_end": true,
+    "trim_trailing_white_space_on_save": true,
+    "ensure_newline_at_eof_on_save": true,
+    "save_on_focus_lost": true,
+    "dictionary": "Packages/Language - English/en_GB.dic",
+    "ignored_packages":
+    [
+        "Vintage",
+    ],
 }
