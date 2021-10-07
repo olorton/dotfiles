@@ -92,6 +92,12 @@ git() {
     fi;
 }
 
+# Set tmux window name when launching cmus
+cmus() {
+    tmux rename-window -t${TMUX_PANE} "cmus";
+    command cmus "$@";
+}
+
 alias rbdevelop="git checkout develop && git pull && git checkout - && git rebase develop"
 
 alias dotedit="cd $DOTFILES && vim README.md"
