@@ -44,7 +44,7 @@ end_prompt() {
     declare -i max_len
     cols=$(tput cols)
     pwd_len="${#PWD}"
-    max_len=$((cols / 3))
+    max_len=$((cols / 2))
     if (( pwd_len > max_len )); then
         print -R -e "\n$"
     fi
