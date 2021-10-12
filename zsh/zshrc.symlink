@@ -5,6 +5,7 @@ source ${DOTFILES}/zsh/vars
 source ${DOTFILES}/zsh/tmux
 source ${DOTFILES}/zsh/path
 source ${DOTFILES}/zsh/python
+source ${DOTFILES}/zsh/postgresql@11
 source ${DOTFILES}/zsh/javascript
 source ${DOTFILES}/zsh/aliases
 source ${DOTFILES}/zsh/keybindings
