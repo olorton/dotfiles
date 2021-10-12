@@ -33,7 +33,7 @@ git_segment() {
         # Stashes
         c=$(git rev-list --walk-reflogs --count refs/stash 2> /dev/null)
         [[ -n "$c" ]] && (
-            print -n "%{%K{green}%{%F{black}%} $c stash "
+            print -n "%{%K{blue}%{%F{black}%} $c stash "
         )
     fi
 }
