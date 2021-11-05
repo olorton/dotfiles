@@ -20,6 +20,9 @@
     cod = checkout develop
     com = !git checkout master || git checkout main
     bd = branch -d $1
+    st = stash
+    stp = stash pop
+    stl = stash list
     fr = !git fetch origin && git rebase origin/master || git rebase origin/main
     ls = log --pretty=format:"%C(yellow)%h\\ %ad%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --date=short
     ll = log --pretty=format:"%C(yellow)%h%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --numstat
