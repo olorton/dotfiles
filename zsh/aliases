@@ -102,9 +102,3 @@ alias rbdevelop="git checkout develop && git pull && git checkout - && git rebas
 
 alias dotedit="cd $DOTFILES && vim README.md"
 alias dedit="dotedit"
-
-shhh() {
-    if [[ -s $DOTFILES/short-help/$@ ]]; then
-        cat $DOTFILES/short-help/$@ | less
-    fi;
-}
