@@ -23,15 +23,6 @@ TODO:
 
 When running Vim for the first time, install plugins using [vim-plug instructions](https://github.com/junegunn/vim-plug#installation). Because of how I have configured vim you will also need to create the following dirs: `mkdir -p ~/.vim/tmp/{undo,backup}`
 
-### OSX defaults
-
-TODO - fix the damn `bin/set-osx-defaults` file.
-
-Currently using:
-
-    defaults write NSGlobalDomain KeyRepeat -int 1
-    defaults write NSGlobalDomain InitialKeyRepeat -int 25
-
 Terminal typefaces I've used:
 - Current: [DOSEGA](https://sourceforge.net/projects/dosega/)
 - [M+1m console font](http://sourceforge.jp/projects/mplus-fonts/downloads/62344/mplus-TESTFLIGHT-059.tar.xz/)
