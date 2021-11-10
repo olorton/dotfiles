@@ -38,13 +38,8 @@ symlink_dotfile vim/vimrc.symlink ~/.vimrc
 symlink_dotfile zsh/zshrc.symlink ~/.zshrc
 symlink_dotfile alacritty/alacritty.yml ~/.config/alacritty/alacritty.yml
 symlink_dotfile pyenv/python-version ~/.python-version
-[ "$IS_LINUX" = true ] && symlink_dotfile i3/config ~/.config/i3/config
-[ "$IS_LINUX" = true ] && symlink_dotfile i3/i3blocks.conf ~/.config/i3/i3blocks.conf
-[ "$IS_LINUX" = true ] && symlink_dotfile x/Xmodmap ~/.Xmodmap
-[ "$IS_LINUX" = true ] && symlink_dotfile x/xsessionrc ~/.xsessionrc
-[ "$IS_LINUX" = true ] && symlink_dotfile tmux/tmux-linux.conf.symlink ~/.tmux.os.conf
-[ "$IS_OSX" = true ] && symlink_dotfile tmux/tmux-macosx.conf.symlink ~/.tmux.os.conf
-[ "$IS_OSX" = true ] && [ -d ~/Library/Application\ Support/Sublime\ Text ] && symlink_dotfile sublime_text/User/ ~/Library/Application\ Support/Sublime\ Text/Packages/User
+symlink_dotfile tmux/tmux-macosx.conf.symlink ~/.tmux.os.conf
+[ -d ~/Library/Application\ Support/Sublime\ Text ] && symlink_dotfile sublime_text/User/ ~/Library/Application\ Support/Sublime\ Text/Packages/User
 
 
 # Create folders for vim

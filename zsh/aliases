@@ -1,5 +1,4 @@
-[ "$IS_OSX" = true ] && alias ls="ls -AGFlhi"
-[ "$IS_LINUX" = true ] && alias ls="ls -AGFlhi --color=always"
+alias ls="ls -AGFlhi"
 
 # Easier navigation:
 cd() { builtin cd "$@"; ls; }
@@ -26,18 +25,18 @@ alias ip="dig +short myip.opendns.com @resolver1.opendns.com"
 #alias localip="ipconfig getifaddr en1"
 
 # Copy my public key to the pasteboard
-[ "$IS_OSX" = true ] && alias pubkey="more ${SSH_KEY_PATH}.pub | pbcopy | printf '=> Public key copied to pasteboard.\n'"
+alias pubkey="more ${SSH_KEY_PATH}.pub | pbcopy | printf '=> Public key copied to pasteboard.\n'"
 
 # Flush DNS cache
-[ "$IS_OSX" = true ] && alias flushdns="dscacheutil -flushcache"
+alias flushdns="dscacheutil -flushcache"
 
 # Show/hide hidden files in Finder
-[ "$IS_OSX" = true ] && alias showdotfiles="defaults write com.apple.finder AppleShowAllFiles -bool true && killall Finder"
-[ "$IS_OSX" = true ] && alias hidedotfiles="defaults write com.apple.finder AppleShowAllFiles -bool false && killall Finder"
+alias showdotfiles="defaults write com.apple.finder AppleShowAllFiles -bool true && killall Finder"
+alias hidedotfiles="defaults write com.apple.finder AppleShowAllFiles -bool false && killall Finder"
 
 # Hide/show all desktop icons (useful when presenting)
-[ "$IS_OSX" = true ] && alias showdeskicons="defaults write com.apple.finder CreateDesktop -bool true && killall Finder"
-[ "$IS_OSX" = true ] && alias hidedeskicons="defaults write com.apple.finder CreateDesktop -bool false && killall Finder"
+alias showdeskicons="defaults write com.apple.finder CreateDesktop -bool true && killall Finder"
+alias hidedeskicons="defaults write com.apple.finder CreateDesktop -bool false && killall Finder"
 
 # extract most know archives with one command
 extract () {
@@ -75,7 +74,7 @@ ii() {
 }
 
 # fucking .DS_Store files
-[ "$IS_OSX" = true ] && alias fuckingdsfiles="find . -type f -name '*.DS_Store' -ls -delete"
+alias fuckingdsfiles="find . -type f -name '*.DS_Store' -ls -delete"
 
 # Add TODO count to git status
 git() {
