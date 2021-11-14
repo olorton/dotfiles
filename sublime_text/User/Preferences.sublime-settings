@@ -2,6 +2,8 @@
     "theme": "Spacegray Eighties.sublime-theme",
     "color_scheme": "Packages/Theme - Spacegray/base16-eighties.dark.tmTheme",
     "font_size": 13,
+    "line_padding_top": 1,
+    "line_padding_bottom": 1,
     "rulers": [88],
     "translate_tabs_to_spaces": true,
     "scroll_past_end": true,
