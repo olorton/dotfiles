@@ -15,4 +15,14 @@
     [
         "Vintage",
     ],
+    "added_words":
+    [
+        "backend",
+        "Django",
+        "Symfony",
+        "Hendricusdottir",
+        "Burgman",
+        "Heroku",
+        "Redis",
+    ],
 }
