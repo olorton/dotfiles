@@ -26,6 +26,7 @@ call plug#end()
 set autoindent
 set backspace=indent,eol,start
 set number
+set encoding=utf-8
 
 " For file related tasks, tab complete into sub-folders
 set path+=**
@@ -238,8 +239,6 @@ let NERDTreeIgnore = ['\.pyc$', '__pycache__']
 
 " Enable file type detection and do language-dependent indenting.
 "filetype plugin indent on
-
-"set encoding=utf-8
 
 " Better indenting
 "set smartindent
