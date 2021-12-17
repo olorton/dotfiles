@@ -15,7 +15,6 @@ Plug 'junegunn/fzf.vim', { 'do': { -> fzf#install() } }
 Plug 'psf/black'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-surround'
-Plug 'dense-analysis/ale'
 
 call plug#end()
 
@@ -210,16 +209,6 @@ nmap <leader>c gcc
 xmap <leader>c gc
 
 
-
-" Ale ------------------------------------------------------------------------
-
-let g:ale_linters = {'python': ['flake8']}
-let g:ale_fixers = {
-            \   '*': ['remove_trailing_lines', 'trim_whitespace'],
-            \   'python': ['black', 'isort']
-            \}
-
-map <C-L> :ALEFix<cr>
 
 " Help system ----------------------------------------------------------------
 
