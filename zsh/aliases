@@ -99,5 +99,5 @@ cmus() {
 
 alias rbdevelop="git checkout develop && git pull && git checkout - && git rebase develop"
 
-alias dotedit="cd $DOTFILES && vim README.md"
+alias dotedit="tmux rename-window -t${TMUX_PANE} dotfiles ; cd $DOTFILES && vim README.md"
 alias dedit="dotedit"
