@@ -1,6 +1,4 @@
-# Dotfiles Readme
-
-My dotfiles: Don't fork these directly, create your own, but steal shamelessly.
+# My dotfiles
 
 ## Setup
 
