@@ -1,6 +1,6 @@
 " Plugin manager -------------------------------------------------------------
 
-call plug#begin('~/.vim/plugged')
+call plug#begin()
 
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
@@ -22,33 +22,29 @@ call plug#end()
 
 " Basics ---------------------------------------------------------------------
 
-set autoindent
-set backspace=indent,eol,start
 set number
 set encoding=utf-8
 
 " For file related tasks, tab complete into sub-folders
-set path+=**
+"set path+=**
 
 " Time out on key codes but not mappings.
-set notimeout
-set ttimeout
-set ttimeoutlen=10
-
-" Show a visual representation of tabs
-set list
-set listchars=tab:>-
-" use :retab to replace these
-
+"set ttimeoutlen=10
 
 " Only do case-sensitive search when caps in search string
 set ignorecase
 set smartcase
 
+" Better indenting
+set smartindent
+
+" Enable file type detection and do language-dependent indenting.
+filetype plugin indent on
+
 
 " Spacing --------------------------------------------------------------------
 
-set nowrap
+"set nowrap
 set tabstop=4
 set shiftwidth=4
 set softtabstop=4
@@ -63,8 +59,8 @@ autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
 
 set backup
 set noswapfile
-set undodir=~/.vim/tmp/undo//
-set backupdir=~/.vim/tmp/backup//
+set undodir=~/.config/nvim/tmp/undo//
+set backupdir=~/.config/nvim/tmp/backup//
 
 
 
@@ -112,6 +108,12 @@ let g:lightline = {
   \ }
 
 
+" Nerdtree
+map <C-n> :NERDTreeToggle<CR>
+let NERDTreeQuitOnOpen=1  " Close nerdtree after a file is opened
+let NERDTreeIgnore = ['\.pyc$', '__pycache__']
+
+
 
 " Trailing whitespace --------------------------------------------------------
 
@@ -154,7 +156,7 @@ augroup END
 
 " Commands -------------------------------------------------------------------
 
-command! MakeTags ! /usr/local/bin/ctags -R --exclude=.git --exclude=node_modules .
+"command! MakeTags ! /usr/local/bin/ctags -R --exclude=.git --exclude=node_modules .
 
 
 
@@ -186,20 +188,20 @@ nnoremap <Tab> :bnext<CR>
 nnoremap <S-Tab> :bprevious<CR>
 
 " Set the number of lines to keep viewable on the screen. Default = 0;
-set scrolloff=20
+set scrolloff=10
 
 
 
-" Tab style autocomplete dropdown --------------------------------------------
-function! InsertTabWrapper()
-    let col = col('.') - 1
-    if !col || getline('.')[col - 1] !~ '\k'
-        return "\<tab>"
-    else
-        return "\<c-n>"
-    endif
-endfunction
-inoremap <tab> <c-r>=InsertTabWrapper()<cr>
+"" Tab style autocomplete dropdown --------------------------------------------
+"function! InsertTabWrapper()
+    "let col = col('.') - 1
+    "if !col || getline('.')[col - 1] !~ '\k'
+        "return "\<tab>"
+    "else
+        "return "\<c-n>"
+    "endif
+"endfunction
+"inoremap <tab> <c-r>=InsertTabWrapper()<cr>
 
 
 
@@ -217,17 +219,11 @@ augroup vimrc_help
     autocmd BufEnter *.txt if &buftype == 'help' | wincmd L | endif
 augroup END
 
+augroup ft_vim
+    au!
 
+    au BufNewFile,BufRead init.vim* setlocal filetype=vim
 
-" TODO (possibly remove) -----------------------------------------------------
-
-" Nerdtree
-map <C-n> :NERDTreeToggle<CR>
-let NERDTreeQuitOnOpen=1  " Close nerdtree after a file is opened
-let NERDTreeIgnore = ['\.pyc$', '__pycache__']
-
-" Enable file type detection and do language-dependent indenting.
-"filetype plugin indent on
-
-" Better indenting
-"set smartindent
+    au FileType vim setlocal foldmethod=marker
+    au FileType help setlocal textwidth=78
+augroup END

@@ -30,18 +30,17 @@ symlink_dotfile () {
     ln -s "${DOTFILES_ROOT}${SOURCE}" "${TARGET}"
 }
 
+mkdir -p ~/.config
 symlink_dotfile git/gitconfig.symlink ~/.gitconfig
 symlink_dotfile git/gitignore_global ~/.gitignore_global
 symlink_dotfile tig/tigrc.symlink ~/.tigrc
 symlink_dotfile tmux/tmux.conf.symlink ~/.tmux.conf
-symlink_dotfile vim/vimrc.symlink ~/.vimrc
+mkdir -p ~/.config/nvim/tmp/backup
+mkdir -p ~/.config/nvim/tmp/undo
+symlink_dotfile nvim/init.vim.symlink ~/.config/nvim/init.vim
 symlink_dotfile zsh/zshrc.symlink ~/.zshrc
+mkdir -p ~/.config/alacritty
 symlink_dotfile alacritty/alacritty.yml ~/.config/alacritty/alacritty.yml
 symlink_dotfile pyenv/python-version ~/.python-version
 symlink_dotfile tmux/tmux-macosx.conf.symlink ~/.tmux.os.conf
 [ -d ~/Library/Application\ Support/Sublime\ Text ] && symlink_dotfile sublime_text/User/ ~/Library/Application\ Support/Sublime\ Text/Packages/User
-
-
-# Create folders for vim
-mkdir -p ~/.vim/tmp/backup
-mkdir -p ~/.vim/tmp/undo
