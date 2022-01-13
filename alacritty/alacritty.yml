@@ -157,3 +157,6 @@ key_bindings:
   # Fixes using alt-arrows to navigate word at a time
   - { key: Left,     mods: Alt,     chars: "\x1bb"                       }
   - { key: Right,    mods: Alt,     chars: "\x1bf"                       }
+
+  # Fixes issue with
+  - { key: Key3,     mods: Alt,     chars: "\x23"                        }
