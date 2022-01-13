@@ -28,6 +28,9 @@ symlink_dotfile () {
     fi
 
     ln -s "${DOTFILES_ROOT}${SOURCE}" "${TARGET}"
+    if [ -L "${TARGET}" ] && [ -f "${TARGET}" ]; then
+        echo "SUCCESSFULLY created link: ${DOTFILES_ROOT}${SOURCE} -> ${TARGET}"
+    fi
 }
 
 mkdir -p ~/.config
