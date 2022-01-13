@@ -5,8 +5,9 @@ window:
 scrolling:
   history: 0
 font:
-  family: monospace
-  size: 15
+  normal:
+    family: Menlo
+  size: 11
 
 # Colors (Gruvbox dark)
 colors:
