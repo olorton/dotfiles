@@ -1,0 +1,52 @@
+#!/usr/bin/env python3
+
+import os
+import re
+
+
+# TODO
+# - Handle indented (sub-tasks)
+
+
+# Locate input file ~/todo.txt
+# TODO: Locate files in current/parent directories, up to the home dir
+home_dir = os.getenv("HOME")
+filename = f"{home_dir}/todo.txt"
+
+
+# Read input file
+with open(filename, "r") as file:
+    # Iterate over days
+    days = file.read().split("\n\n")
+
+    list_next = []
+    list_backlog = []
+
+    # Iterate over lines
+    for day in days:
+        date = None
+        for line in day.split("\n"):
+            if len(line):
+                # Format line
+                #   - If line is a date, convert it to iso format
+                #   - If line is a bullet "-" or "*" convert it to "- [ ]" or "- [*]"
+                #   - If line is numbered, i.e. incomplete, convert it to "1. [ ]"
+                if date is None:
+                    date = line
+                elif bool(re.search(r'^\d\.', line)):
+                    # Add line to prioritised list if it starts with int followed by "."
+                    list_next.append(f"{line} [{date}]")
+                elif line[0] == "-":
+                    # Add line to backlog list if it starts with a -
+                    list_backlog.append(f"{line} [{date}]")
+
+    # Print out the prioritised script
+    print("NEXT:")
+    for item in sorted(list_next):
+        print(item)
+    if list_next and list_backlog:
+        print("")
+    # Print out the backlog list
+    print("BACKLOG:")
+    for item in list_backlog:
+        print(item)
