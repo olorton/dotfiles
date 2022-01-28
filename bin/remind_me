@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+
+if [ -z "$1" ]; then
+    read -rp "what? " what
+else
+    what=$1
+fi
+
+if [ -z "$2" ]; then
+    read -rp "When? " when
+else
+    when=$2
+fi
+timestamp=$(php -r "echo date('d/m/Y G:i:s', strtotime('${when}'));")
+
+osascript - "${what}" "${timestamp}" <<END
+on run argv
+    set stringedAll to date (item 2 of argv)
+    tell application "Reminders"
+        make new reminder with properties {name:item 1 of argv, due date:stringedAll}
+    end tell
+end run
+END
+
+echo "Set to go off at: ${timestamp}"
