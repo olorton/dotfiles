@@ -201,6 +201,9 @@ inoremap <right> <nop>
 nnoremap <Tab> :bnext<CR>
 nnoremap <S-Tab> :bprevious<CR>
 
+" Clear highlights
+nnoremap <Esc> :nohl<CR>
+
 " Set the number of lines to keep viewable on the screen. Default = 0;
 set scrolloff=10
 
