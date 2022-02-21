@@ -47,3 +47,4 @@ symlink_dotfile alacritty/alacritty.yml ~/.config/alacritty/alacritty.yml
 symlink_dotfile pyenv/python-version ~/.python-version
 symlink_dotfile tmux/tmux-macosx.conf.symlink ~/.tmux.os.conf
 [ -d ~/Library/Application\ Support/Sublime\ Text ] && symlink_dotfile sublime_text/User/ ~/Library/Application\ Support/Sublime\ Text/Packages/User
+symlink_dotfile direnv/direnvrc.symlink ~/.direnvrc
