@@ -15,6 +15,12 @@ fi
 #   e.g. 1 hour, tomorrow 8am, 90 min
 timestamp=$(php -r "echo date('d/m/Y G:i:s', strtotime('${when}'));")
 
+# Check if the timestamp is valid
+if [ "01/01/1970 0:00:00" = "$timestamp" ]; then
+    echo "Unknown date/time: $2  =>  $timestamp"
+    exit 1
+fi
+
 osascript - "${what}" "${timestamp}" <<END
 on run argv
     set stringedAll to date (item 2 of argv)
