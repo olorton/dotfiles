@@ -103,3 +103,5 @@ alias rbdevelop="git checkout develop && git pull && git checkout - && git rebas
 
 alias dotedit="tmux rename-window -t${TMUX_PANE} dotfiles ; cd $DOTFILES && nvim README.md"
 alias dedit="dotedit"
+
+alias brupod="brew update && brew outdated"
