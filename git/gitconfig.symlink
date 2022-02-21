@@ -13,8 +13,9 @@
     ca = commit -a
     cam = commit --amend
     caam = commit -a --amend
-    p = push
-    pf = push -f
+    ph = push
+    phf = push -f
+    pl = pull
     co = checkout
     col = checkout -
     cob = checkout -b
