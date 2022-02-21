@@ -37,11 +37,12 @@
 ehthumbs.db
 Thumbs.db
 
-# IDEs              #
+# IDEs & env        #
 #####################
 .idea
 *.sublime-project
 *.sublime-workspace
+.envrc
 
 # Stuff and Shit    #
 #####################
