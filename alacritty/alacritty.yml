@@ -2,6 +2,9 @@
 # e.g. https://github.com/alacritty/alacritty/releases
 window:
   startup_mode: Fullscreen
+  padding:
+    x: 3
+    y: 3
 scrolling:
   history: 0
 font:
