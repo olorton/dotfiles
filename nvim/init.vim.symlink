@@ -119,6 +119,7 @@ let g:lightline = {
 
 " Nerdtree
 map <C-n> :NERDTreeToggle<CR>
+nmap ,n :NERDTreeFind<CR>
 let NERDTreeQuitOnOpen=1  " Close nerdtree after a file is opened
 let NERDTreeIgnore = ['\.pyc$', '__pycache__']
 
