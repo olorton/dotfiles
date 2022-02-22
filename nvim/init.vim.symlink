@@ -182,6 +182,7 @@ nnoremap <C-p> :Files<Cr>
 nmap ; :Buffers<CR>
 nmap <Leader>t :Tags<CR>
 map <leader>w :up\|bd<cr>
+vmap <leader>y "*y<CR>
 
 
 
