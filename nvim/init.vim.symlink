@@ -133,9 +133,9 @@ let NERDTreeIgnore = ['\.pyc$', '__pycache__']
 
 " Trailing whitespace --------------------------------------------------------
 
-" Show tab characters as: <-->
+" Show tab characters as: --->
 set list
-set listchars=tab:<->
+set listchars=tab:-->
 
 " Highlight trailing whitespace with red
 highlight ExtraWhitespace ctermbg=red guibg=red
