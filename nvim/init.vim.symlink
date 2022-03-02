@@ -178,8 +178,8 @@ augroup END
 " Commands -------------------------------------------------------------------
 
 "command! MakeTags ! /usr/local/bin/ctags -R --exclude=.git --exclude=node_modules .
-command EditConfig :edit ~/.config/nvim/init.vim
-command ReloadConfig :source ~/.config/nvim/init.vim
+command! EditConfig :edit ~/.config/nvim/init.vim
+command! ReloadConfig :source ~/.config/nvim/init.vim
 
 
 
