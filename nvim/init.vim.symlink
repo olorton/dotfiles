@@ -23,7 +23,7 @@ Plug 'hrsh7th/cmp-cmdline'
 Plug 'hrsh7th/cmp-nvim-lua'
 Plug 'hrsh7th/cmp-nvim-lsp'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
-" TODO Plug 'sbdchd/neoformat'
+Plug 'sbdchd/neoformat'
 " TODO Neomake
 
 call plug#end()
@@ -192,6 +192,7 @@ nmap ; :Buffers<CR>
 nmap <Leader>t :Tags<CR>
 map <leader>w :up\|bd<cr>
 vmap <leader>y "*y<CR>
+nmap <leader>l :Neoformat<CR>
 
 
 
@@ -240,7 +241,20 @@ xmap <leader>c gc
 
 
 
-" Git blame toggle
+" Neoformat ------------------------------------------------------------------
+
+let g:neoformat_run_all_formatters = 1
+let g:neoformat_try_formatprg = 1
+
+let g:neoformat_enabled_css = ['prettier']
+let g:neoformat_enabled_javascript = ['prettier']
+let g:neoformat_enabled_javascriptreact = ['prettier']
+let g:neoformat_enabled_jsx = ['prettier']
+let g:neoformat_enabled_python = ['black']
+
+
+
+" Git blame toggle -----------------------------------------------------------
 " https://github.com/tpope/vim-fugitive/issues/1474
 
 function! s:BlameToggle() abort
