@@ -16,11 +16,12 @@ Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-surround'
 Plug 'ekalinin/Dockerfile.vim'
 Plug 'neovim/nvim-lspconfig'
-Plug 'hrsh7th/cmp-nvim-lsp'
+Plug 'hrsh7th/nvim-cmp'
 Plug 'hrsh7th/cmp-buffer'
 Plug 'hrsh7th/cmp-path'
 Plug 'hrsh7th/cmp-cmdline'
-Plug 'hrsh7th/nvim-cmp'
+Plug 'hrsh7th/cmp-nvim-lua'
+Plug 'hrsh7th/cmp-nvim-lsp'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 " TODO Plug 'sbdchd/neoformat'
 " TODO Neomake
@@ -277,6 +278,58 @@ augroup END
 
 
 
+" nvim-cmp ------------------------------------------------------------------------
+
+lua <<EOF
+  local cmp = require 'cmp'
+  local keyword_length = 3
+
+  cmp.setup({
+    mapping = {
+      ['<C-b>'] = cmp.mapping(cmp.mapping.scroll_docs(-4), { 'i', 'c' }),
+      ['<C-f>'] = cmp.mapping(cmp.mapping.scroll_docs(4), { 'i', 'c' }),
+      ['<C-Space>'] = cmp.mapping(cmp.mapping.complete(), { 'i', 'c' }),
+      ['<C-y>'] = cmp.config.disable, -- Specify `cmp.config.disable` if you want to remove the default `<C-y>` mapping.
+      ['<C-e>'] = cmp.mapping({
+        i = cmp.mapping.abort(),
+        c = cmp.mapping.close(),
+      }),
+      ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+    },
+    sources = cmp.config.sources({
+      { name = 'nvim_lua' },
+      { name = 'nvim_lsp' },
+      { name = 'path' },
+      { name = 'buffer', keyword_length = keyword_length },
+    }),
+  })
+
+  -- Use buffer source for `/` (if you enabled `native_menu`, this won't work anymore).
+  cmp.setup.cmdline('/', {
+    sources = {
+      { name = 'buffer' }
+    }
+  })
+
+  -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
+  cmp.setup.cmdline(':', {
+    sources = cmp.config.sources({
+      { name = 'path' }
+    }, {
+      { name = 'cmdline' }
+    })
+  })
+
+  -- Setup lspconfig.
+  local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
+  -- Replace <YOUR_LSP_SERVER> with each lsp server you've enabled.
+  require('lspconfig')['pylsp'].setup {
+    capabilities = capabilities
+  }
+EOF
+
+
+
 " LSP ------------------------------------------------------------------------
 
 lua << EOF
@@ -315,9 +368,36 @@ local on_attach = function(client, bufnr)
 
 end
 
+nvim_lsp.pylsp.setup({
+  enable = true,
+  on_attach = on_attach,
+  settings = {
+    pylsp = {
+      configurationSources = {"flake8"},
+      plugins = {
+        jedi_completion = {enabled = false},
+        jedi_hover = {enabled = false},
+        jedi_references = {enabled = false},
+        jedi_signature_help = {enabled = false},
+        jedi_symbols = {enabled = false, all_scopes = true},
+        pycodestyle = {enabled = false},
+        flake8 = {enabled = true},
+        mypy = {enabled = false},
+        isort = {enabled = false},
+        yapf = {enabled = false},
+        pylint = {enabled = false},
+        pydocstyle = {enabled = false},
+        mccabe = {enabled = false},
+        preload = {enabled = false},
+        rope_completion = {enabled = false}
+      }
+    }
+  }
+})
+
 -- Use a loop to conveniently call 'setup' on multiple servers and
 -- map buffer local keybindings when the language server attaches
-local servers = { 'pylsp' }
+local servers = { 'rust_analyzer' }
 for _, lsp in ipairs(servers) do
   nvim_lsp[lsp].setup {
     on_attach = on_attach,
@@ -357,56 +437,6 @@ require'nvim-treesitter.configs'.setup {
     additional_vim_regex_highlighting = false,
   },
 }
-EOF
-
-
-
-" nvim-cmp ------------------------------------------------------------------------
-
-lua <<EOF
-  local cmp = require'cmp'
-
-  cmp.setup({
-    mapping = {
-      ['<C-b>'] = cmp.mapping(cmp.mapping.scroll_docs(-4), { 'i', 'c' }),
-      ['<C-f>'] = cmp.mapping(cmp.mapping.scroll_docs(4), { 'i', 'c' }),
-      ['<C-Space>'] = cmp.mapping(cmp.mapping.complete(), { 'i', 'c' }),
-      ['<C-y>'] = cmp.config.disable, -- Specify `cmp.config.disable` if you want to remove the default `<C-y>` mapping.
-      ['<C-e>'] = cmp.mapping({
-        i = cmp.mapping.abort(),
-        c = cmp.mapping.close(),
-      }),
-      ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
-    },
-    sources = cmp.config.sources({
-      { name = 'nvim_lsp' },
-    }, {
-      { name = 'buffer' },
-    })
-  })
-
-  -- Use buffer source for `/` (if you enabled `native_menu`, this won't work anymore).
-  cmp.setup.cmdline('/', {
-    sources = {
-      { name = 'buffer' }
-    }
-  })
-
-  -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
-  cmp.setup.cmdline(':', {
-    sources = cmp.config.sources({
-      { name = 'path' }
-    }, {
-      { name = 'cmdline' }
-    })
-  })
-
-  -- Setup lspconfig.
-  local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
-  -- Replace <YOUR_LSP_SERVER> with each lsp server you've enabled.
-  require('lspconfig')['pylsp'].setup {
-    capabilities = capabilities
-  }
 EOF
 
 
