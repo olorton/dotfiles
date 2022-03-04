@@ -26,14 +26,14 @@ git_segment() {
     ref="$vcs_info_msg_0_"
     if [[ -n "$ref" ]]; then
         if working_tree_is_clean; then
-            print -n "%{%K{green}%{%F{black}%} $(git_prompt_info) "
+            print -n "%{%K{green}%}%{%F{black}%} $(git_prompt_info) "
         else
-            print -n "%{%K{yellow}%{%F{black}%} $(git_prompt_info) "
+            print -n "%{%K{yellow}%}%{%F{black}%} $(git_prompt_info) "
         fi
         # Stashes
         c=$(git rev-list --walk-reflogs --count refs/stash 2> /dev/null)
         [[ -n "$c" ]] && (
-            print -n "%{%K{blue}%{%F{black}%} $c stash "
+            print -n "%{%K{blue}%}%{%F{black}%} $c stash "
         )
     fi
 }
