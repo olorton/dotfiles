@@ -161,17 +161,14 @@ augroup END
 
 " Autosave -------------------------------------------------------------------
 
-" Save all buffers on focus lost and no input
-au FocusLost * :silent! wall
-au CursorHold * :silent! wall
+" Reload when entering the buffer or gaining focus
+au FocusGained,BufEnter * :silent! !
+
+" Save when exiting the buffer or losing focus
+au FocusLost,WinLeave,CursorHold * :silent! wall
 
 " Write to disk when navigating file
 set autowrite
-
-" Write when leaving a buffer
-augroup AutoWrite
-    autocmd! BufLeave * :update
-augroup END
 
 
 
