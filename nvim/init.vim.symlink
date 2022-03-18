@@ -131,6 +131,11 @@ let NERDTreeIgnore = ['\.pyc$', '__pycache__']
 
 
 
+" Fzf
+let $FZF_DEFAULT_COMMAND = 'ag -g ""'
+
+
+
 " Trailing whitespace --------------------------------------------------------
 
 " Show tab characters as: --->
