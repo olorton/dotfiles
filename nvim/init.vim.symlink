@@ -253,7 +253,7 @@ let g:neoformat_enabled_javascript = ['prettier']
 let g:neoformat_enabled_javascriptreact = ['prettier']
 let g:neoformat_enabled_jsx = ['prettier']
 let g:neoformat_enabled_python = ['black']
-
+" let g:neoformat_enabled_bzl = ["buildifier"]
 
 
 " Git blame toggle -----------------------------------------------------------
