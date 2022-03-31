@@ -9,7 +9,6 @@ Plug 'itchyny/lightline.vim'
 Plug 'morhetz/gruvbox'
 Plug 'scrooloose/nerdtree'
 Plug 'bling/vim-bufferline'
-Plug 'djoshea/vim-autoread'
 set rtp+=/usr/local/opt/fzf
 Plug 'junegunn/fzf.vim', { 'do': { -> fzf#install() } }
 Plug 'tpope/vim-commentary'
