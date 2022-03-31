@@ -13,7 +13,7 @@ else
 fi
 # Use PHP's excellent parser to parse vague time strings to a timestamp
 #   e.g. 1 hour, tomorrow 8am, 90 min
-timestamp=$(php -r "echo date('d/m/Y G:i:s', strtotime('${when}'));")
+timestamp=$(php -r "date_default_timezone_set('Europe/London');echo date('d/m/Y G:i:s', strtotime('${when}'));")
 
 # Check if the timestamp is valid
 if [ "01/01/1970 0:00:00" = "$timestamp" ]; then
