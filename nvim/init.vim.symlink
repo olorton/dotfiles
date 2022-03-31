@@ -187,7 +187,6 @@ command! ReloadConfig :source ~/.config/nvim/init.vim
 
 " Keybindings ----------------------------------------------------------------
 
-set pastetoggle=<F2>
 nnoremap <C-g> :Rg<Cr>
 nnoremap <C-p> :Files<Cr>
 nmap ; :Buffers<CR>
