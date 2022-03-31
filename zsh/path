@@ -9,5 +9,6 @@ export PATH="$PYENV_ROOT/bin:$PATH"                 # Pyenv
 eval "$(pyenv init --path)"                         # Pyenv
 export PATH="$HOME/.local/bin:$PATH"                # pipx stuff
 export PATH="$HOME/Code/dotfiles/bin:$PATH"         # dotfiles scripts
+export PATH="$(go env GOPATH)/bin:$PATH"            # Go binaries
 
 # Note: NPM path is set in $DOTFILES/zsh/javascript
