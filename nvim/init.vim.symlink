@@ -187,12 +187,26 @@ command! ReloadConfig :source ~/.config/nvim/init.vim
 
 " Keybindings ----------------------------------------------------------------
 
+" Fuzzy search project file contents
 nnoremap <C-g> :Rg<Cr>
+
+" Fuzzy search project file names
 nnoremap <C-p> :Files<Cr>
+
+" Fuzzy search open buffers
 nmap ; :Buffers<CR>
-nmap <Leader>t :Tags<CR>
-map <leader>w :up\|bd<cr>
+
+" Fuzzy search project tags
+nmap <leader>t :Tags<CR>
+
+" Update the current buffer, switch to the last buffer, then close the
+" previous (original buffer)
+nmap <leader>w :w<bar>b#<bar>bd#<CR>
+
+" Yank to the system clipboard
 vmap <leader>y "*y<CR>
+
+" Format the current file
 nmap <leader>l :Neoformat<CR>
 
 
