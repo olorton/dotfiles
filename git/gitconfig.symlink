@@ -15,6 +15,7 @@
     caam = commit -a --amend
     ph = push
     phf = push -f
+    phsu = !git push -u origin $(git symbolic-ref --short HEAD)
     pl = pull
     co = checkout
     col = checkout -
