@@ -209,8 +209,8 @@ vmap <leader>y "*y<CR>
 " Format the current file
 nmap <leader>l :Neoformat<CR>
 
-" Clear the state of the buffer (highlights) and write file
-nnoremap <Esc> :nohl<CR>:w<CR>
+" Refresh the state of the buffer, clear hightlights, and write file
+nnoremap <Esc> :nohl<CR>:w<CR>:GitGutterAll<CR>
 
 
 
