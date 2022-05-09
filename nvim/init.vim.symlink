@@ -214,6 +214,41 @@ nnoremap <Esc> :nohl<CR>:w<CR>:GitGutterAll<CR>
 
 
 
+" Exit insert mode after 30 secs with no cursor movement
+
+let g:inactivity_limit = 30  " max Insert mode inactivity before fail, in seconds
+let g:check_frequency = 1    " seconds between checks
+
+augroup monitor
+    au!
+    " when vim starts kick off the infinitely repeating calls to the monitor function
+    au VimEnter * call timer_start(g:check_frequency * 1000, 'MonitorActivity', {'repeat' : -1})
+
+    " when cursor moves in Insert mode update the last activity time
+    au CursorMovedI * let g:last_activity = reltime()
+augroup END
+
+func! MonitorActivity(timer_id)
+    " when we start we'll initialize the last activity time then return
+    " ...gives a little grace period at beginning
+    if ! exists('g:last_activity') || empty(g:last_activity)
+        let g:last_activity = reltime()
+        return
+    endif
+
+    " very handy function for our purposes, reltime
+    let l:diff = reltime(g:last_activity)[0]
+
+    if l:diff > g:inactivity_limit
+        " Not exit insert mode and save buffer
+        echom "Exiting insert mode after timeout: " . l:diff
+        stopinsert
+        let g:last_activity = []
+    endif
+endfunc
+
+
+
 " Movement -------------------------------------------------------------------
 
 " Break the habit, you stupid boy!
