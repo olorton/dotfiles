@@ -266,7 +266,7 @@ nnoremap <Tab> :bnext<CR>
 nnoremap <S-Tab> :bprevious<CR>
 
 " Set the number of lines to keep viewable on the screen. Default = 0;
-set scrolloff=10
+set scrolloff=4
 
 
 
