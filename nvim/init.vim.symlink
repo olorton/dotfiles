@@ -110,7 +110,7 @@ let g:lightline = {
       \   'helloworld': 'Hello, world!',
       \ },
       \ 'component_function': {
-      \   'gitbranch': 'fugitive#head',
+      \   'gitbranch': 'FugitiveHead',
       \ },
   \ }
 
