@@ -6,7 +6,7 @@ Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'itchyny/lightline.vim'
-Plug 'morhetz/gruvbox'
+Plug 'dracula/vim', { 'as': 'dracula' }
 Plug 'scrooloose/nerdtree'
 Plug 'bling/vim-bufferline'
 set rtp+=/usr/local/opt/fzf
@@ -88,21 +88,12 @@ let mapleader = ","
 
 " Colour scheme --------------------------------------------------------------
 
-colorscheme gruvbox
 set bg=dark
 syntax on
 
 " Enable CursorLine
 set cursorline
 
-" Default Colors for CursorLine
-highlight  CursorLine ctermbg=237 ctermfg=None
-
-" Change Color when entering Insert Mode
-autocmd InsertEnter * highlight  CursorLine ctermbg=239 ctermfg=None
-
-" Revert Color to default when leaving Insert Mode
-autocmd InsertLeave * highlight  CursorLine ctermbg=237 ctermfg=None
 
 
 " Lightline ------------------------------------------------------------------
@@ -110,7 +101,7 @@ autocmd InsertLeave * highlight  CursorLine ctermbg=237 ctermfg=None
 set laststatus=2
 set noshowmode
 let g:lightline = {
-      \ 'colorscheme': 'gruvbox',
+      \ 'colorscheme': 'dracula',
       \ 'active': {
       \   'left': [ [ 'mode', 'paste' ],
       \             [ 'filename', 'gitbranch', 'readonly', 'modified'] ]
