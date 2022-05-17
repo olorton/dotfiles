@@ -10,7 +10,7 @@ scrolling:
 font:
   normal:
     family: Menlo
-  size: 10
+  size: 11
 
 key_bindings:
   # (macOS only)
