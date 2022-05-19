@@ -25,6 +25,12 @@ Terminal typefaces I've used:
 - Current: [DOSEGA](https://sourceforge.net/projects/dosega/)
 - [M+1m console font](http://sourceforge.jp/projects/mplus-fonts/downloads/62344/mplus-TESTFLIGHT-059.tar.xz/)
 
+### Colour theme: Dracula
+
+Already configured for vim and alacritty.
+
+For Slack: `#282A36,#44475A,#44475A,#8BE9FD,#6272A4,#FFFFFF,#50FA7B,#FF5555`
+
 ### Fix font rendering on 1080p screens
 
     defaults -currentHost delete -globalDomain AppleFontSmoothing
