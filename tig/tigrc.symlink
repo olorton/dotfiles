@@ -6,3 +6,4 @@ set refresh-interval = 1
 color cursor black green
 
 bind status a !?git commit --amend
+bind generic P !git push origin
