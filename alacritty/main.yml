@@ -10,6 +10,8 @@ scrolling:
 font:
   normal:
     family: Menlo
+  bold:
+    style: normal
   size: 11
 
 key_bindings:
