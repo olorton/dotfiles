@@ -3,6 +3,6 @@
 set mouse = false
 set refresh-mode = periodic
 set refresh-interval = 1
+color cursor black green
 
 bind status a !?git commit --amend
-
