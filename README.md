@@ -12,6 +12,7 @@ git clone git@github.com:olorton/dotfiles.git ~/Code/dotfiles
 cd ~/Code/dotfiles
 brew bundle
 bin/dotfiles-symlink
+git clone https://github.com/dracula/alacritty.git ~/Code/dracula_alacritty
 cat ~/.python-version | pyenv install -
 ```
 
