@@ -31,6 +31,11 @@ Already configured for vim and alacritty.
 
 For Slack: `#282A36,#44475A,#44475A,#8BE9FD,#6272A4,#FFFFFF,#50FA7B,#FF5555`
 
+### Speed up key repeat
+
+    defaults write NSGlobalDomain KeyRepeat -int 2           # normal minimum is 2 (30 ms)
+    defaults write NSGlobalDomain InitialKeyRepeat -int 25   # normal minimum is 15 (225 ms)
+
 ### Fix font rendering on 1080p screens
 
     defaults -currentHost delete -globalDomain AppleFontSmoothing
