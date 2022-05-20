@@ -185,3 +185,5 @@ bar {
         status_command i3status
 }
 
+# Run on startup
+exec xrandr --output "DP-1" --primary --auto --output "HDMI-2" --above "DP-1" --auto
