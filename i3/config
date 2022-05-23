@@ -186,4 +186,4 @@ bar {
 }
 
 # Run on startup
-exec xrandr --output "DP-1" --primary --auto --output "HDMI-2" --above "DP-1" --auto
+exec xrandr --output "DisplayPort-0" --primary --auto --output "HDMI-A-1" --above "DisplayPort-0" --auto
