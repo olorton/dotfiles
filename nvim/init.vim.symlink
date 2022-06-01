@@ -508,3 +508,11 @@ augroup ft_python
     " More syntax highlighting for Python
     let python_highlight_all = 1
 augroup END
+
+if has('autocmd')
+  if has('spell')
+    au BufNewFile,BufRead COMMIT_EDITMSG setlocal spell
+  endif
+  " move to top of the buffer and switch to insert mode
+  au BufNewFile,BufRead COMMIT_EDITMSG call feedkeys('ggi', 't')
+endif
