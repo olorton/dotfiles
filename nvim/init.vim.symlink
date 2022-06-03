@@ -93,6 +93,7 @@ syntax on
 
 " Enable CursorLine
 set cursorline
+set cursorlineopt=number
 
 
 
