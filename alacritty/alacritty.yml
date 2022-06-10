@@ -4,4 +4,4 @@ import:
   - ~/.config/alacritty/main.yml
   - ~/.config/alacritty/os_overrides.yml
   - ~/Code/dracula_alacritty/dracula.yml
-  - ~/.config/alacritty/host_overrides.yml
+  - ~/.config/alacritty/local.yml
