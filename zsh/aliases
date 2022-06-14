@@ -108,7 +108,7 @@ alias brupod="brew update && brew outdated"
 
 alias szsh="source ~/.zshrc"
 
-alias sit="idasen-controller --sit && idasen-controller --sit && idasen-controller --sit"
-alias stand="idasen-controller --stand && idasen-controller --stand && idasen-controller --stand"
+alias sit="idasen-controller --move-to 710"
+alias stand="idasen-controller --move-to 1111"
 
 alias mux="tmuxinator"

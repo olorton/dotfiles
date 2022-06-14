@@ -65,5 +65,4 @@ symlink_dotfile pyenv/python-version ~/.python-version
 [[ $OSTYPE == "darwin"* ]] && symlink_dotfile tmux/tmux-macosx.conf.symlink ~/.tmux.os.conf
 [[ $OSTYPE == "darwin"* ]] && [ -d ~/Library/Application\ Support/Sublime\ Text ] && symlink_dotfile sublime_text/User/ ~/Library/Application\ Support/Sublime\ Text/Packages/User
 symlink_dotfile direnv/direnvrc.symlink ~/.direnvrc
-[[ $OSTYPE == "darwin"* ]] && symlink_dotfile idasen-controller/config.yaml ~/Library/Application\ Support/idasen-controller/config.yaml
 [[ $OSTYPE == "linux"* ]] && symlink_dotfile i3/config ~/.config/i3/config
