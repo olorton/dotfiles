@@ -1,16 +1,17 @@
 # Ensure user-installed binaries take precedence
-export PATH="$HOME/.cargo/bin:$PATH"                # Rust
-export PATH="/usr/local/bin:$PATH"                  # Homebrew stuff
-export PATH="/usr/local/sbin:$PATH"                 # Homebrew stuff
-export PATH="/usr/local/opt/ruby/bin:/usr/local/lib/ruby/gems/3.0.0/bin:$PATH"  # Ruby
-export PATH="/usr/local/opt/php@7.3/bin:$PATH"      # PHP
-export PATH="/usr/local/opt/php@7.3/sbin:$PATH"     # PHP
-export PATH="$PYENV_ROOT/bin:$PATH"                 # Pyenv
-eval "$(pyenv init --path)"                         # Pyenv
-export PATH="$HOME/.local/bin:$PATH"                # pipx stuff
-export PATH="$HOME/Code/dotfiles/bin:$PATH"         # dotfiles scripts
+export PATH="$HOME/.cargo/bin:$PATH"                    # Rust
+export PATH="/usr/local/bin:$PATH"                      # Homebrew stuff
+export PATH="/usr/local/sbin:$PATH"                     # Homebrew stuff
+export PATH="$(ruby -e 'puts Gem.user_dir')/bin:$PATH"  # Ruby
+export PATH="/usr/local/opt/ruby/bin:$PATH"             # Ruby
+export PATH="/usr/local/opt/php@7.3/bin:$PATH"          # PHP
+export PATH="/usr/local/opt/php@7.3/sbin:$PATH"         # PHP
+export PATH="$PYENV_ROOT/bin:$PATH"                     # Pyenv
+eval "$(pyenv init --path)"                             # Pyenv
+export PATH="$HOME/.local/bin:$PATH"                    # pipx stuff
+export PATH="$HOME/Code/dotfiles/bin:$PATH"             # dotfiles scripts
 if command -v go &> /dev/null; then
-    export PATH="$(go env GOPATH)/bin:$PATH"        # Go binaries
+    export PATH="$(go env GOPATH)/bin:$PATH"            # Go binaries
 fi
 
 # Note: NPM path is set in $DOTFILES/zsh/javascript
