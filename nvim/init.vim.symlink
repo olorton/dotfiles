@@ -57,6 +57,8 @@ filetype plugin indent on
 " left when exiting Insert mode: https://news.ycombinator.com/item?id=30463129
 au InsertLeave * :normal `^
 
+" Tidy up split pane dividers
+highlight VertSplit cterm=NONE
 
 
 " Spacing --------------------------------------------------------------------
