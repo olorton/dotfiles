@@ -24,13 +24,14 @@ Plug 'hrsh7th/cmp-cmdline'
 Plug 'hrsh7th/cmp-nvim-lua'
 Plug 'hrsh7th/cmp-nvim-lsp'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+Plug 'heavenshell/vim-pydocstring'
 Plug 'sbdchd/neoformat'
 " TODO Neomake
 " TODO shellcheck
 
 call plug#end()
 
-
+let g:pydocstring_doq_path = '~/.local/bin/doq'
 
 " Basics ---------------------------------------------------------------------
 
@@ -331,6 +332,12 @@ augroup ft_vim
     au FileType vim setlocal foldmethod=marker
     au FileType help setlocal textwidth=78
 augroup END
+
+
+
+" pydocstring ---------------------------------------------------------------------
+
+let g:pydocstring_enable_mapping = 0
 
 
 
