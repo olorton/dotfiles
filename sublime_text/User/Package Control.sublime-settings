@@ -6,6 +6,7 @@
 	"installed_packages":
 	[
 		"Dockerfile Syntax Highlighting",
+		"Dracula Color Scheme",
 		"Gitignore",
 		"nginx",
 		"Package Control",
