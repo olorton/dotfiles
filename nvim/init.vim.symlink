@@ -525,5 +525,5 @@ if has('autocmd')
     au BufNewFile,BufRead COMMIT_EDITMSG setlocal spell
   endif
   " move to top of the buffer and switch to insert mode
-  au BufNewFile,BufRead COMMIT_EDITMSG call feedkeys('ggi', 't')
+  " au BufNewFile,BufRead COMMIT_EDITMSG call feedkeys('ggi', 't')
 endif
