@@ -221,8 +221,10 @@ bindsym $mod+r mode "resize"
 bindsym XF86MonBrightnessUp exec xbacklight -inc 10
 bindsym XF86MonBrightnessDown exec xbacklight -dec 10
 
-# Start polybar to display a workspace bar (plus the system information)
-exec_always --no-startup-id $HOME/.config/polybar/launch.sh
+# Start i3bar
+bar {
+    status_command i3status
+}
 
 # Make the currently focused window a scratchpad
 bindsym $mod+Shift+minus move scratchpad

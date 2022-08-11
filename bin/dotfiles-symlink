@@ -33,6 +33,10 @@ symlink_dotfile () {
     fi
 }
 
+# Remove old configs
+rm -rf ~/.config/polybar
+
+# Everything else
 mkdir -p ~/.config/cmus
 symlink_dotfile cmus/rc ~/.config/cmus/rc
 symlink_dotfile git/gitconfig.symlink ~/.gitconfig
@@ -66,6 +70,3 @@ symlink_dotfile pyenv/python-version ~/.python-version
 [[ $OSTYPE == "darwin"* ]] && [ -d ~/Library/Application\ Support/Sublime\ Text ] && symlink_dotfile sublime_text/User/ ~/Library/Application\ Support/Sublime\ Text/Packages/User
 symlink_dotfile direnv/direnvrc.symlink ~/.direnvrc
 [[ $OSTYPE == "linux"* ]] && symlink_dotfile i3/config ~/.config/i3/config
-mkdir -p ~/.config/polybar
-[[ $OSTYPE == "linux"* ]] && symlink_dotfile polybar/launch.sh ~/.config/polybar/launch.sh
-[[ $OSTYPE == "linux"* ]] && symlink_dotfile polybar/config.ini ~/.config/polybar/config.ini
