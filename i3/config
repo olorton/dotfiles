@@ -26,9 +26,30 @@ exec --no-startup-id dex --autostart --environment i3
 # The combination of xss-lock, nm-applet and pactl is a popular choice, so
 # they are included here as an example. Modify as you see fit.
 
+# Set timout to lock screen
+
+exec_always --no-startup-id xset dpms 0 0 300 &
+
 # xss-lock grabs a logind suspend inhibit lock and will use i3lock to lock the
 # screen before suspend. Use loginctl lock-session to lock your screen.
-exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
+set $lock_cmd rm -f /tmp/screen.png && scrot "/tmp/screen.png" && convert "/tmp/screen.png" -scale 10% -scale 1000% "/tmp/screen.png" && convert /tmp/screen.png -fill black -colorize 20%  /tmp/screen.png && i3lock -u -i "/tmp/screen.png" && sleep 1 && rm -f /tmp/screen.png
+exec_always --no-startup-id xss-lock --transfer-sleep-lock -- $lock_cmd --nofork
+
+# exit i3
+set $mode_system System (l) lock, (e) logout, (s) suspend, (h) hibernate, (r) reboot, (Shift+s) shutdown
+mode "$mode_system" {
+    bindsym l exec --no-startup-id $lock_cmd, mode "default"
+    bindsym e exec --no-startup-id i3-msg exit, mode "default"
+    bindsym s exec --no-startup-id $lock_cmd && systemctl suspend, mode "default"
+    bindsym h exec --no-startup-id $lock_cmd && systemctl hibernate, mode "default"
+    bindsym r exec --no-startup-id systemctl reboot, mode "default"
+    bindsym Shift+s exec --no-startup-id systemctl poweroff -i, mode "default"
+
+    # back to normal: Enter or Escape
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+bindsym $mod+Shift+e mode "$mode_system"
 
 # NetworkManager is the most popular way to manage wireless networks on Linux,
 # and nm-applet is a desktop environment-independent system tray GUI for it.
@@ -168,24 +189,6 @@ bindsym Control+$mod+semicolon move workspace to output right
 bindsym $mod+Shift+c reload
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 bindsym $mod+Shift+r restart
-# exit i3
-set $Locker rm -f /tmp/screen.png && scrot "/tmp/screen.png" && convert "/tmp/screen.png" -scale 10% -scale 1000% "/tmp/screen.png" && convert /tmp/screen.png -fill black -colorize 20%  /tmp/screen.png && i3lock -u -i "/tmp/screen.png" && sleep 1 && rm -f /tmp/screen.png
-set $mode_system System (l) lock, (e) logout, (s) suspend, (h) hibernate, (r) reboot, (Shift+s) shutdown
-mode "$mode_system" {
-    bindsym l exec --no-startup-id $Locker, mode "default"
-    bindsym e exec --no-startup-id i3-msg exit, mode "default"
-    bindsym s exec --no-startup-id $Locker && systemctl suspend, mode "default"
-    bindsym h exec --no-startup-id $Locker && systemctl hibernate, mode "default"
-    bindsym r exec --no-startup-id systemctl reboot, mode "default"
-    bindsym Shift+s exec --no-startup-id systemctl poweroff -i, mode "default"
-
-    # back to normal: Enter or Escape
-    bindsym Return mode "default"
-    bindsym Escape mode "default"
-}
-
-bindsym $mod+Shift+e mode "$mode_system"
-
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
