@@ -72,6 +72,16 @@ bindsym XF86AudioPrev exec playerctl previous && playerctl position 0
 bindsym XF86MonBrightnessUp exec xbacklight -inc 20 # increase screen brightness
 bindsym XF86MonBrightnessDown exec xbacklight -dec 20 # decrease screen brightness
 
+# Touchpad controls
+# bindsym XF86TouchpadToggle exec /some/path/toggletouchpad.sh # toggle touchpad
+# e.g.:
+#    #!/bin/bash
+#    if synclient -l | grep "TouchpadOff .*=.*0" ; then
+#        synclient TouchpadOff=1 ;
+#    else
+#        synclient TouchpadOff=0 ;
+#    fi
+
 # Provide Alt-Tab like behaviour
 bindsym $mod+Tab exec --no-startup-id rofi -modi combi -combi-modi window -show combi
 
