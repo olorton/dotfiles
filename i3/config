@@ -68,6 +68,10 @@ bindsym XF86AudioPause exec playerctl play-pause
 bindsym XF86AudioNext exec playerctl next && playerctl position 0
 bindsym XF86AudioPrev exec playerctl previous && playerctl position 0
 
+# Sreen brightness controls
+bindsym XF86MonBrightnessUp exec xbacklight -inc 20 # increase screen brightness
+bindsym XF86MonBrightnessDown exec xbacklight -dec 20 # decrease screen brightness
+
 # Provide Alt-Tab like behaviour
 bindsym $mod+Tab exec --no-startup-id rofi -modi combi -combi-modi window -show combi
 
@@ -216,10 +220,6 @@ mode "resize" {
 }
 
 bindsym $mod+r mode "resize"
-
-# Function keys
-bindsym XF86MonBrightnessUp exec xbacklight -inc 10
-bindsym XF86MonBrightnessDown exec xbacklight -dec 10
 
 # Start i3bar
 bar {
