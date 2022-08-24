@@ -28,6 +28,7 @@ Plug 'heavenshell/vim-pydocstring'
 Plug 'sbdchd/neoformat'
 " TODO Neomake
 " TODO shellcheck
+Plug 'martinda/jenkinsfile-vim-syntax'
 
 call plug#end()
 
