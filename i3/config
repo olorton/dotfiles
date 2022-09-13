@@ -82,9 +82,6 @@ bindsym XF86MonBrightnessDown exec xbacklight -dec 20 # decrease screen brightne
 #        synclient TouchpadOff=0 ;
 #    fi
 
-# Provide Alt-Tab like behaviour
-bindsym $mod+Tab exec --no-startup-id rofi -modi combi -combi-modi window -show combi
-
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
 
