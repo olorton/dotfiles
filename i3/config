@@ -235,9 +235,37 @@ mode "resize" {
 
 bindsym $mod+r mode "resize"
 
+# Colours
+set $bg-color               #2f343f
+set $inactive-bg-color      #2f343f
+set $text-color             #f3f4f5
+set $inactive-text-color    #676e7d
+set $urgent-bg-color        #e53935
+set $indicator-color        #00ff00
+set $separator-color        #757575
+
+# Window Colours        border              background          text                    indicator
+client.focused          $bg-color           $bg-color           $text-color             $indicator-color
+client.unfocused        $inactive-bg-color  $inactive-bg-color  $inactive-text-color    $indicator-color
+client.focused_inactive $inactive-bg-color  $inactive-bg-color  $inactive-text-color    $indicator-color
+client.urgent           $urgent-bg-color    $urgent-bg-color    $text-text-color        $indicator-color
+hide_edge_borders both
+default_border pixel 1
+default_floating_border pixel 1
+
 # Start i3bar
 bar {
+    position top
     status_command i3status
+    font pango:monospace 8
+    colors {
+        background  $bg-color
+        separator   $separator-color
+        #                   border              background          text
+        focused_workspace   $bg-color           $bg-color           $text-color
+        inactive_workspace  $inactive-bg-color  $inactive-bg-color  $inactive-text-color
+        urgent_workspace    $urgent-bg-color    $urgent-bg-color    $text-color
+    }
 }
 
 # Make the currently focused window a scratchpad
@@ -252,3 +280,6 @@ bindsym $mod+minus scratchpad show
 # exec --no-startup-id i3-msg 'workspace 3; exec /usr/bin/signal-desktop'
 exec --no-startup-id xinput disable "SynPS/2 Synaptics TouchPad"
 exec xrandr --output "DisplayPort-0" --primary --auto --output "HDMI-A-1" --above "DisplayPort-0" --auto
+
+# Background wallpaper
+exec_always feh --bg-scale /home/oliver/Wallpapers/wallpaper.jpg
