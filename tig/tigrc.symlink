@@ -4,6 +4,7 @@ set mouse = false
 set refresh-mode = periodic
 set refresh-interval = 1
 color cursor black green
+set main-view-id = yes
 
 bind status a !?git commit --amend
 bind generic P !git push origin
