@@ -72,8 +72,8 @@ bindsym $mod+XF86AudioMute exec playerctl previous && playerctl position 0
 bindsym $mod+XF86AudioRaiseVolume exec playerctl next && playerctl position 0
 
 # Sreen brightness controls
-bindsym XF86MonBrightnessUp exec xbacklight -inc 20 # increase screen brightness
-bindsym XF86MonBrightnessDown exec xbacklight -dec 20 # decrease screen brightness
+bindsym XF86MonBrightnessUp exec xbacklight -inc 10 -steps 100 && current_value=`xbacklight -get` && notify-send -r 2344123 "Brightness Up" "${current_value%.*} %"
+bindsym XF86MonBrightnessDown exec xbacklight -dec 10 -steps 100 && current_value=`xbacklight -get` && notify-send -r 2344123 "Brightness Up" "${current_value%.*} %"
 
 # Touchpad controls
 # bindsym XF86TouchpadToggle exec /some/path/toggletouchpad.sh # toggle touchpad
