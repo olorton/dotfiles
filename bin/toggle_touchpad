@@ -1,0 +1,35 @@
+#!/usr/bin/env bash
+
+TOUCHPAD="SynPS/2 Synaptics TouchPad"
+TRACKPOINT="TPPS/2 IBM TrackPoint"
+
+is_enabled() {
+    [ $(xinput --list-props "$1" | grep "Device Enabled" | awk '{print $4}') == "1" ]
+}
+
+is_disabled() {
+    if is_enabled "$1"; then
+        false
+    fi
+}
+
+notify_send() {
+    if is_enabled "${TRACKPOINT}"; then
+        trackpoint_status="TrackPoint  ENABLED"
+    else
+        trackpoint_status="TrackPoint  disabled"
+    fi
+    if is_enabled "${TOUCHPAD}"; then
+        touchpad_status="TouchPad    ENABLED"
+    else
+        touchpad_status="TouchPad    disabled"
+    fi
+
+    notify-send -r 848475 "Input devices changed" "${trackpoint_status}\n${touchpad_status}"
+}
+
+
+is_enabled "${TOUCHPAD}" && is_enabled "${TRACKPOINT}" && xinput disable "${TOUCHPAD}" && xinput disable "${TRACKPOINT}" && notify_send && exit 0
+is_disabled "${TOUCHPAD}" && is_disabled "${TRACKPOINT}" && xinput enable "${TOUCHPAD}" && notify_send && exit 0
+is_enabled "${TOUCHPAD}" && is_disabled "${TRACKPOINT}" && xinput disable "${TOUCHPAD}" && xinput enable "${TRACKPOINT}" && notify_send && exit 0
+is_disabled "${TOUCHPAD}" && is_enabled "${TRACKPOINT}" && xinput enable "${TOUCHPAD}" && notify_send && exit 0
