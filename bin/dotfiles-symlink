@@ -42,9 +42,7 @@ symlink_dotfile git/gitconfig.symlink ~/.gitconfig
 symlink_dotfile git/gitignore_global ~/.gitignore_global
 symlink_dotfile tig/tigrc.symlink ~/.tigrc
 symlink_dotfile tmux/tmux.conf.symlink ~/.tmux.conf
-mkdir -p ~/.config/nvim/tmp/backup
-mkdir -p ~/.config/nvim/tmp/undo
-symlink_dotfile nvim/init.vim.symlink ~/.config/nvim/init.vim
+symlink_dotfile nvim ~/.config/nvim
 symlink_dotfile zsh/zshrc.symlink ~/.zshrc
 mkdir -p ~/.config/alacritty
 symlink_dotfile alacritty/main.yml ~/.config/alacritty/main.yml
