@@ -1,2 +1,3 @@
 Brewfile.lock.json
 alacritty/local.yml
+nvim/plugin/packer_compiled.lua
