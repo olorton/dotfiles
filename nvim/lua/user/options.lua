@@ -23,7 +23,7 @@ vim.opt.hlsearch = true
 vim.opt.ignorecase = true
 
 -- allow the mouse to be used in neovim
-vim.opt.mouse = "a"
+vim.opt.mouse = ""
 
 -- pop up menu height
 vim.opt.pumheight = 10
