@@ -23,6 +23,9 @@ keymap("n", "<C-j>", "<C-w>j", key_opts)
 keymap("n", "<C-k>", "<C-w>k", key_opts)
 keymap("n", "<C-l>", "<C-w>l", key_opts)
 
+-- File explorer
+keymap("n", "<leader>e", ":Lex 30<cr>", key_opts)
+
 -- Resize with arrows
 keymap("n", "<C-Up>", ":resize -2<CR>", key_opts)
 keymap("n", "<C-Down>", ":resize +2<CR>", key_opts)
