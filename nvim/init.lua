@@ -37,6 +37,12 @@ vim.opt.sidescrolloff = 8
 vim.opt.list = true
 vim.opt.listchars = 'tab:>~'
 
+-- File loading/saving
+vim.opt.autowrite = true -- write to disk when navigating file
+vim.opt.autoread = true -- read the file if it was changed externally
+vim.api.nvim_command("au FocusGained,BufEnter * :silent! !") -- reload when entereing the buffer ore gaining focus
+vim.api.nvim_command("au FocusLost,WinLeave,CursorHold * :silent! wall") -- save when exiting buffer or losing focus
+
 -- TODO whats is all this?:
 vim.cmd "set whichwrap+=<,>,[,],h,l"
 vim.cmd [[set iskeyword+=-]]
