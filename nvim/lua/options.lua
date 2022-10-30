@@ -42,8 +42,16 @@ vim.api.nvim_create_autocmd({ "BufWritePre" }, {
 -- File loading/saving
 vim.opt.autowrite = true -- write to disk when navigating file
 vim.opt.autoread = true -- read the file if it was changed externally
-vim.api.nvim_command("au FocusGained,BufEnter * :silent! !") -- reload when entereing the buffer ore gaining focus
-vim.api.nvim_command("au FocusLost,WinLeave,CursorHold * :silent! wall") -- save when exiting buffer or losing focus
+-- reload when entereing the buffer ore gaining focus
+vim.api.nvim_create_autocmd({ "FocusGained", "BufEnter" }, {
+  pattern = { "*" },
+  command = [[silent! !]],
+})
+-- save when exiting buffer or losing focus
+vim.api.nvim_create_autocmd({ "FocusLost", "WinLeave", "CursorHold" }, {
+  pattern = { "*" },
+  command = [[silent! wall]],
+})
 
 -- TODO whats is all this?:
 vim.cmd "set whichwrap+=<,>,[,],h,l"
