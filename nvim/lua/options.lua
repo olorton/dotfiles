@@ -30,8 +30,14 @@ vim.opt.signcolumn = "yes" -- always show the sign column, otherwise it would sh
 vim.opt.wrap = true
 vim.opt.scrolloff = 8
 vim.opt.sidescrolloff = 8
+
+-- Display/remove unexpected whitespace
 vim.opt.list = true
-vim.opt.listchars = 'tab:>~'
+vim.opt.listchars = 'trail:·,tab:>~'
+vim.api.nvim_create_autocmd({ "BufWritePre" }, {
+  pattern = { "*" },
+  command = [[%s/\s\+$//e]],
+})
 
 -- File loading/saving
 vim.opt.autowrite = true -- write to disk when navigating file
