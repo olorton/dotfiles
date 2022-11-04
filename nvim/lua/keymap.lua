@@ -40,6 +40,10 @@ keymap("n", "<S-h>", ":bprevious<CR>", opts)
 keymap("n", "<A-j>", "<Esc>:m .+1<CR>==gi", opts)
 keymap("n", "<A-k>", "<Esc>:m .-2<CR>==gi", opts)
 
+-- Telescope
+keymap("n", "<C-p>", "<cmd>lua require'telescope.builtin'.find_files(require('telescope.themes').get_dropdown({ previewer = false }))<cr>", opts)
+keymap("n", "<C-g>", "<cmd>Telescope live_grep<cr>", opts)
+
 -- Insert --
 -- Press jk fast to exit insert mode 
 --keymap("i", "jk", "<ESC>", opts)
