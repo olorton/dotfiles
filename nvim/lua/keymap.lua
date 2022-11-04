@@ -45,7 +45,7 @@ keymap("n", "<C-p>", "<cmd>lua require'telescope.builtin'.find_files(require('te
 keymap("n", "<C-g>", "<cmd>Telescope live_grep<cr>", opts)
 
 -- Insert --
--- Press jk fast to exit insert mode 
+-- Press jk fast to exit insert mode
 --keymap("i", "jk", "<ESC>", opts)
 --keymap("i", "kj", "<ESC>", opts)
 
