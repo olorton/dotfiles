@@ -43,3 +43,11 @@ For Slack: `#282A36,#44475A,#44475A,#8BE9FD,#6272A4,#FFFFFF,#50FA7B,#FF5555`
     defaults write -g CGFontRenderingFontSmoothingDisabled -bool YES
 
 Source: [nvucuong.medium.com/macos-blurry-texts-on-an-external-full-hd-monitor-d2a955c25607](https://nvucuong.medium.com/macos-blurry-texts-on-an-external-full-hd-monitor-d2a955c25607)
+
+## Tips
+
+Sync dotfiles to vagrant box:
+
+```bash
+rsync -av --delete -e "vagrant ssh --" $DOTFILES :~/
+```
