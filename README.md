@@ -51,3 +51,16 @@ Sync dotfiles to vagrant box:
 ```bash
 rsync -av --delete -e "vagrant ssh --" $DOTFILES :~/
 ```
+
+Install zsh & oh-my-zsh on a server:
+
+```bash
+sudo apt install zsh
+sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+```
+
+TODO vagrant dotfiles
+
+- rg - `sudo apt-get install ripgrep`
+- install nvim (neovim on ubuntu) Use ppa `sudo add-apt-repository ppa:neovim-ppa/stable -y`
+- install zsh && ohmyzsh

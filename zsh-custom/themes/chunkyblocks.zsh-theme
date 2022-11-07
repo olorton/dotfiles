@@ -52,7 +52,7 @@ end_prompt() {
 
 prompt_wip_precmd() {
     vcs_info
-    PROMPT="%{%f%b%k%}$(dir_segment)$(git_segment)%{%f%b%k%}$(end_prompt) "
+    PROMPT="TODO SERVER %{%f%b%k%}$(dir_segment)$(git_segment)%{%f%b%k%}$(end_prompt) "
 }
 
 prompt_wip_setup() {
