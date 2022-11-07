@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 
-DOTFILES_ROOT="${HOME}/Code/dotfiles/"
-[ -d "${HOME}/code" ] && DOTFILES_ROOT="${HOME}/code/dotfiles/"
+DOTFILES_ROOT=$(cd $(dirname "${BASH_SOURCE[0]}") && cd .. && pwd)
 
 symlink_dotfile () {
     SOURCE="${1}"
@@ -11,10 +10,10 @@ symlink_dotfile () {
         echo "Backing up file ${TARGET} to ${TARGET}.backup before creating symlink"
         mv "${TARGET}" "${TARGET}.backup"
     elif [ -L "${TARGET}" ] && [ -f "${TARGET}" ]; then
-        echo "Target link already exists, replacing linked file: ${DOTFILES_ROOT}${SOURCE} -> ${TARGET}"
+        echo "Target link already exists, replacing linked file: ${DOTFILES_ROOT}/${SOURCE} -> ${TARGET}"
         rm -f "${TARGET}"
     elif [ -L "${TARGET}" ] && [ -d "${TARGET}" ]; then
-        echo "Target link dir already exists, replacing linked file: ${DOTFILES_ROOT}${SOURCE} -> ${TARGET}"
+        echo "Target link dir already exists, replacing linked file: ${DOTFILES_ROOT}/${SOURCE} -> ${TARGET}"
         rm -f "${TARGET}"
     elif [ ! -L "${TARGET}" ] && [ -d "${TARGET}" ]; then
         echo "Backing up dir ${TARGET} to ${TARGET}.backup before creating symlink"
@@ -27,9 +26,9 @@ symlink_dotfile () {
         mkdir -p "$(dirname "${TARGET}")"
     fi
 
-    ln -s "${DOTFILES_ROOT}${SOURCE}" "${TARGET}"
+    ln -s "${DOTFILES_ROOT}/${SOURCE}" "${TARGET}"
     if [ -L "${TARGET}" ] && [ -f "${TARGET}" ]; then
-        echo "SUCCESSFULLY created link: ${DOTFILES_ROOT}${SOURCE} -> ${TARGET}"
+        echo "SUCCESSFULLY created link: ${DOTFILES_ROOT}/${SOURCE} -> ${TARGET}"
     fi
 }
 
