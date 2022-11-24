@@ -41,6 +41,8 @@
 [pull]
     default = current
     ff = only
+[branch]
+    autosetuprebase = always
 [branch "master"]
     remote = origin
     merge = refs/heads/master
