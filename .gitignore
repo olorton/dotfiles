@@ -1,3 +1,4 @@
 Brewfile.lock.json
 alacritty/local.yml
-.netrwhist
+nvim/plugin
+nvim/.netrwhist
