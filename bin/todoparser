@@ -27,7 +27,7 @@ with open(filename, "r") as file:
         date = None
         for line in day.split("\n"):
             if len(line):
-                # Format line
+                # TODO Format line
                 #   - If line is a date, convert it to iso format
                 #   - If line is a bullet "-" or "*" convert it to "- [ ]" or "- [*]"
                 #   - If line is numbered, i.e. incomplete, convert it to "1. [ ]"
