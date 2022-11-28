@@ -5,6 +5,7 @@
 	],
 	"installed_packages":
 	[
+		"BazelSyntax",
 		"Dockerfile Syntax Highlighting",
 		"Dracula Color Scheme",
 		"Gitignore",
