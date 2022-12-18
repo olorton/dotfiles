@@ -5,6 +5,10 @@ vim.cmd [[
     autocmd TextYankPost * silent!lua require('vim.highlight').on_yank({higroup = 'Visual', timeout = 200}) 
     autocmd BufWinEnter * :set formatoptions-=cro
     autocmd FileType qf set nobuflisted
+
+    " Fixes issue with the default behavior which is that nvim shifts the cursor
+    " left when exiting Insert mode: https://news.ycombinator.com/item?id=30463129
+    au InsertLeave * :normal `^
   augroup end
 
   augroup _git
