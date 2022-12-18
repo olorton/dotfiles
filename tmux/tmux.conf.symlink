@@ -33,11 +33,8 @@ set -g status-fg '#aaaaaa'
 # Keep plenty of history for scrollback
 set -g history-limit 10000
 
-# mouse
-#set -g mouse-resize-pane on
-#set -g mouse-select-pane on
-#set -g mouse-select-window on
-#setw -g mode-mouse on
+# disable mouse
+set -g mouse off
 
 # synchronize-panes
 bind C-a setw synchronize-panes
