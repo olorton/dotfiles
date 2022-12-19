@@ -24,7 +24,8 @@ set -g clock-mode-style 24
 set -g renumber-windows on
 
 # use 256 colors
-set -g default-terminal "screen-256color"
+set -g default-terminal "tmux-256color"
+set -ag terminal-overrides ",xterm-256color:RGB"
 
 # change tmux bar colors
 set -g status-bg '#666666'

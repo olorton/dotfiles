@@ -1,5 +1,7 @@
 # The default config can be found on the alacritty release page,
 # e.g. https://github.com/alacritty/alacritty/releases
+env:
+  TERM: xterm-256color
 window:
   startup_mode: Windowed
   padding:

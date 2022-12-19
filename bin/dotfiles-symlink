@@ -49,23 +49,24 @@ symlink_dotfile tmux/tmux.conf.symlink ~/.tmux.conf
 #mkdir -p ~/.config/nvim/tmp/undo
 symlink_dotfile nvim ~/.config/nvim
 symlink_dotfile zsh/zshrc.symlink ~/.zshrc
-#mkdir -p ~/.config/alacritty
-#symlink_dotfile alacritty/main.yml ~/.config/alacritty/main.yml
-#[[ $OSTYPE == "darwin"* ]] && symlink_dotfile alacritty/mac.yml ~/.config/alacritty/os_overrides.yml
-#[[ $OSTYPE == "linux"* ]] && symlink_dotfile alacritty/linux.yml ~/.config/alacritty/os_overrides.yml
-## TODO remove this section once all machines have been migrated to new file structure
-#new_file="${DOTFILES_ROOT}/alacritty/local.yml"
-#old_file="$(cd ~ && pwd)/.config/alacritty/host_overrides.yml"
-#ls -al "$old_file"
-#if [ -e "$old_file" ]; then
-#    echo "Moving old alacritty host_overrides.yml"
-#    mv $old_file $new_file
-#else
-#    echo "Touching alacritty local.yml"
-#    touch "${DOTFILES_ROOT}/alacritty/local.yml"
-#fi
-#symlink_dotfile alacritty/local.yml ~/.config/alacritty/local.yml
-#symlink_dotfile alacritty/alacritty.yml ~/.config/alacritty/alacritty.yml
+mkdir -p ~/.config/alacritty
+symlink_dotfile alacritty/main.yml ~/.config/alacritty/main.yml
+[[ $OSTYPE == "darwin"* ]] && symlink_dotfile alacritty/mac.yml ~/.config/alacritty/os_overrides.yml
+[[ $OSTYPE == "linux"* ]] && symlink_dotfile alacritty/linux.yml ~/.config/alacritty/os_overrides.yml
+# TODO remove this section once all machines have been migrated to new file structure
+new_file="${DOTFILES_ROOT}/alacritty/local.yml"
+old_file="$(cd ~ && pwd)/.config/alacritty/host_overrides.yml"
+ls -al "$old_file"
+if [ -e "$old_file" ]; then
+    echo "Moving old alacritty host_overrides.yml"
+    mv $old_file $new_file
+else
+    echo "Touching alacritty local.yml"
+    touch "${DOTFILES_ROOT}/alacritty/local.yml"
+fi
+symlink_dotfile alacritty/colours ~/.config/alacritty/colours
+symlink_dotfile alacritty/local.yml ~/.config/alacritty/local.yml
+symlink_dotfile alacritty/alacritty.yml ~/.config/alacritty/alacritty.yml
 symlink_dotfile pyenv/python-version ~/.python-version
 [[ $OSTYPE == "linux"* ]] && symlink_dotfile tmux/tmux-linux.conf.symlink ~/.tmux.os.conf
 [[ $OSTYPE == "darwin"* ]] && symlink_dotfile tmux/tmux-macosx.conf.symlink ~/.tmux.os.conf
