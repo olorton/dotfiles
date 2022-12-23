@@ -65,9 +65,9 @@ symlink_dotfile tmux/tmux.conf.symlink ~/.tmux.conf
 [[ $OSTYPE == "darwin"* ]] && symlink_dotfile tmux/tmux-macosx.conf.symlink ~/.tmux.os.conf
 
 # Nvim
+symlink_dotfile nvim ~/.config/nvim
 #mkdir -p ~/.config/nvim/tmp/backup # TODO - should my new vim config do stuff with this?
 #mkdir -p ~/.config/nvim/tmp/undo # TODO - should my new vim config do stuff with this?
-symlink_dotfile nvim ~/.config/nvim
 
 # Zsh
 symlink_dotfile zsh/zshrc.symlink ~/.zshrc
