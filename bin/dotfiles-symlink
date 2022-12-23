@@ -34,28 +34,25 @@ symlink_dotfile () {
         printf "${FG_RED}Cannot overwrite because the destination exists, and is not a file or a link: ${TARGET}\n${ANSI_RESET}"
         exit 1
     fi
-
+    
+    # Ensure target's directories exists
+    mkdir -p $(dirname "${TARGET}")
+    # Create symlink
     ln -s "${DOTFILES_ROOT}/${SOURCE}" "${TARGET}"
     if [ -L "${TARGET}" ] && [ -f "${TARGET}" ]; then
         printf "${FG_GREEN}${SOURCE} -> ${TARGET/$HOME/~}${info_message}\n${ANSI_RESET}"
     fi
 }
 
-# Make .config
-mkdir -p ~/.config
-
-# Everything else
-#mkdir -p ~/.config/cmus
 #symlink_dotfile cmus/rc ~/.config/cmus/rc
 symlink_dotfile git/gitconfig.symlink ~/.gitconfig
 symlink_dotfile git/gitignore_global ~/.gitignore_global
 symlink_dotfile tig/tigrc.symlink ~/.tigrc
 symlink_dotfile tmux/tmux.conf.symlink ~/.tmux.conf
-#mkdir -p ~/.config/nvim/tmp/backup
-#mkdir -p ~/.config/nvim/tmp/undo
+#mkdir -p ~/.config/nvim/tmp/backup # TODO - should my new vim config do stuff with this?
+#mkdir -p ~/.config/nvim/tmp/undo # TODO - should my new vim config do stuff with this?
 symlink_dotfile nvim ~/.config/nvim
 symlink_dotfile zsh/zshrc.symlink ~/.zshrc
-mkdir -p ~/.config/alacritty
 symlink_dotfile alacritty/main.yml ~/.config/alacritty/main.yml
 [[ $OSTYPE == "darwin"* ]] && symlink_dotfile alacritty/mac.yml ~/.config/alacritty/os_overrides.yml
 [[ $OSTYPE == "linux"* ]] && symlink_dotfile alacritty/linux.yml ~/.config/alacritty/os_overrides.yml
