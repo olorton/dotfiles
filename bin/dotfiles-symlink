@@ -37,6 +37,7 @@ symlink_dotfile () {
     
     # Ensure target's directories exists
     mkdir -p $(dirname "${TARGET}")
+
     # Create symlink
     ln -s "${DOTFILES_ROOT}/${SOURCE}" "${TARGET}"
     if [ -L "${TARGET}" ] && [ -f "${TARGET}" ]; then
