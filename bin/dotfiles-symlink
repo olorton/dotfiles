@@ -22,10 +22,10 @@ symlink_dotfile () {
         info_message="${FG_BLUE} (File backed up to: ${TARGET}.backup)"
         mv "${TARGET}" "${TARGET}.backup"
     elif [ -L "${TARGET}" ] && [ -f "${TARGET}" ]; then
-        info_message="${FG_LIGHT_GRAY} (Linked file replaced)"
+        info_message="${FG_LIGHT_GRAY} (replaced)"
         rm -f "${TARGET}"
     elif [ -L "${TARGET}" ] && [ -d "${TARGET}" ]; then
-        info_message="${FG_LIGHT_GRAY} (Linked dir replaced)"
+        info_message="${FG_LIGHT_GRAY} (replaced)"
         rm -f "${TARGET}"
     elif [ ! -L "${TARGET}" ] && [ -d "${TARGET}" ]; then
         info_message="${FG_BLUE} (Dir backed up to: ${TARGET}.backup)"
