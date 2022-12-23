@@ -2,33 +2,42 @@
 
 DOTFILES_ROOT=$(cd $(dirname "${BASH_SOURCE[0]}") && cd .. && pwd)
 
+ANSI_RESET="\033[0m"
+FG_BLACK="\033[30m"
+FG_RED="\033[31m"
+FG_GREEN="\033[32m"
+FG_YELLOW="\033[33m"
+FG_BLUE="\033[34m"
+FG_PURPLE="\033[35m"
+FG_CYAN="\033[36m"
+FG_LIGHT_GRAY="\033[37m"
+
 symlink_dotfile () {
     SOURCE="${1}"
     TARGET="${2}"
 
+    info_message=""
+
     if [ ! -L "${TARGET}" ] && [ -f "${TARGET}" ]; then
-        echo "Backing up file ${TARGET} to ${TARGET}.backup before creating symlink"
+        info_message="${FG_BLUE} (File backed up to: ${TARGET}.backup)"
         mv "${TARGET}" "${TARGET}.backup"
     elif [ -L "${TARGET}" ] && [ -f "${TARGET}" ]; then
-        echo "Target link already exists, replacing linked file: ${DOTFILES_ROOT}/${SOURCE} -> ${TARGET}"
+        info_message="${FG_LIGHT_GRAY} (Linked file replaced)"
         rm -f "${TARGET}"
     elif [ -L "${TARGET}" ] && [ -d "${TARGET}" ]; then
-        echo "Target link dir already exists, replacing linked file: ${DOTFILES_ROOT}/${SOURCE} -> ${TARGET}"
+        info_message="${FG_LIGHT_GRAY} (Linked dir replaced)"
         rm -f "${TARGET}"
     elif [ ! -L "${TARGET}" ] && [ -d "${TARGET}" ]; then
-        echo "Backing up dir ${TARGET} to ${TARGET}.backup before creating symlink"
+        info_message="${FG_BLUE} (Dir backed up to: ${TARGET}.backup)"
         mv "${TARGET}" "${TARGET}.backup"
     elif [ -e "${TARGET}" ]; then
-        echo "Cannot overwrite because the destination exists, and is not a file or a link: ${TARGET}"
+        printf "${FG_RED}Cannot overwrite because the destination exists, and is not a file or a link: ${TARGET}\n${ANSI_RESET}"
         exit 1
-
-        echo "Target link does not exist, linking file from dotfiles to: ${TARGET}"
-        mkdir -p "$(dirname "${TARGET}")"
     fi
 
     ln -s "${DOTFILES_ROOT}/${SOURCE}" "${TARGET}"
     if [ -L "${TARGET}" ] && [ -f "${TARGET}" ]; then
-        echo "SUCCESSFULLY created link: ${DOTFILES_ROOT}/${SOURCE} -> ${TARGET}"
+        printf "${FG_GREEN}${SOURCE} -> ${TARGET/$HOME/~}${info_message}\n${ANSI_RESET}"
     fi
 }
 
