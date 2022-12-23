@@ -50,25 +50,47 @@ ALLOW_DESKTOP=1
 [[ ${1} == "remote" ]] && ALLOW_DESKTOP=0
 [[ $ALLOW_DESKTOP == 0 ]] && echo "Only symlinking server/remote dotfiles."
 
-# Tasks
-[[ $ALLOW_DESKTOP == 1 ]] && symlink_dotfile cmus/rc ~/.config/cmus/rc
+# Tasks ----------------------------------------------------------------------
+
+# Git
 symlink_dotfile git/gitconfig.symlink ~/.gitconfig
 symlink_dotfile git/gitignore_global ~/.gitignore_global
+
+# Tig
 symlink_dotfile tig/tigrc.symlink ~/.tigrc
+
+# Tmux
 symlink_dotfile tmux/tmux.conf.symlink ~/.tmux.conf
+[[ $OSTYPE == "linux"* ]] && symlink_dotfile tmux/tmux-linux.conf.symlink ~/.tmux.os.conf
+[[ $OSTYPE == "darwin"* ]] && symlink_dotfile tmux/tmux-macosx.conf.symlink ~/.tmux.os.conf
+
+# Nvim
 #mkdir -p ~/.config/nvim/tmp/backup # TODO - should my new vim config do stuff with this?
 #mkdir -p ~/.config/nvim/tmp/undo # TODO - should my new vim config do stuff with this?
 symlink_dotfile nvim ~/.config/nvim
+
+# Zsh
 symlink_dotfile zsh/zshrc.symlink ~/.zshrc
+
+# Pyenv
+symlink_dotfile pyenv/python-version ~/.python-version
+
+# Direnv
+symlink_dotfile direnv/direnvrc.symlink ~/.direnvrc
+
+# Cmus
+[[ $ALLOW_DESKTOP == 1 ]] && symlink_dotfile cmus/rc ~/.config/cmus/rc
+
+# i3
+[[ $ALLOW_DESKTOP == 1 ]] && [[ $OSTYPE == "linux"* ]] && symlink_dotfile i3/config ~/.config/i3/config
+
+# Alacritty
 [[ $ALLOW_DESKTOP == 1 ]] && symlink_dotfile alacritty/main.yml ~/.config/alacritty/main.yml
 [[ $ALLOW_DESKTOP == 1 ]] && [[ $OSTYPE == "darwin"* ]] && symlink_dotfile alacritty/mac.yml ~/.config/alacritty/os_overrides.yml
 [[ $ALLOW_DESKTOP == 1 ]] && [[ $OSTYPE == "linux"* ]] && symlink_dotfile alacritty/linux.yml ~/.config/alacritty/os_overrides.yml
 [[ $ALLOW_DESKTOP == 1 ]] && symlink_dotfile alacritty/colours ~/.config/alacritty/colours
 [[ $ALLOW_DESKTOP == 1 ]] && symlink_dotfile alacritty/local.yml ~/.config/alacritty/local.yml
 [[ $ALLOW_DESKTOP == 1 ]] && symlink_dotfile alacritty/alacritty.yml ~/.config/alacritty/alacritty.yml
-symlink_dotfile pyenv/python-version ~/.python-version
-[[ $OSTYPE == "linux"* ]] && symlink_dotfile tmux/tmux-linux.conf.symlink ~/.tmux.os.conf
-[[ $OSTYPE == "darwin"* ]] && symlink_dotfile tmux/tmux-macosx.conf.symlink ~/.tmux.os.conf
+
+# Sublime text
 [[ $ALLOW_DESKTOP == 1 ]] && [[ $OSTYPE == "darwin"* ]] && [ -d ~/Library/Application\ Support/Sublime\ Text ] && symlink_dotfile sublime_text/User/ ~/Library/Application\ Support/Sublime\ Text/Packages/User
-symlink_dotfile direnv/direnvrc.symlink ~/.direnvrc
-[[ $ALLOW_DESKTOP == 1 ]] && [[ $OSTYPE == "linux"* ]] && symlink_dotfile i3/config ~/.config/i3/config
