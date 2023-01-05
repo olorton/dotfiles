@@ -45,6 +45,8 @@ end
 -- }
 -- find more here: https://www.nerdfonts.com/cheat-sheet
 
+local keyword_length = 3
+
 cmp.setup {
   snippet = {
     expand = function(args)
@@ -112,7 +114,7 @@ cmp.setup {
   sources = {
     { name = "nvim_lsp" },
     { name = "luasnip" },
-    { name = "buffer" },
+    { name = "buffer", keyword_length = keyword_length },
     { name = "path" },
   },
   confirm_opts = {
