@@ -9,9 +9,6 @@ vim.cmd [[
     " Fixes issue with the default behavior which is that nvim shifts the cursor
     " left when exiting Insert mode: https://news.ycombinator.com/item?id=30463129
     au InsertLeave * :normal `^
-
-    " Remove trailing whitespace on save.
-    autocmd BufWritePre * %s/\s\+$//e
   augroup end
 
   augroup _git
