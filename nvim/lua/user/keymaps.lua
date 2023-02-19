@@ -19,9 +19,6 @@ vim.g.maplocalleader = " "
 --   command_mode = "c",
 
 -- Normal --
--- Reset the current bufffer, e.g. remove highlights
-keymap("n", "<Esc>", ":nohl<CR>:w<CR>", opts)
-
 -- Window navigation that works with Tmux
 keymap("n", "<C-h>", "<CMD>NavigatorLeft<CR>", opts)
 keymap("n", "<C-l>", "<CMD>NavigatorRight<CR>", opts)
