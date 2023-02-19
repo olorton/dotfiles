@@ -11,18 +11,16 @@ local diagnostics = {
 	"diagnostics",
 	sources = { "nvim_diagnostic" },
 	sections = { "error", "warn" },
-	symbols = { error = "errors: ", warn = "warnings: " },
-	colored = true,
+	symbols = { error = " ", warn = " " },
+	colored = false,
 	update_in_insert = false,
-	always_visible = false,
+	always_visible = true,
 }
 
 local diff = {
 	"diff",
 	colored = false,
-	symbols = { added = "a", modified = "m", removed = "r" }, -- changes diff symbols
-
-
+	symbols = { added = " ", modified = " ", removed = " " }, -- changes diff symbols
   cond = hide_in_width
 }
 
@@ -41,11 +39,8 @@ local filetype = {
 
 local branch = {
 	"branch",
-	icons_enabled = false,
-	icon = nil,
-  fmt = function(str)
-    return "[" .. str .. "]"
-  end,
+	icons_enabled = true,
+	icon = "",
 }
 
 local location = {
@@ -77,21 +72,21 @@ lualine.setup({
 		always_divide_middle = true,
 	},
 	sections = {
-		lualine_a = { "filename" },
+		lualine_a = { branch, diagnostics },
 		lualine_b = { mode },
-		lualine_c = { diagnostics },
+		lualine_c = {},
 		-- lualine_x = { "encoding", "fileformat", "filetype" },
-		lualine_x = { branch, diff, spaces, "encoding", filetype },
+		lualine_x = { diff, spaces, "encoding", filetype },
 		lualine_y = { location },
-		lualine_z = {},
+		lualine_z = { progress },
 	},
 	inactive_sections = {
 		lualine_a = {},
 		lualine_b = {},
-		lualine_c = {},
+		lualine_c = { "filename" },
 		lualine_x = { "location" },
 		lualine_y = {},
-		lualine_z = { progress } ,
+		lualine_z = {},
 	},
 	tabline = {},
 	extensions = {},
