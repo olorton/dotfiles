@@ -64,10 +64,12 @@ symlink_dotfile tmux/tmux.conf.symlink ~/.tmux.conf
 [[ $OSTYPE == "linux"* ]] && symlink_dotfile tmux/tmux-linux.conf.symlink ~/.tmux.os.conf
 [[ $OSTYPE == "darwin"* ]] && symlink_dotfile tmux/tmux-macosx.conf.symlink ~/.tmux.os.conf
 
-# Nvim
-#mkdir -p ~/.config/nvim/tmp/backup # TODO - should my new vim config do stuff with this?
-#mkdir -p ~/.config/nvim/tmp/undo # TODO - should my new vim config do stuff with this?
-symlink_dotfile nvim ~/.config/nvim
+# Nvim (REMOVE)
+rm -rf ~/.config/nvim
+
+# Vim
+mkdir -p ~/.vim/tmp/{undo,backup}
+symlink_dotfile vim/vimrc.symlink ~/.vimrc
 
 # Zsh
 symlink_dotfile zsh/zshrc.symlink ~/.zshrc

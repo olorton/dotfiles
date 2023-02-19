@@ -97,13 +97,11 @@ cmus() {
     command cmus "$@";
 }
 
-alias vim="nvim"
-
 alias rbdevelop="git checkout develop && git pull && git checkout - && git rebase develop"
 
-alias dotedit="tmux rename-window -t${TMUX_PANE} dotfiles ; cd $DOTFILES && nvim README.md"
+alias dotedit="tmux rename-window -t${TMUX_PANE} dotfiles ; cd $DOTFILES && vim README.md"
 alias dedit="dotedit"
-alias wikiedit="tmux rename-window -t${TMUX_PANE} wiki ; cd ~/markdown-wiki/ && nvim ."
+alias wikiedit="tmux rename-window -t${TMUX_PANE} wiki ; cd ~/markdown-wiki/ && vim ."
 alias wedit="wikiedit"
 
 alias brupod="brew update && brew outdated"

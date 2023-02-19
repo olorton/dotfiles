@@ -4,7 +4,7 @@
     email = oliverlorton@gmail.com
     name = Oliver Lorton
 [core]
-    editor=nvim
+    editor=vim
     excludesfile = ~/.gitignore_global
 [alias]
     s = status -s
