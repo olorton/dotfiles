@@ -16,8 +16,8 @@ Plug 'itchyny/lightline.vim'
 Plug 'ericbn/vim-solarized'
 Plug 'scrooloose/nerdtree'
 Plug 'bling/vim-bufferline'
-set rtp+=/usr/local/opt/fzf
-Plug 'junegunn/fzf.vim', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-surround'
 Plug 'famiu/bufdelete.nvim'
