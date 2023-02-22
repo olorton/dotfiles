@@ -278,9 +278,9 @@ bindsym $mod+Shift+minus move scratchpad
 bindsym $mod+minus scratchpad show
 
 # Run on startup
-exec --no-startup-id i3-msg 'workspace 1; exec /usr/bin/alacritty'
-exec --no-startup-id i3-msg 'workspace 2; exec /usr/bin/firefox'
-exec --no-startup-id i3-msg 'workspace 3; exec /usr/bin/signal-desktop'
+exec --no-startup-id i3-msg 'workspace $ws1; exec /usr/bin/alacritty --command "tmux"; workspace $ws1'
+exec --no-startup-id i3-msg 'workspace $ws2;  exec /usr/bin/firefox; workspace $ws1'
+exec --no-startup-id i3-msg 'workspace $ws3; exec /usr/bin/signal-desktop; workspace $ws1'
 exec --no-startup-id xinput disable "SynPS/2 Synaptics TouchPad"
 exec xrandr --output "DisplayPort-0" --primary --auto --output "HDMI-A-0" --above "DisplayPort-0" --auto
 
