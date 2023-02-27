@@ -31,6 +31,7 @@ Plug 'sbdchd/neoformat'
 " TODO Neomake
 " TODO shellcheck
 Plug 'martinda/jenkinsfile-vim-syntax'
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 call plug#end()
 
@@ -64,6 +65,9 @@ au InsertLeave * :normal `^
 " Tidy up split pane dividers
 highlight VertSplit cterm=NONE
 
+set updatetime=300
+
+set mouse=
 
 " Spacing --------------------------------------------------------------------
 
@@ -80,10 +84,10 @@ autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
 
 " Backups --------------------------------------------------------------------
 
-set backup
 set noswapfile
 set undodir=~/.vim/tmp/undo//
-set backupdir=~/.vim/tmp/backup//
+set nobackup
+set nowritebackup
 
 
 
@@ -103,6 +107,8 @@ colorscheme solarized
 " Enable CursorLine
 set cursorline
 set cursorlineopt=number
+
+set signcolumn=yes
 
 
 
@@ -273,15 +279,15 @@ set scrolloff=4
 
 " Tab style autocomplete dropdown --------------------------------------------
 " TODO Is this rubbish? Probably? Replace?
-function! InsertTabWrapper()
-    let col = col('.') - 1
-    if !col || getline('.')[col - 1] !~ '\k'
-        return "\<tab>"
-    else
-        return "\<c-n>"
-    endif
-endfunction
-inoremap <tab> <c-r>=InsertTabWrapper()<cr>
+" function! InsertTabWrapper()
+"     let col = col('.') - 1
+"     if !col || getline('.')[col - 1] !~ '\k'
+"         return "\<tab>"
+"     else
+"         return "\<c-n>"
+"     endif
+" endfunction
+" inoremap <tab> <c-r>=InsertTabWrapper()<cr>
 
 
 
@@ -372,3 +378,15 @@ if has('autocmd')
   " move to top of the buffer and switch to insert mode
   " au BufNewFile,BufRead COMMIT_EDITMSG call feedkeys('ggi', 't')
 endif
+
+
+
+" Coc ------------------------------------------------------------------------
+
+let g:coc_global_extensions = ['coc-html', 'coc-css', 'coc-tsserver', 'coc-json']
+let g:coc_user_config = {'diagnostic.checkCurrentLine' : 1}
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gr <Plug>(coc-references)
+inoremap <silent><expr> <C-j> coc#pum#visible() ? coc#pum#next(1) : "\<C-n>"
+inoremap <silent><expr> <C-k> coc#pum#visible() ? coc#pum#prev(1) : "\<C-p>"
+inoremap <expr> <CR> coc#pum#visible() ? coc#_select_confirm() : "\<CR>"
