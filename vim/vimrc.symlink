@@ -209,9 +209,6 @@ nnoremap <C-p> :Files<Cr>
 " Fuzzy search open buffers
 nmap ; :Buffers<CR>
 
-" Fuzzy search project tags
-nmap <leader>t :Tags<CR>
-
 " Close buffer, but leave the split open and switch to next buffer in the list
 nmap <leader>w :w<bar>Bdelete<CR>
 
