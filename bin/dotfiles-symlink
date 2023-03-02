@@ -34,7 +34,7 @@ symlink_dotfile () {
         printf "${FG_RED}Cannot overwrite because the destination exists, and is not a file or a link: ${TARGET}\n${ANSI_RESET}"
         exit 1
     fi
-    
+
     # Ensure target's directories exists
     mkdir -p $(dirname "${TARGET}")
 
