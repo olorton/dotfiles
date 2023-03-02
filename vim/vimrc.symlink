@@ -97,7 +97,8 @@ set nowritebackup
 
 " Leader ---------------------------------------------------------------------
 
-let mapleader = ","
+nnoremap <SPACE> <Nop>
+let mapleader = " "
 
 
 
