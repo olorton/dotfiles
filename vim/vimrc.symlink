@@ -47,7 +47,7 @@ set encoding=utf-8
 "set path+=**
 
 " Time out on key codes but not mappings.
-"set ttimeoutlen=10
+set ttimeoutlen=10
 
 " Only do case-sensitive search when caps in search string
 set ignorecase
