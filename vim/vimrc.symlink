@@ -59,6 +59,12 @@ set smartindent
 " Enable file type detection and do language-dependent indenting.
 filetype plugin indent on
 
+" Set cursor shape to line in insert mode, underline shape in replace mode and
+" block shape in normal mode.
+let &t_SI = "\<Esc>[6 q"
+let &t_SR = "\<Esc>[4 q"
+let &t_EI = "\<Esc>[2 q"
+
 " Fixes issue with the default behavior which is that nvim shifts the cursor
 " left when exiting Insert mode: https://news.ycombinator.com/item?id=30463129
 au InsertLeave * :normal `^
