@@ -42,6 +42,7 @@ with open(filename, "r") as file:
 
     # Print out the prioritised script
     print("NEXT:")
+    # TODO this list should only be sorted by the numbers, items with the same number should remain in the order they are in the document
     for item in sorted(list_next):
         print(item)
     if list_next and list_backlog:
