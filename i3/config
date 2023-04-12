@@ -76,7 +76,7 @@ bindsym XF86MonBrightnessUp exec xbacklight -inc 10 -steps 100 && current_value=
 bindsym XF86MonBrightnessDown exec xbacklight -dec 10 -steps 100 && current_value=`xbacklight -get` && notify-send -t 800 -r 2344123 "Brightness Up" "${current_value%.*} %"
 
 # Touchpad controls
-bindsym XF86Favorites exec /home/oliver/Code/dotfiles/bin/toggle_touchpad
+bindsym XF86Favorites exec /home/oliver/dev/dotfiles/bin/toggle_touchpad
 # bindsym XF86TouchpadToggle exec /some/path/toggletouchpad.sh # toggle touchpad
 # e.g.:
 #    #!/bin/bash
