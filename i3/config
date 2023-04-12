@@ -86,6 +86,9 @@ bindsym XF86Favorites exec /home/oliver/dev/dotfiles/bin/toggle_touchpad
 #        synclient TouchpadOff=0 ;
 #    fi
 
+# Cycle audio output device
+bindsym $mod+Shift+a exec /home/oliver/dev/dotfiles/bin/cycle_audio_output
+
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
 
