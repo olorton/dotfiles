@@ -58,3 +58,5 @@
     prune = true
 [commit]
     verbose = true
+[rebase]
+    autoStash = true
