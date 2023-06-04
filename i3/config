@@ -263,7 +263,7 @@ default_floating_border pixel 1
 # Start i3bar
 bar {
     position top
-    status_command i3status
+    status_command i3blocks
     font pango:monospace 8
     colors {
         background  $bg-color

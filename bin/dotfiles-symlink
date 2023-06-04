@@ -85,6 +85,7 @@ symlink_dotfile direnv/direnvrc.symlink ~/.direnvrc
 
 # i3
 [[ $ALLOW_DESKTOP == 1 ]] && [[ $OSTYPE == "linux"* ]] && symlink_dotfile i3/config ~/.config/i3/config
+[[ $ALLOW_DESKTOP == 1 ]] && [[ $OSTYPE == "linux"* ]] && symlink_dotfile i3blocks ~/.config/i3blocks
 
 # Alacritty
 [[ $ALLOW_DESKTOP == 1 ]] && symlink_dotfile alacritty/main.yml ~/.config/alacritty/main.yml
