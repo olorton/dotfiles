@@ -64,12 +64,10 @@ symlink_dotfile tmux/tmux.conf.symlink ~/.tmux.conf
 [[ $OSTYPE == "linux"* ]] && symlink_dotfile tmux/tmux-linux.conf.symlink ~/.tmux.os.conf
 [[ $OSTYPE == "darwin"* ]] && symlink_dotfile tmux/tmux-macosx.conf.symlink ~/.tmux.os.conf
 
-# Nvim (REMOVE)
-rm -rf ~/.config/nvim
-
 # Vim
 mkdir -p ~/.vim/tmp/{undo,backup}
 symlink_dotfile vim/vimrc.symlink ~/.vimrc
+symlink_dotfile vim/vimrc.symlink $XDG_CONFIG_HOME/nvim/init.vim
 
 # Zsh
 symlink_dotfile zsh/zshrc.symlink ~/.zshrc
