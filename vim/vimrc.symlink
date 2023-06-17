@@ -33,6 +33,8 @@ Plug 'sbdchd/neoformat'
 Plug 'martinda/jenkinsfile-vim-syntax'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'wfxr/protobuf.vim'
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+
 
 call plug#end()
 
@@ -270,6 +272,50 @@ inoremap <tab> <c-r>=InsertTabWrapper()<cr>
 
 nmap <leader>c gcc
 xmap <leader>c gc
+
+
+
+" Treesitter -----------------------------------------------------------------
+
+if has("nvim")
+lua <<EOF
+    require'nvim-treesitter.configs'.setup {
+      ensure_installed = {
+          "bash",
+          "c",
+          "cpp",
+          "css",
+          "diff",
+          "dockerfile",
+          "git_config",
+          "gitignore",
+          "go",
+          "html",
+          "htmldjango",
+          "ini",
+          "javascript",
+          "jq",
+          "json",
+          "make",
+          "php",
+          "python",
+          "rst",
+          "rust",
+          "sql",
+          "terraform",
+          "toml",
+          "toml",
+          "twig",
+          "typescript",
+          "vim",
+          "yaml",
+      },
+      indent = {
+        disable = {"python", },
+      },
+    }
+EOF
+endif
 
 
 
