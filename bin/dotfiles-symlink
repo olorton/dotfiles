@@ -81,19 +81,19 @@ symlink_dotfile pyenv/python-version ~/.python-version
 symlink_dotfile direnv/direnvrc.symlink ~/.direnvrc
 
 # Cmus
-[[ $ALLOW_DESKTOP == 1 ]] && symlink_dotfile cmus/rc ~/.config/cmus/rc
+[[ $ALLOW_DESKTOP == 1 ]] && symlink_dotfile cmus/rc $XDG_CONFIG_HOME/cmus/rc
 
 # i3
-[[ $ALLOW_DESKTOP == 1 ]] && [[ $OSTYPE == "linux"* ]] && symlink_dotfile i3/config ~/.config/i3/config
-[[ $ALLOW_DESKTOP == 1 ]] && [[ $OSTYPE == "linux"* ]] && symlink_dotfile i3blocks ~/.config/i3blocks
+[[ $ALLOW_DESKTOP == 1 ]] && [[ $OSTYPE == "linux"* ]] && symlink_dotfile i3/config $XDG_CONFIG_HOME/i3/config
+[[ $ALLOW_DESKTOP == 1 ]] && [[ $OSTYPE == "linux"* ]] && symlink_dotfile i3blocks $XDG_CONFIG_HOME/i3blocks
 
 # Alacritty
-[[ $ALLOW_DESKTOP == 1 ]] && symlink_dotfile alacritty/main.yml ~/.config/alacritty/main.yml
-[[ $ALLOW_DESKTOP == 1 ]] && [[ $OSTYPE == "darwin"* ]] && symlink_dotfile alacritty/mac.yml ~/.config/alacritty/os_overrides.yml
-[[ $ALLOW_DESKTOP == 1 ]] && [[ $OSTYPE == "linux"* ]] && symlink_dotfile alacritty/linux.yml ~/.config/alacritty/os_overrides.yml
-[[ $ALLOW_DESKTOP == 1 ]] && symlink_dotfile alacritty/colours ~/.config/alacritty/colours
-[[ $ALLOW_DESKTOP == 1 ]] && symlink_dotfile alacritty/local.yml ~/.config/alacritty/local.yml
-[[ $ALLOW_DESKTOP == 1 ]] && symlink_dotfile alacritty/alacritty.yml ~/.config/alacritty/alacritty.yml
+[[ $ALLOW_DESKTOP == 1 ]] && symlink_dotfile alacritty/main.yml $XDG_CONFIG_HOME/alacritty/main.yml
+[[ $ALLOW_DESKTOP == 1 ]] && [[ $OSTYPE == "darwin"* ]] && symlink_dotfile alacritty/mac.yml $XDG_CONFIG_HOME/alacritty/os_overrides.yml
+[[ $ALLOW_DESKTOP == 1 ]] && [[ $OSTYPE == "linux"* ]] && symlink_dotfile alacritty/linux.yml $XDG_CONFIG_HOME/alacritty/os_overrides.yml
+[[ $ALLOW_DESKTOP == 1 ]] && symlink_dotfile alacritty/colours $XDG_CONFIG_HOME/alacritty/colours
+[[ $ALLOW_DESKTOP == 1 ]] && symlink_dotfile alacritty/local.yml $XDG_CONFIG_HOME/alacritty/local.yml
+[[ $ALLOW_DESKTOP == 1 ]] && symlink_dotfile alacritty/alacritty.yml $XDG_CONFIG_HOME/alacritty/alacritty.yml
 
 # Sublime text
 [[ $ALLOW_DESKTOP == 1 ]] && [[ $OSTYPE == "darwin"* ]] && [ -d ~/Library/Application\ Support/Sublime\ Text ] && symlink_dotfile sublime_text/User/ ~/Library/Application\ Support/Sublime\ Text/Packages/User

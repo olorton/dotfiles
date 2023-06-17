@@ -1,6 +1,7 @@
 # Disable verification of insecure directories
 ZSH_DISABLE_COMPFIX="true"
 
+export XDG_CONFIG_HOME="$HOME/.config"
 export EDITOR=vim
 export XDEBUG_CONFIG="idekey=PHPSTORM"
 export LANG=en_GB.UTF-8
