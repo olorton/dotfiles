@@ -35,8 +35,8 @@ Plug 'martinda/jenkinsfile-vim-syntax'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'wfxr/protobuf.vim'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+Plug 'hashivim/vim-terraform'
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
-
 
 call plug#end()
 
