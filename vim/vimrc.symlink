@@ -394,6 +394,9 @@ augroup ft_python
     let python_highlight_all = 1
 augroup END
 
+" Disable visual tab chars in go, by disabling all visual listchars
+au FileType go setlocal nolist
+
 if has('autocmd')
   if has('spell')
     au BufNewFile,BufRead COMMIT_EDITMSG setlocal spell
