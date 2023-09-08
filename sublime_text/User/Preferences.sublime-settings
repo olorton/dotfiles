@@ -25,5 +25,11 @@
         "Heroku",
         "Redis",
         "Oxbotica",
+        "Malie",
+        "Joonas",
+    ],
+    "ignored_words":
+    [
+        "121s"
     ],
 }
