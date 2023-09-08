@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 # shellcheck disable=SC2059
 
+set -Eeuo pipefail
+
 DOTFILES_ROOT=$(cd "$(dirname "${BASH_SOURCE[0]}")" && cd .. && pwd)
 
 ANSI_RESET="\033[0m"
