@@ -37,6 +37,7 @@ Plug 'wfxr/protobuf.vim'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'hashivim/vim-terraform'
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+Plug 'b4b4r07/vim-hcl'
 
 call plug#end()
 
