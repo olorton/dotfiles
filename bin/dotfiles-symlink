@@ -70,57 +70,61 @@ parse_params() {
     return 0
 }
 
-parse_params "$@"
+cli_tasks() {
+    # Git
+    symlink_dotfile "git/gitconfig.symlink" "$HOME/.gitconfig"
+    symlink_dotfile "git/gitignore_global" "$HOME/.gitignore_global"
 
-# Check switch for server/remote only tasks
-if [[ $ALLOW_DESKTOP == 0 ]]; then
+    # Tig
+    symlink_dotfile "tig/tigrc.symlink" "$HOME/.tigrc"
+
+    # Tmux
+    symlink_dotfile "tmux/tmux.conf.symlink" "$HOME/.tmux.conf"
+    [[ $OSTYPE == "linux"* ]] && symlink_dotfile "tmux/tmux-linux.conf.symlink" "$HOME/.tmux.os.conf"
+    [[ $OSTYPE == "darwin"* ]] && symlink_dotfile "tmux/tmux-macosx.conf.symlink" "$HOME/.tmux.os.conf"
+
+    # Vim
+    mkdir -p "$HOME/.vim/tmp/{undo,backup}"
+    symlink_dotfile "vim/vimrc.symlink" "$HOME/.vimrc"
+    symlink_dotfile "vim/vimrc.symlink" "$XDG_CONFIG_HOME/nvim/init.vim"
+
+    # Zsh
+    symlink_dotfile "zsh/zshrc.symlink" "$HOME/.zshrc"
+
+    # Pyenv
+    symlink_dotfile "pyenv/python-version" "$HOME/.python-version"
+
+    # Direnv
+    symlink_dotfile "direnv/direnvrc.symlink" "$HOME/.direnvrc"
+}
+
+desktop_tasks() {
+    # Cmus
+    symlink_dotfile "cmus/rc" "$XDG_CONFIG_HOME/cmus/rc"
+
+    # i3
+    [[ $OSTYPE == "linux"* ]] && symlink_dotfile "i3/config" "$XDG_CONFIG_HOME/i3/config"
+    [[ $OSTYPE == "linux"* ]] && symlink_dotfile "i3blocks" "$XDG_CONFIG_HOME/i3blocks"
+
+    # Alacritty
+    symlink_dotfile "alacritty/main.yml" "$XDG_CONFIG_HOME/alacritty/main.yml"
+    [[ $OSTYPE == "darwin"* ]] && symlink_dotfile "alacritty/mac.yml" "$XDG_CONFIG_HOME/alacritty/os_overrides.yml"
+    [[ $OSTYPE == "linux"* ]] && symlink_dotfile "alacritty/linux.yml" "$XDG_CONFIG_HOME/alacritty/os_overrides.yml"
+    symlink_dotfile "alacritty/colours" "$XDG_CONFIG_HOME/alacritty/colours"
+    symlink_dotfile "alacritty/local.yml" "$XDG_CONFIG_HOME/alacritty/local.yml"
+    symlink_dotfile "alacritty/alacritty.yml" "$XDG_CONFIG_HOME/alacritty/alacritty.yml"
+
+    # Sublime text
+    [[ $OSTYPE == "darwin"* ]] && [ -d "$HOME/Library/Application Support/Sublime Text" ] && symlink_dotfile "sublime_text/User/" "$HOME/Library/Application Support/Sublime Text/Packages/User"
+}
+
+parse_params "$@"
+if [[ $ALLOW_DESKTOP == 1 ]]; then
+    cli_tasks
+    desktop_tasks
+else
+    touch "$DISABLE_DESKTOP_SYMLINKS_FILE"
     echo "Only symlinking server/remote dotfiles."
     echo "To disable delete $DISABLE_DESKTOP_SYMLINKS_FILE"
-    touch "$DISABLE_DESKTOP_SYMLINKS_FILE"
+    cli_tasks
 fi
-
-# Tasks ----------------------------------------------------------------------
-
-# Git
-symlink_dotfile "git/gitconfig.symlink" "$HOME/.gitconfig"
-symlink_dotfile "git/gitignore_global" "$HOME/.gitignore_global"
-
-# Tig
-symlink_dotfile "tig/tigrc.symlink" "$HOME/.tigrc"
-
-# Tmux
-symlink_dotfile "tmux/tmux.conf.symlink" "$HOME/.tmux.conf"
-[[ $OSTYPE == "linux"* ]] && symlink_dotfile "tmux/tmux-linux.conf.symlink" "$HOME/.tmux.os.conf"
-[[ $OSTYPE == "darwin"* ]] && symlink_dotfile "tmux/tmux-macosx.conf.symlink" "$HOME/.tmux.os.conf"
-
-# Vim
-mkdir -p "$HOME/.vim/tmp/{undo,backup}"
-symlink_dotfile "vim/vimrc.symlink" "$HOME/.vimrc"
-symlink_dotfile "vim/vimrc.symlink" "$XDG_CONFIG_HOME/nvim/init.vim"
-
-# Zsh
-symlink_dotfile "zsh/zshrc.symlink" "$HOME/.zshrc"
-
-# Pyenv
-symlink_dotfile "pyenv/python-version" "$HOME/.python-version"
-
-# Direnv
-symlink_dotfile "direnv/direnvrc.symlink" "$HOME/.direnvrc"
-
-# Cmus
-[[ $ALLOW_DESKTOP == 1 ]] && symlink_dotfile "cmus/rc" "$XDG_CONFIG_HOME/cmus/rc"
-
-# i3
-[[ $ALLOW_DESKTOP == 1 ]] && [[ $OSTYPE == "linux"* ]] && symlink_dotfile "i3/config" "$XDG_CONFIG_HOME/i3/config"
-[[ $ALLOW_DESKTOP == 1 ]] && [[ $OSTYPE == "linux"* ]] && symlink_dotfile "i3blocks" "$XDG_CONFIG_HOME/i3blocks"
-
-# Alacritty
-[[ $ALLOW_DESKTOP == 1 ]] && symlink_dotfile "alacritty/main.yml" "$XDG_CONFIG_HOME/alacritty/main.yml"
-[[ $ALLOW_DESKTOP == 1 ]] && [[ $OSTYPE == "darwin"* ]] && symlink_dotfile "alacritty/mac.yml" "$XDG_CONFIG_HOME/alacritty/os_overrides.yml"
-[[ $ALLOW_DESKTOP == 1 ]] && [[ $OSTYPE == "linux"* ]] && symlink_dotfile "alacritty/linux.yml" "$XDG_CONFIG_HOME/alacritty/os_overrides.yml"
-[[ $ALLOW_DESKTOP == 1 ]] && symlink_dotfile "alacritty/colours" "$XDG_CONFIG_HOME/alacritty/colours"
-[[ $ALLOW_DESKTOP == 1 ]] && symlink_dotfile "alacritty/local.yml" "$XDG_CONFIG_HOME/alacritty/local.yml"
-[[ $ALLOW_DESKTOP == 1 ]] && symlink_dotfile "alacritty/alacritty.yml" "$XDG_CONFIG_HOME/alacritty/alacritty.yml"
-
-# Sublime text
-[[ $ALLOW_DESKTOP == 1 ]] && [[ $OSTYPE == "darwin"* ]] && [ -d "$HOME/Library/Application Support/Sublime Text" ] && symlink_dotfile "sublime_text/User/" "$HOME/Library/Application Support/Sublime Text/Packages/User"
