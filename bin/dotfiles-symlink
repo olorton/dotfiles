@@ -48,9 +48,26 @@ symlink_dotfile () {
     fi
 }
 
+parse_params() {
+    # default values of variables set from params
+    ALLOW_DESKTOP=1
+
+    while :; do
+        case "${1-}" in
+        -v | --verbose) set -x ;;
+        --remote) ALLOW_DESKTOP=0 ;;
+        -?*) die "Unknown option: $1" ;;
+        *) break ;;
+        esac
+        shift
+    done
+
+    return 0
+}
+
+parse_params "$@"
+
 # Check switch for server/remote only tasks
-ALLOW_DESKTOP=1
-[[ ${1} == "remote" ]] && ALLOW_DESKTOP=0
 [[ $ALLOW_DESKTOP == 0 ]] && echo "Only symlinking server/remote dotfiles."
 
 # Tasks ----------------------------------------------------------------------
