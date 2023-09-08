@@ -4,6 +4,7 @@
 set -Eeuo pipefail
 
 DOTFILES_ROOT=$(cd "$(dirname "${BASH_SOURCE[0]}")" && cd .. && pwd)
+DISABLE_DESKTOP_SYMLINKS_FILE="$DOTFILES_ROOT/.disable_desktop_symlinks"
 
 ANSI_RESET="\033[0m"
 # FG_BLACK="\033[30m"
@@ -50,7 +51,11 @@ symlink_dotfile () {
 
 parse_params() {
     # default values of variables set from params
-    ALLOW_DESKTOP=1
+    if [[ -f $DISABLE_DESKTOP_SYMLINKS_FILE ]]; then
+        ALLOW_DESKTOP=0
+    else
+        ALLOW_DESKTOP=1
+    fi
 
     while :; do
         case "${1-}" in
@@ -68,7 +73,11 @@ parse_params() {
 parse_params "$@"
 
 # Check switch for server/remote only tasks
-[[ $ALLOW_DESKTOP == 0 ]] && echo "Only symlinking server/remote dotfiles."
+if [[ $ALLOW_DESKTOP == 0 ]]; then
+    echo "Only symlinking server/remote dotfiles."
+    echo "To disable delete $DISABLE_DESKTOP_SYMLINKS_FILE"
+    touch "$DISABLE_DESKTOP_SYMLINKS_FILE"
+fi
 
 # Tasks ----------------------------------------------------------------------
 
