@@ -35,10 +35,10 @@ with open(filename, "r") as file:
                     date = line
                 elif bool(re.search(r'^\d\.', line)):
                     # Add line to prioritised list if it starts with int followed by "."
-                    list_next.append(f"{line} [{date}]")
+                    list_next.append(line.replace(".", f". [{date}]", 1))
                 elif line[0] == "-":
                     # Add line to backlog list if it starts with a -
-                    list_backlog.append(f"{line} [{date}]")
+                    list_backlog.append(f"[{date}] {line}")
 
     # Print out the prioritised script
     print("NEXT:")
