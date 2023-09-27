@@ -5,5 +5,74 @@ ICON_THREE_QUARTERS=
 ICON_HALF=
 ICON_QUARTER=
 ICON_EMPTY=
+ICON_CHARGING=
+ICON_CHARGING_COMPLETE=
 
-echo "TODO battery"
+COLOUR_ENABLED=#f3f4f5
+# COLOUR_DISABLED=#676e7d
+COLOUR_ALERT=#e53935
+
+
+acpi_status=$(acpi 2>/dev/null)
+# example acpi status:
+#   Battery 0: Not charging, 99%
+#   Battery 1: Charging, 62%, 01:04:12 remaining"
+# Should look like:
+#    99%  62% (01:04)
+
+# quietly exit if there is no battery
+[ -z "$acpi_status" ] && exit 0
+
+output_full_text=""
+output_short_text=""
+alert=0
+while IFS= read -r line; do
+    details=$(awk -F: '{first = $1; $1=""; print $0}' <<< "$line")
+    charge_status=$(awk -F, '{print tolower($1)}' <<< "$details" | xargs)
+    percent=$(awk -F, '{print $2+0}' <<< "$details")
+    time_string=$(awk -F, '{print $3}' <<< "$details")
+    hours=$(awk '{print $1}' <<< "$time_string")
+    minutes=$(awk '{print $2}' <<< "$time_string")
+    seconds=$(awk '{print $3}' <<< "$time_string")
+
+    remaining="${hours}:${minutes} hrs"
+    if [[ "$hours" -lt "1" ]]; then
+        remaining="${minutes}:${seconds} min"
+    fi
+
+    # select battery icon based on charge available
+    icon=$ICON_FULL
+    if [[ "$charge_status" == "charging" ]]; then
+        icon=$ICON_CHARGING
+        if [[ "$percent" -eq "100" ]]; then
+            icon=$ICON_CHARGING_COMPLETE
+        fi
+    elif [[ "$percent" -lt "10" ]]; then
+        icon=$ICON_EMPTY
+        alert=1
+    elif [[ "$percent" -lt "30" ]]; then
+        icon=$ICON_QUARTER
+    elif [[ "$percent" -lt "50" ]]; then
+        icon=$ICON_HALF
+    elif [[ "$percent" -lt "70" ]]; then
+        icon=$ICON_THREE_QUARTERS
+ fi
+
+    output="${icon}"
+    [[ "${percent}" -gt "0" ]] && output="${output} ${percent}%"
+    output_short_text=$(echo "${output_short_text} ${output}" | xargs)
+    [[ "${hours}" -gt "0" ]] || [[ "${minutes}" -gt "0" ]] && output="${output} (${remaining})"
+    output_full_text=$(echo "${output_full_text} ${output}" | xargs)
+done <<< "$acpi_status"
+
+# sort out any alerts found
+if [[ $alert == "1" ]]; then
+    output_colour=$COLOUR_ALERT
+else
+    output_colour=$COLOUR_ENABLED
+fi
+
+# output
+echo "$output_full_text"
+echo "$output_short_text"
+echo "$output_colour"
