@@ -57,11 +57,10 @@ bindsym $mod+Shift+e mode "$mode_system"
 exec --no-startup-id nm-applet
 
 # Use pactl to adjust volume in PulseAudio.
-set $refresh_i3status killall -SIGUSR1 i3status
-bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +4% && $refresh_i3status && current_value=`(pactl get-sink-volume @DEFAULT_SINK@ VOLUME)|awk '{print $5}'` && notify-send -t 800 -r 738849 "Audio" "Increased ${current_value}"
-bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -4% && $refresh_i3status && current_value=`(pactl get-sink-volume @DEFAULT_SINK@ VOLUME)|awk '{print $5}'` && notify-send -t 800 -r 738849 "Audio" "Decreased ${current_value}"
-bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && $refresh_i3status && notify-send -t 800 -r 738849 "Audio" "Muted"
-bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && $refresh_i3status && notify-send -t 800 -r 738849 "Audio" "Microphone muted"
+bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +4% && current_value=`(pactl get-sink-volume @DEFAULT_SINK@ VOLUME)|awk '{print $5}'` && notify-send -t 800 -r 738849 "Audio" "Increased ${current_value}"
+bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -4% && current_value=`(pactl get-sink-volume @DEFAULT_SINK@ VOLUME)|awk '{print $5}'` && notify-send -t 800 -r 738849 "Audio" "Decreased ${current_value}"
+bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && notify-send -t 800 -r 738849 "Audio" "Muted"
+bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && notify-send -t 800 -r 738849 "Audio" "Microphone muted"
 
 # Media player controls
 bindsym XF86AudioPlay exec playerctl play-pause
