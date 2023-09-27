@@ -1,0 +1,76 @@
+#!/usr/bin/env bash
+
+COLOUR_ENABLED=#f3f4f5
+COLOUR_DISABLED=#676e7d
+COLOUR_ALERT=#e53935
+
+ICON_ETHERNET=
+ICON_WIFI=
+
+status_string=$( \
+    nmcli -f DEVICE,TYPE,STATE,IP4-CONNECTIVITY,IP6-CONNECTIVITY,DBUS-PATH,CONNECTION,CON-UUID,CON-PATH device status \
+        | grep -v "connected (externally)" \
+        | grep "${1}" \
+)
+active_connection=$(nmcli -f TYPE,NAME connection show --active | grep -v TYPE | head -n 1)
+device_name="$(echo $active_connection | awk '{$1= ""; print $0}' | xargs)"
+
+# defaults
+colour=$COLOUR_DISABLED
+icon=?
+text_value=""
+
+# update icons and colours based on connection state.
+# either connected or disconnected expected
+if [[ "$(echo ${status_string} | awk '{print$3}')" == "connected" ]]; then
+    colour=$COLOUR_ENABLED
+fi
+address=$(nmcli connection show "$device_name" 2> /dev/null | grep ADDRESS | head -n 1 | awk '{print$2}' | cut -d '/' -f 1)
+if [[ "${1}" == "ethernet" ]]; then
+    icon=$ICON_ETHERNET
+    if [[ "$(echo ${active_connection} | awk '{print$1}')" == "ethernet" ]]; then
+        text_value="$(echo ${address})"
+    fi
+elif [[ "${1}" == "wifi" ]]; then
+    icon=$ICON_WIFI
+    if [[ "$(echo ${active_connection} | awk '{print$1}')" == "wifi" ]]; then
+       text_value="$(echo ${status_string} | awk '{print$7}') ${address}"
+    fi
+fi
+
+# output
+output_full_text="$icon $text_value"
+output_short_text="$icon"
+output_colour="$colour"
+
+echo "$output_full_text"
+echo "$output_short_text"
+echo "$output_colour"
+
+
+
+# # defaults
+# colour=$COLOUR_ENABLED
+# icon=$ICON_HIGH
+
+# # update icons and colours
+# if [[ "$volume_value" -eq "0" ]]; then
+#     icon=$ICON_OFF
+#     colour="$COLOUR_DISABLED"
+# elif [[ "$volume_value" -lt "40" ]]; then
+#     icon=$ICON_LOW
+# fi
+
+# if [[ "$mute_string" = "yes" ]]; then
+#     icon=$ICON_MUTED
+#     colour="$COLOUR_DISABLED"
+# fi
+
+# # output
+# output_full_text="$icon $volume_value"
+# output_short_text="$full_text"
+# output_colour="$colour"
+
+# echo "$output_full_text"
+# echo "$output_short_text"
+# echo "$output_colour"

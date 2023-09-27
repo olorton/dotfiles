@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+COLOUR_ENABLED=#f3f4f5
+COLOUR_DISABLED=#676e7d
+COLOUR_ALERT=#e53935
+ICON=
+
+percent=$(df --output=pcent $HOME | tail -n 1 | xargs| tr -dc '0-9')
+amount=$(df --output=used -h $HOME | tail -n 1 | xargs)
+echo "$ICON ${amount} ${percent}%"
+echo "$ICON ${percent}%"
+if [[ "$percent" -lt "90" ]]; then
+    echo "$COLOUR_ENABLED"
+else
+    echo "$COLOUR_ALERT"
+fi

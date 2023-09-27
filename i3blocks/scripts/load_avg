@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+
+COLOUR_ENABLED=#f3f4f5
+COLOUR_DISABLED=#676e7d
+COLOUR_ALERT=#e53935
+
+ICON=
+icon=$ICON
+
+# evaluate load averages
+avgs="$(cut -d" " -f1-3 /proc/loadavg)"
+avg1=$(echo "$avgs" | awk '{print$1}')
+cores="$(nproc --all)"
+colour=$COLOUR_ALERT
+alert_value="$(bc -l <<< "scale=0;${avg1} / ${cores}")"
+if [[ "${alert_value}" -lt "1" ]]; then
+    colour=$COLOUR_ENABLED
+fi
+
+# output
+output_full_text="$icon $avgs"
+output_short_text="$icon $avg1"
+output_colour="$colour"
+
+echo "$output_full_text"
+echo "$output_short_text"
+echo "$output_colour"

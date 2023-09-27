@@ -1,0 +1,38 @@
+#!/usr/bin/env bash
+
+COLOUR_ENABLED=#f3f4f5
+COLOUR_DISABLED=#676e7d
+
+ICON_MUTED=
+ICON_OFF=
+ICON_LOW=
+ICON_HIGH=
+
+volume_value=$(pactl get-sink-volume @DEFAULT_SINK@ VOLUME | awk '{print$5}' | tr -dc '0-9')
+mute_string=$(pactl get-sink-mute @DEFAULT_SINK@ | awk '{print$2}' | xargs)
+
+# defaults
+colour=$COLOUR_ENABLED
+icon=$ICON_HIGH
+
+# update icons and colours
+if [[ "$volume_value" -eq "0" ]]; then
+    icon=$ICON_OFF
+    colour="$COLOUR_DISABLED"
+elif [[ "$volume_value" -lt "40" ]]; then
+    icon=$ICON_LOW
+fi
+
+if [[ "$mute_string" = "yes" ]]; then
+    icon=$ICON_MUTED
+    colour="$COLOUR_DISABLED"
+fi
+
+# output
+output_full_text="$icon $volume_value"
+output_short_text="$full_text"
+output_colour="$colour"
+
+echo "$output_full_text"
+echo "$output_short_text"
+echo "$output_colour"

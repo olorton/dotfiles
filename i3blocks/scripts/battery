@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+ICON_FULL=
+ICON_THREE_QUARTERS=
+ICON_HALF=
+ICON_QUARTER=
+ICON_EMPTY=
+
+echo "TODO battery"

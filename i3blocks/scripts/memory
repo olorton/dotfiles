@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+
+COLOUR_ENABLED=#f3f4f5
+COLOUR_DISABLED=#676e7d
+COLOUR_ALERT=#e53935
+ICON=
+
+mem_total=$(cat /proc/meminfo | grep ^MemTotal | awk '{print$2}')
+mem_available=$(cat /proc/meminfo | grep ^MemAvailable | awk '{print$2}')
+GB_mem_total=$(awk '/MemTotal/ { printf "%.2f \n", $2/1024/1024 }' /proc/meminfo)
+GB_mem_available=$(awk '/MemAvailable/ { printf "%.2f \n", $2/1024/1024 }' /proc/meminfo)
+GB_mem_used=$(bc -l <<< "scale=2; $GB_mem_total - $GB_mem_available")
+percent_used=$(bc -l <<< "scale=0; 100* ($mem_total - $mem_available) / $mem_total")
+# mem_free=$(cat /proc/meminfo | grep ^MemFree | awk '{print$2}')
+# GB_mem_free=$(awk '/MemFree/ { printf "%.2f \n", $2/1024/1024 }' /proc/meminfo)
+
+echo "$ICON ${GB_mem_used}GB ${percent_used}%"
+echo "$ICON ${percent_used}%"
+if [[ "$percent_used" -lt "90" ]]; then
+    echo "$COLOUR_ENABLED"
+else
+    echo "$COLOUR_ALERT"
+fi
