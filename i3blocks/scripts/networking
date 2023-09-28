@@ -7,6 +7,29 @@ COLOUR_ALERT=#e53935
 ICON_ETHERNET=
 ICON_WIFI=
 
+EIGHTH_0="0"
+EIGHTH_1="⅛"
+EIGHTH_2="¼"
+EIGHTH_3="⅜"
+EIGHTH_4="½"
+EIGHTH_5="⅝"
+EIGHTH_6="¾"
+EIGHTH_7="⅞"
+EIGHTH_8="1"
+
+signal_strength() {
+    value=$(nmcli dev wifi list | awk '/\*/{if (NR!=1) {print $8}}' | xargs)
+    if [ "$value" -lt "10" ]; then echo "$EIGHTH_0";
+    elif [ "$value" -lt "20" ]; then echo "$EIGHTH_1";
+    elif [ "$value" -lt "30" ]; then echo "$EIGHTH_2";
+    elif [ "$value" -lt "40" ]; then echo "$EIGHTH_3";
+    elif [ "$value" -lt "50" ]; then echo "$EIGHTH_4";
+    elif [ "$value" -lt "60" ]; then echo "$EIGHTH_5";
+    elif [ "$value" -lt "70" ]; then echo "$EIGHTH_6";
+    elif [ "$value" -lt "80" ]; then echo "$EIGHTH_7";
+    else echo "EIGHTH_0"; fi
+}
+
 status_string=$( \
     nmcli -f DEVICE,TYPE,STATE,IP4-CONNECTIVITY,IP6-CONNECTIVITY,DBUS-PATH,CONNECTION,CON-UUID,CON-PATH device status \
         | grep -v "connected (externally)" \
@@ -32,9 +55,9 @@ if [[ "${1}" == "ethernet" ]]; then
         text_value="$(echo ${address})"
     fi
 elif [[ "${1}" == "wifi" ]]; then
-    icon=$ICON_WIFI
+    icon="${ICON_WIFI}"
     if [[ "$(echo ${active_connection} | awk '{print$1}')" == "wifi" ]]; then
-       text_value="$(echo ${status_string} | awk '{print$7}') ${address}"
+       text_value="$(echo ${status_string} | awk '{print$7}') $(signal_strength) ${address}"
     fi
 fi
 
