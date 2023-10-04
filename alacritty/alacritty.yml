@@ -4,5 +4,6 @@ import:
   - ~/.config/alacritty/main.yml
   - ~/.config/alacritty/os_overrides.yml
   # - ~/.config/alacritty/colours/dracula.yml
-  - ~/.config/alacritty/colours/base16-solarized-light.yml
+  # - ~/.config/alacritty/colours/base16-solarized-light.yml
+  - ~/.config/alacritty/colours/tomorrow.yml
   - ~/.config/alacritty/local.yml
