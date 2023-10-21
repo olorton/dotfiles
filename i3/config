@@ -287,6 +287,10 @@ bindsym $mod+Shift+minus move scratchpad
 # Show the first scratchpad window
 bindsym $mod+minus scratchpad show
 
+# TODO build a floating super mini launcher for settings, e.g.:
+# Audio output selection
+# Display arrangement
+
 # Run on startup
 exec --no-startup-id i3-msg 'workspace $ws1; exec /usr/bin/alacritty --command "tmux"; workspace $ws1'
 exec --no-startup-id i3-msg 'workspace $ws2;  exec /usr/bin/firefox; workspace $ws1'
