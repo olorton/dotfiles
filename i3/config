@@ -256,7 +256,7 @@ set $separator-color        #757575
 client.focused          $bg-color           $bg-color           $text-color             $indicator-color
 client.unfocused        $inactive-bg-color  $inactive-bg-color  $inactive-text-color    $indicator-color
 client.focused_inactive $inactive-bg-color  $inactive-bg-color  $inactive-text-color    $indicator-color
-client.urgent           $urgent-bg-color    $urgent-bg-color    $text-text-color        $indicator-color
+client.urgent           $urgent-bg-color    $urgent-bg-color    $text-color             $indicator-color
 hide_edge_borders both
 default_border pixel 1
 default_floating_border pixel 1
