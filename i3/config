@@ -36,12 +36,14 @@ exec_always --no-startup-id xset dpms 0 0 300 &
 set $lock_cmd rm -f /tmp/screen.png && scrot "/tmp/screen.png" && convert "/tmp/screen.png" -scale 10% -scale 1000% "/tmp/screen.png" && convert /tmp/screen.png -fill black -colorize 20%  /tmp/screen.png && i3lock -u -i "/tmp/screen.png" && sleep 1 && rm -f /tmp/screen.png
 exec_always --no-startup-id xss-lock --transfer-sleep-lock -- $lock_cmd --nofork
 
-# exit i3
+# exit/lock/suspend/hibernate/reboot/shutdown
 set $mode_system System (l) lock, (e) logout, (s) suspend, (h) hibernate, (r) reboot, (Shift+s) shutdown
 mode "$mode_system" {
     bindsym l exec --no-startup-id $lock_cmd, mode "default"
     bindsym e exec --no-startup-id i3-msg exit, mode "default"
+    # Suspend: aka sleep, aka suspend to RAM
     bindsym s exec --no-startup-id $lock_cmd && systemctl suspend, mode "default"
+    # Hibernate: aka suspend to disk
     bindsym h exec --no-startup-id $lock_cmd && systemctl hibernate, mode "default"
     bindsym r exec --no-startup-id systemctl reboot, mode "default"
     bindsym Shift+s exec --no-startup-id systemctl poweroff -i, mode "default"
