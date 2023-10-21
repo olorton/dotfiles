@@ -1,7 +1,7 @@
 alias ls="ls -AGFlhi"
 
 # Easier navigation:
-cd() { builtin cd "$@"; ls; }
+cd() { builtin cd "$@"; ls -l; }
 alias cd..='cd ../'
 alias ..='cd ../'
 alias ...='cd ../../'
