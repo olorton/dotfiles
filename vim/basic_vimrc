@@ -1,0 +1,215 @@
+" Basics ---------------------------------------------------------------------
+
+set number
+set encoding=utf-8
+
+" For file related tasks, tab complete into sub-folders
+set path+=**
+
+" Time out on key codes but not mappings.
+set ttimeoutlen=10
+
+" Only do case-sensitive search when caps in search string
+set ignorecase
+set smartcase
+
+" Better indenting
+set smartindent
+
+" Enable file type detection and do language-dependent indenting.
+filetype plugin indent on
+
+" Set cursor shape to line in insert mode, underline shape in replace mode and
+" block shape in normal mode.
+let &t_SI = "\<Esc>[6 q"
+let &t_SR = "\<Esc>[4 q"
+let &t_EI = "\<Esc>[2 q"
+
+" Fixes issue with the default behavior which is that nvim shifts the cursor
+" left when exiting Insert mode: https://news.ycombinator.com/item?id=30463129
+au InsertLeave * :normal `^
+
+" Tidy up split pane dividers
+highlight VertSplit cterm=NONE
+
+" Fix backspace
+set backspace=indent,eol,start
+
+" Having longer updatetime (default is 4000 ms = 4s) leads to noticeable
+" delays and poor user experience
+set updatetime=300
+
+" Disable mouse interactions
+set mouse=
+
+" Spacing --------------------------------------------------------------------
+
+"set nowrap
+set tabstop=4
+set shiftwidth=4
+set softtabstop=4
+set expandtab
+set textwidth=0
+
+autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
+
+
+
+" Backups --------------------------------------------------------------------
+
+set noswapfile
+set nobackup
+set nowritebackup
+
+
+
+" Leader ---------------------------------------------------------------------
+
+nnoremap <SPACE> <Nop>
+let mapleader = " "
+
+
+
+" Colour scheme --------------------------------------------------------------
+
+set termguicolors
+syntax enable
+set background=light
+colorscheme base16-tomorrow
+
+" Enable CursorLine
+set cursorline
+set cursorlineopt=number
+
+set signcolumn=yes
+
+
+
+" Trailing whitespace --------------------------------------------------------
+
+" Show tab characters as: --->
+set list
+set listchars=tab:-->
+
+" Highlight trailing whitespace with red
+highlight ExtraWhitespace ctermbg=red guibg=red
+match ExtraWhitespace /\s\+$/
+autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
+autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
+autocmd InsertLeave * match ExtraWhitespace /\s\+$/
+autocmd BufWinLeave * call clearmatches()
+" Remove trailing lines on save. ALEFix is not run automatically on save.
+autocmd BufWritePre * %s/\s\+$//e
+
+
+
+" Highlight cursor -----------------------------------------------------------
+
+augroup CursorLine
+  au!
+  au VimEnter,WinEnter,BufWinEnter * setlocal cursorline
+  au WinLeave * setlocal nocursorline
+augroup END
+
+
+
+" Autosave/autoread ----------------------------------------------------------
+
+" Reload when entering the buffer or gaining focus
+au FocusGained,BufEnter * :silent! !
+
+" Save when exiting the buffer or losing focus
+au FocusLost,WinLeave,CursorHold * :silent! wall
+
+" Write to disk when navigating file
+set autowrite
+
+" Automatically read the file if it was changed externally
+set autoread
+
+
+
+" Keybindings ----------------------------------------------------------------
+
+
+" Nerdtree
+map <leader>e :NERDTreeToggle<CR>
+nmap <leader>n :NERDTreeFind<CR>
+let NERDTreeQuitOnOpen=1  " Close nerdtree after a file is opened
+let NERDTreeIgnore = ['\.pyc$', '__pycache__']
+
+" Fzf settings
+let $FZF_DEFAULT_COMMAND = 'ag -g ""'
+
+" Fuzzy search project file contents
+nnoremap <C-g> :Rg<Cr>
+
+" Fuzzy search project file names
+nnoremap <C-p> :Files<Cr>
+
+" Fuzzy search open buffers
+nmap ; :Buffers<CR>
+
+" Close buffer, but leave the split open and switch to next buffer in the list
+nmap <leader>w :w<bar>Bdelete<CR>
+
+" Yank to the system clipboard
+vmap <leader>y "*y<CR>
+
+" Format the current file
+nmap <leader>l :Neoformat<CR>
+
+" Refresh the state of the buffer, clear hightlights, and write file
+nnoremap <Esc> :nohl<CR>:w<CR>:GitGutterAll<CR>
+
+
+
+" Movement -------------------------------------------------------------------
+
+" Break the habit, you stupid boy!
+noremap <Up> <Nop>
+noremap <Down> <Nop>
+noremap <Left> <Nop>
+noremap <Right> <Nop>
+inoremap <up> <nop>
+inoremap <down> <nop>
+inoremap <left> <nop>
+inoremap <right> <nop>
+
+" Cycle through buffers
+nnoremap <Tab> :bnext<CR>
+nnoremap <S-Tab> :bprevious<CR>
+
+" Set the number of lines to keep viewable on the screen. Default = 0;
+set scrolloff=4
+
+
+
+" Tab style autocomplete dropdown --------------------------------------------
+function! InsertTabWrapper()
+    let col = col('.') - 1
+    if !col || getline('.')[col - 1] !~ '\k'
+        return "\<tab>"
+    else
+        return "\<c-n>"
+    endif
+endfunction
+inoremap <tab> <c-r>=InsertTabWrapper()<cr>
+
+
+
+" Help system ----------------------------------------------------------------
+
+augroup vimrc_help
+    autocmd!
+    autocmd BufEnter *.txt if &buftype == 'help' | wincmd L | endif
+augroup END
+
+augroup ft_vim
+    au!
+
+    au BufNewFile,BufRead init.vim* setlocal filetype=vim
+
+    au FileType vim setlocal foldmethod=marker
+    au FileType help setlocal textwidth=78
+augroup END

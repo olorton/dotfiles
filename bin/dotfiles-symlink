@@ -89,7 +89,8 @@ cli_tasks() {
     # Vim
     mkdir -p "$HOME/.vim/tmp/{undo,backup}"
     symlink_dotfile "vim/vimrc.symlink" "$HOME/.vimrc"
-    symlink_dotfile "vim/vimrc.symlink" "$XDG_CONFIG_HOME/nvim/init.vim"
+    mkdir -p "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/tmp/{undo,backup}
+    symlink_dotfile "nvim/init.vim.symlink" "$XDG_CONFIG_HOME/nvim/init.vim"
 
     # Zsh
     symlink_dotfile "zsh/zshrc.symlink" "$HOME/.zshrc"
