@@ -10,6 +10,7 @@ DOCUMENTS=documents
 MUSIC=music
 PICTURES=pictures
 VIDEOS=videos
+GAMES=games
 # Another alternative is:
 #MUSIC=Documents/Music
 #PICTURES=Documents/Pictures
