@@ -1,3 +1,5 @@
+" TODO fix vim Vs nvim setup
+
 " Plugin manager -------------------------------------------------------------
 
 let data_dir = '~/.vim'
