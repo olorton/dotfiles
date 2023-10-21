@@ -1,0 +1,28 @@
+colors:
+  name: olorton
+  author: Oliver Lorton
+  primary:
+    background: "#f0ebe3"
+    foreground: "#1c1a17"
+  cursor:
+    text: "#f0ebe3"
+    cursor: "#1c1a17"
+  normal:
+    black: "#1c1a17"
+    red: "#f26f5e"
+    green: "#91bd68"
+    yellow: "#e09f1f"
+    blue: "#8bb3d2"
+    magenta: "#c69fd2"
+    cyan: "#5ab6b4"
+    white: "#dbdbdb"
+  bright:
+    black: "#1c1a17"
+    red: "#f26f5e"
+    green: "#91bd68"
+    yellow: "#e09f1f"
+    blue: "#8bb3d2"
+    magenta: "#c69fd2"
+    cyan: "#74cbc9"
+    white: "#dbdbdb"
+
