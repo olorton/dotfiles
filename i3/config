@@ -53,6 +53,7 @@ mode "$mode_system" {
     bindsym Escape mode "default"
 }
 bindsym $mod+Shift+e mode "$mode_system"
+exec_always --no-startup-id xautolock -time 1 -locker "sh $lock_cmd"
 
 # NetworkManager is the most popular way to manage wireless networks on Linux,
 # and nm-applet is a desktop environment-independent system tray GUI for it.
