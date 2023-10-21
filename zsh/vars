@@ -2,7 +2,7 @@
 ZSH_DISABLE_COMPFIX="true"
 
 export XDG_CONFIG_HOME="$HOME/.config"
-export EDITOR=vim
+export EDITOR=nvim
 export XDEBUG_CONFIG="idekey=PHPSTORM"
 export LANG=en_GB.UTF-8
 export SSH_KEY_PATH="~/.ssh/id_rsa"
