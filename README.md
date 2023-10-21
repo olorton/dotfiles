@@ -8,11 +8,11 @@
 Then:
 
 ```bash
-git clone git@github.com:olorton/dotfiles.git ~/Code/dotfiles
-cd ~/Code/dotfiles
+git clone git@github.com:olorton/dotfiles.git ~/dev/dotfiles
+cd ~/dev/dotfiles
 brew bundle
 bin/dotfiles-symlink
-git clone https://github.com/dracula/alacritty.git ~/Code/dracula_alacritty
+git clone https://github.com/dracula/alacritty.git ~/dev/dracula_alacritty
 cat ~/.python-version | pyenv install -
 ```
 
