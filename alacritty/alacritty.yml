@@ -7,5 +7,5 @@ import:
   # - ~/.config/alacritty/colours/base16-solarized-light.yml
   # - ~/.config/alacritty/colours/tomorrow.yml
   # TODO split this theme into base16 so that I can generate theme files for everything
-  - ~/Dev/dotfiles/alacritty/colours/olorton.yml
+  - ~/.config/alacritty/colours/olorton.yml
   - ~/.config/alacritty/local.yml
