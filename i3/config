@@ -300,3 +300,6 @@ workspace $ws6 output nonprimary
 
 # Background wallpaper
 exec_always feh --bg-scale /home/oliver/Wallpapers/wallpaper.jpg
+
+# Fix for TF2 fullscreen
+for_window [class="hl2_linux"] floating enable fullscreen enable
