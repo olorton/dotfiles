@@ -92,6 +92,10 @@ bindsym XF86Favorites exec $dotfiles/bin/toggle_touchpad
 # Cycle audio output device
 bindsym $mod+Shift+a exec $dotfiles/bin/cycle_audio_output
 
+# Cycle monitor settings
+# TODO consolidate this with the cycle_monitors script
+bindsym $mod+Shift+d exec $dotfiles/bin/toggle_monitor_gamemode
+
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
 
