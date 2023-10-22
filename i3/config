@@ -291,6 +291,11 @@ bindsym $mod+minus scratchpad show
 # Audio output selection
 # Display arrangement
 
+bindsym $mod+i exec /usr/bin/alacritty --class AlacrittyFloating --command "/home/oliver/dev/dotfiles/bin/quick_run"
+
+# bindsym $sup+4 exec urxvt -name floating
+for_window [class="AlacrittyFloating"] floating enable border pixel
+
 # Run on startup
 exec --no-startup-id i3-msg 'workspace $ws1; exec /usr/bin/alacritty --command "tmux"; workspace $ws1'
 exec --no-startup-id i3-msg 'workspace $ws2;  exec /usr/bin/firefox; workspace $ws1'

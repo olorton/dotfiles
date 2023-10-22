@@ -1,0 +1,39 @@
+#!/usr/bin/env python3
+
+import argparse
+import configparser
+import os
+import sys
+import termios
+import tty
+
+def read_single_char():
+    fd = sys.stdin.fileno()
+    old_settings = termios.tcgetattr(fd)
+    tty.setraw(sys.stdin.fileno())
+    char = sys.stdin.read(1)
+    termios.tcsetattr(fd, termios.TCSADRAIN, old_settings)
+    return char
+
+def read_options_file(filepath):
+    options = configparser.ConfigParser()
+    options.read(filepath)
+    print(options.sections())
+
+# parse arguments
+parser = argparse.ArgumentParser()
+parser.add_argument(dest="config_location", help="Location of file containing options")
+args = parser.parse_args()
+
+# read options from file
+options = read_options_file(args.config_location)
+
+# display options
+# print_options(options)
+
+# get an option
+char = read_single_char()
+
+# execute option
+
+# or print error
