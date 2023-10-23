@@ -1,1 +1,1 @@
-[[ $OSTYPE == "linux"* ]] && eval $(ssh-agent) >/dev/null
+[[ $OSTYPE == "linux"* ]] && eval $(keychain --eval --quiet id_rsa)
