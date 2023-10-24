@@ -1,1 +1,1 @@
-[[ $OSTYPE == "linux"* ]] && eval $(keychain --eval --quiet id_rsa)
+[[ $OSTYPE == "linux"* ]] && [[ -x "$(command -v keychain)" ]] && eval $(keychain --eval --quiet id_rsa)
