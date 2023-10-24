@@ -15,7 +15,7 @@ EIGHTH_4="½"
 EIGHTH_5="⅝"
 EIGHTH_6="¾"
 EIGHTH_7="⅞"
-EIGHTH_8="1"
+EIGHTH_8=""
 
 signal_strength() {
     value=$(nmcli dev wifi list | awk '/\*/{if (NR!=1) {print $8}}' | xargs)
@@ -27,7 +27,7 @@ signal_strength() {
     elif [ "$value" -lt "60" ]; then echo "$EIGHTH_5";
     elif [ "$value" -lt "70" ]; then echo "$EIGHTH_6";
     elif [ "$value" -lt "80" ]; then echo "$EIGHTH_7";
-    else echo "EIGHTH_0"; fi
+    else echo "$EIGHTH_8"; fi
 }
 
 status_string=$( \
