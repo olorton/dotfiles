@@ -5,6 +5,8 @@ COLOUR_DISABLED=#676e7d
 COLOUR_ALERT=#e53935
 ICON=
 
+command bc 2>&1 || exit
+
 mem_total=$(cat /proc/meminfo | grep ^MemTotal | awk '{print$2}')
 mem_available=$(cat /proc/meminfo | grep ^MemAvailable | awk '{print$2}')
 GB_mem_total=$(awk '/MemTotal/ { printf "%.2f \n", $2/1024/1024 }' /proc/meminfo)
