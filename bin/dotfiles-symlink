@@ -91,6 +91,7 @@ cli_tasks() {
     symlink_dotfile "vim/vimrc.symlink" "$HOME/.vimrc"
     mkdir -p "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/tmp/{undo,backup}
     symlink_dotfile "nvim/init.vim.symlink" "$XDG_CONFIG_HOME/nvim/init.vim"
+    symlink_dotfile "nvim/coc-settings.json" "$XDG_CONFIG_HOME/nvim/coc-settings.json"
 
     # Zsh
     symlink_dotfile "zsh/zshrc.symlink" "$HOME/.zshrc"
