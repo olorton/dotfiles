@@ -105,7 +105,7 @@ cli_tasks() {
 
 desktop_tasks() {
     # XDG User dirs
-    symlink_dotfile "xdg/user-dirs.dirs" "$XDG_CONFIG_HOME/user-dirs.dirs"
+    [[ $OSTYPE == "linux"* ]] && symlink_dotfile "xdg/user-dirs.dirs" "$XDG_CONFIG_HOME/user-dirs.dirs"
 
     # Cmus
     symlink_dotfile "cmus/rc" "$XDG_CONFIG_HOME/cmus/rc"
