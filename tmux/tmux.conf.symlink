@@ -112,6 +112,10 @@ bind -r J resize-pane -D 5
 bind -r K resize-pane -U 5
 bind -r L resize-pane -R 5
 
+# Easily switch to main-vertical layout
+bind -r C-y select-layout main-vertical
+
+
 ######################
 ### DESIGN CHANGES ###
 ######################
