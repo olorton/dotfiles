@@ -16,4 +16,4 @@ Plug 'famiu/bufdelete.nvim'
 call plug#end()
 
 set undodir=~/.vim/tmp/undo//
-source $DOTFILES/vim/basic_vimrc
+source ~/.vimrc_basic

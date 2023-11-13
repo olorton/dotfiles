@@ -44,7 +44,7 @@ call plug#end()
 
 let g:pydocstring_doq_path = '~/.local/bin/doq'
 
-source $DOTFILES/vim/basic_vimrc
+source ~/.vimrc_basic
 
 
 
