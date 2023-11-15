@@ -6,6 +6,7 @@ COLOUR_ALERT=#e53935
 
 ICON_ETHERNET=
 ICON_WIFI=
+ICON_VPN=
 
 EIGHTH_0="0"
 EIGHTH_1="⅛"
@@ -32,7 +33,7 @@ signal_strength() {
 
 status_string=$( \
     nmcli -f DEVICE,TYPE,STATE,IP4-CONNECTIVITY,IP6-CONNECTIVITY,DBUS-PATH,CONNECTION,CON-UUID,CON-PATH device status \
-        | grep -v "connected (externally)" \
+        | grep -v "loopback" \
         | grep "${1}" \
 )
 active_connection=$(nmcli -f TYPE,NAME connection show --active | grep -v TYPE | head -n 1)
@@ -57,7 +58,12 @@ if [[ "${1}" == "ethernet" ]]; then
 elif [[ "${1}" == "wifi" ]]; then
     icon="${ICON_WIFI}"
     if [[ "$(echo ${active_connection} | awk '{print$1}')" == "wifi" ]]; then
-       text_value="$(echo ${status_string} | awk '{print$7}') $(signal_strength) ${address}"
+        text_value="$(echo ${status_string} | awk '{print$7}') $(signal_strength) ${address}"
+    fi
+elif [[ "${1}" == "tun" ]]; then
+    icon="${ICON_VPN}"
+    if [[ "$(echo ${active_connection} | awk '{print$1}')" == "vpn" ]]; then
+        text_value="$(nmcli connection show VPNConfig | grep "VPN.TYPE" | awk '{print$2}') $(echo ${address})"
     fi
 fi
 

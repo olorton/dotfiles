@@ -34,6 +34,10 @@ markup=none
 [battery]
 interval=5
 
+[vpn]
+command=~/.config/i3blocks/scripts/networking tun
+interval=5
+
 [wifi]
 command=~/.config/i3blocks/scripts/networking wifi
 interval=5
