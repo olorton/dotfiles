@@ -1,0 +1,141 @@
+#!/usr/bin/env python3
+
+import subprocess
+import sys
+import time
+from pathlib import Path
+from io import StringIO
+import csv
+
+PLAYLIST_PATH = Path.home().joinpath(".config", "cmus", "playlists", "sync-iphone")
+# This path must exist and be writable by the current user
+PLAYLIST_PATH_PREFIX = Path("/home/oliver/music/")
+IPHONE_MOUNT_PATH = Path("/mnt/iphone")
+IPHONE_APP_NAME = "Doppler"
+SYNC_DESTINATION_DIR = Path.joinpath(IPHONE_MOUNT_PATH, "linux-sync")
+
+
+
+def progress(count, total):
+    if count > total:
+        count = total
+    bar_len = 60
+    filled_len = round(bar_len * count / total)
+
+    percents = int(round(100.0 * count / total, 1))
+    bar = "#" * filled_len + "-" * (bar_len - filled_len)
+
+    sys.stdout.write(f"[{bar}] {percents}% ({int(round(count, 0))}/{total})\r")
+    sys.stdout.flush()
+
+
+# # TODO remove this example
+# i = 0
+# while i <= 300:
+#     progress(i, 300)
+#     time.sleep(0.1)
+#     i += 3.0
+
+
+def wait_for_subprocess(arg_list, info_text=False, ok_text="OK", wait_time=0.5):
+    if info_text is not False:
+        print(f"{info_text} ...", end="")
+    sys.stdout.flush()
+    while True:
+        p = subprocess.run(
+            arg_list,
+            stdout=subprocess.DEVNULL,
+            stderr=subprocess.STDOUT,
+        )
+        exit_status = p.returncode
+        if exit_status == 0:
+            print(ok_text)
+            break
+        time.sleep(wait_time)
+
+
+class SimpleFile:
+    def __init__(self, file_path: str):
+        self.src_file_path = file_path.strip()
+        self.dst_file_path = file_path.strip().replace(str(PLAYLIST_PATH_PREFIX), str(SYNC_DESTINATION_DIR),1)
+        self.last_modified = None
+        self.byte_size = None
+
+
+def get_files_on_playlist():
+    result = []
+    with open(PLAYLIST_PATH) as playlist:
+        for line in playlist:
+            file = SimpleFile(line)
+            print(file.src_file_path)
+            print(file.dst_file_path)
+
+
+if __name__ == "__main__":
+    print("Starting sync...")
+
+    # Connect to iphone
+    wait_for_subprocess(
+        ["systemctl", "is-active", "usbmuxd.service", "2>/dev/null"],
+        info_text="Waiting for iPhone to connect",
+    )
+    wait_for_subprocess(
+        ["idevicepair", "pair"],
+        info_text="Waiting for user to click trust iphone connection",
+    )
+    wait_for_subprocess(
+        ["idevicepair", "validate"],
+        info_text="Waiting for connection to validate",
+    )
+    wait_for_subprocess(
+        ["idevicepair", "validate"],
+        info_text=f"Waiting for iPhone to mount on {IPHONE_MOUNT_PATH}",
+    )
+
+    # Do a quick and dirty unmount, for ease of repeatability
+    # TODO maybe just check if the dir IPHONE_MOUNT_PATH/.doppler exists instead.
+    subprocess.run(
+        ["fusermount", "-u", IPHONE_MOUNT_PATH],
+        stdout=subprocess.DEVNULL,
+        stderr=subprocess.STDOUT,
+    )
+
+    # Mount iphone doppler dir
+    p = subprocess.run(["ifuse", "--list-apps"], capture_output=True)
+    f = StringIO(p.stdout.decode("utf-8"))
+    reader = csv.reader(f, delimiter=",")
+    ios_identifier = False
+    for row in reader:
+        if row[2] == IPHONE_APP_NAME:
+            ios_identifier = row[0]
+    if ios_identifier is False:
+        raise Exception(f"Unable to detect ios ios identifier for {IPHONE_APP_NAME}")
+
+    wait_for_subprocess(
+        ["ifuse", "--documents", ios_identifier, IPHONE_MOUNT_PATH],
+        info_text="Waiting for iphone to mount to filesystem",
+    )
+
+    # Create dir if not exist
+    SYNC_DESTINATION_DIR.mkdir(parents=True, exist_ok=True)
+
+    # Get a list of existing files in the computer (on playlist)
+    get_files_on_playlist()
+
+    # Get a list of existing files on the iphone
+
+    # Get list of files to delete on iphone
+    #   These are all the files that exist on the iphone fs, but are not in the playlist
+
+    # Get list of files to copy to iphone
+    #   These are files that exist on the computer fs and not on the iphone fs
+    #   AND files that exist in both places and either have a difference in bytesize
+    #       OR files that exist in both places but the iphone version has an older date modified
+
+    # Present delta to user and ask for OK to proceed
+
+    # Delete files not needed from iphone
+    # Delete audio files not needed
+    # Delete .Trash and .DS_Store
+
+    # Copy files to the iphone
