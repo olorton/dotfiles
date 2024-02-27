@@ -307,6 +307,9 @@ workspace $ws4 output primary
 workspace $ws5 output nonprimary
 workspace $ws6 output nonprimary
 
+# Auto mount drives
+exec --no-startup-id udiskie --no-automount --no-notify --tray &
+
 # Background wallpaper
 exec_always feh --bg-scale /home/oliver/Wallpapers/wallpaper.jpg
 
