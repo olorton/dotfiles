@@ -81,6 +81,8 @@ command! ReloadConfig :source ~/.config/nvim/init.vim
 nmap <leader>c gcc
 xmap <leader>c gc
 
+autocmd FileType php setlocal commentstring=//\ %s
+
 
 
 " Treesitter -----------------------------------------------------------------
@@ -199,7 +201,7 @@ endif
 
 " Coc ------------------------------------------------------------------------
 
-let g:coc_global_extensions = ['coc-html', 'coc-css', 'coc-tsserver', 'coc-json', 'coc-pyright']
+let g:coc_global_extensions = ['coc-html', 'coc-css', 'coc-tsserver', 'coc-json', 'coc-pyright', 'coc-phpls']
 let g:coc_user_config = {'diagnostic.checkCurrentLine' : 1}
 nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gr <Plug>(coc-references)
