@@ -216,6 +216,9 @@ bindsym Control+$mod+k move workspace to output down
 bindsym Control+$mod+l move workspace to output up
 bindsym Control+$mod+semicolon move workspace to output right
 
+# swap workspaces on two displays, maintaining focus on the active display
+bindsym $mod+Shift+s exec $dotfiles/bin/i3-swap-monitor-workspaces
+
 # reload the configuration file
 bindsym $mod+Shift+c reload
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
