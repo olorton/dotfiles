@@ -8,9 +8,7 @@ endif
 
 call plug#begin()
 Plug 'christoomey/vim-tmux-navigator'
-"Plug 'dracula/vim', { 'as': 'dracula' }
-" Plug 'ericbn/vim-solarized'
-Plug 'chriskempson/base16-vim'
+Plug 'sainnhe/everforest'
 Plug 'scrooloose/nerdtree'
 Plug 'famiu/bufdelete.nvim'
 call plug#end()

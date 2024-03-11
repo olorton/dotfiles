@@ -116,12 +116,7 @@ desktop_tasks() {
     [[ $OSTYPE == "linux"* ]] && symlink_dotfile "i3blocks" "$XDG_CONFIG_HOME/i3blocks"
 
     # Alacritty
-    symlink_dotfile "alacritty/main.yml" "$XDG_CONFIG_HOME/alacritty/main.yml"
-    [[ $OSTYPE == "darwin"* ]] && symlink_dotfile "alacritty/mac.yml" "$XDG_CONFIG_HOME/alacritty/os_overrides.yml"
-    [[ $OSTYPE == "linux"* ]] && symlink_dotfile "alacritty/linux.yml" "$XDG_CONFIG_HOME/alacritty/os_overrides.yml"
-    symlink_dotfile "alacritty/colours" "$XDG_CONFIG_HOME/alacritty/colours"
-    symlink_dotfile "alacritty/local.yml" "$XDG_CONFIG_HOME/alacritty/local.yml"
-    symlink_dotfile "alacritty/alacritty.yml" "$XDG_CONFIG_HOME/alacritty/alacritty.yml"
+    symlink_dotfile "alacritty/" "$XDG_CONFIG_HOME/alacritty"
 
     # Sublime text
     [[ $OSTYPE == "darwin"* ]] && [ -d "$HOME/Library/Application Support/Sublime Text" ] && symlink_dotfile "sublime_text/User/" "$HOME/Library/Application Support/Sublime Text/Packages/User"
