@@ -56,15 +56,25 @@ let g:lightline = {
       \ 'colorscheme': 'everforest_light',
       \ 'active': {
       \   'left': [ [ 'mode', 'paste' ],
-      \             [ 'filename', 'gitbranch', 'readonly', 'modified'] ]
+      \             [ 'filename', 'gitbranch', 'readonly', 'modified'] ],
+      \   'right': [ [ 'lineinfo' ],
+      \              [ 'percent' ],
+      \              [ 'charvaluehex', 'fileformat', 'fileencoding', 'filetype' ] ]
       \ },
       \ 'component': {
       \   'helloworld': 'Hello, world!',
       \ },
       \ 'component_function': {
       \   'gitbranch': 'FugitiveHead',
+      \   'charvaluehex': 'LightlineCharcode',
       \ },
   \ }
+
+function! LightlineCharcode() abort
+    let line = getline('.')
+    let col = col('.')
+    return col - 1 < len(line) ? printf('0x%02x', char2nr(matchstr(line[(col - 1):], '^.'))) : '----'
+endfunction
 
 
 
