@@ -131,7 +131,7 @@ endif
 
 " Neoformat ------------------------------------------------------------------
 
-nmap <silent> <leader>l Neoformat<cr>
+nmap <silent> <leader>l :Neoformat<cr>
 
 let g:neoformat_run_all_formatters = 1
 let g:neoformat_try_formatprg = 1
