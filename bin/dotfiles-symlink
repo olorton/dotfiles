@@ -5,7 +5,7 @@ set -Eeuo pipefail
 
 DOTFILES_ROOT=$(cd "$(dirname "${BASH_SOURCE[0]}")" && cd .. && pwd)
 DISABLE_DESKTOP_SYMLINKS_FILE="$DOTFILES_ROOT/.disable_desktop_symlinks"
-source ${DOTFILES_ROOT}/zsh/vars
+source "${DOTFILES_ROOT}/zsh/vars"
 
 ANSI_RESET="\033[0m"
 # FG_BLACK="\033[30m"
