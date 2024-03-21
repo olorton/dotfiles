@@ -1,8 +1,6 @@
 #!/usr/bin/env bash
 # shellcheck disable=SC2059
 
-# TODO why does running this script ALWAYS result in an exit code of 1
-
 set -Eeuo pipefail
 
 DOTFILES_ROOT=$(cd "$(dirname "${BASH_SOURCE[0]}")" && cd .. && pwd)
