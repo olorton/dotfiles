@@ -1,3 +1,9 @@
 colorscheme xterm-white
 set aaa_mode=album
 set softvol=true
+set format_treewin_artist=%{albumartist}
+bind -f common F1 shell cmus-switch-library all
+bind -f common F2 shell cmus-switch-library main
+bind -f common F3 shell cmus-switch-library classical
+bind -f common F4 shell cmus-switch-library jazz
+bind -f common F5 shell cmus-switch-library rock
