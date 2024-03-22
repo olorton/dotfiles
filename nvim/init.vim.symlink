@@ -12,8 +12,7 @@ Plug 'sainnhe/everforest'
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
 Plug 'christoomey/vim-tmux-navigator'
-" Plug 'itchyny/lightline.vim'
-Plug 'olorton/lightline.vim'
+Plug 'itchyny/lightline.vim'
 Plug 'scrooloose/nerdtree'
 Plug 'bling/vim-bufferline'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
@@ -53,7 +52,7 @@ set laststatus=2
 set noshowmode
 
 let g:lightline = {
-      \ 'colorscheme': 'everforest_light',
+      \ 'colorscheme': 'everforest',
       \ 'active': {
       \   'left': [ [ 'mode', 'paste' ],
       \             [ 'filename', 'gitbranch', 'readonly', 'modified'] ],
