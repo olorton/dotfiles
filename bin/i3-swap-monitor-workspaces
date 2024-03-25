@@ -14,5 +14,5 @@ for ROW in ${DISPLAY_CONFIG}; do
     i3-msg -- workspace --no-auto-back-and-forth "$ROW"
     i3-msg -- move workspace to output next
 done
-sleep 0.15
+sleep 0.25
 i3-msg -- focus output "${ACTIVE_DISPLAY}"
