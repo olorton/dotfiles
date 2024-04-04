@@ -24,17 +24,13 @@ font pango:monospace 8
 # https://wiki.archlinux.org/index.php/XDG_Autostart
 exec --no-startup-id dex --autostart --environment i3
 
-# The combination of xss-lock, nm-applet and pactl is a popular choice, so
-# they are included here as an example. Modify as you see fit.
-
-# Set timout to lock screen
-
-exec_always --no-startup-id xset dpms 0 0 300 &
-
-# xss-lock grabs a logind suspend inhibit lock and will use i3lock to lock the
-# screen before suspend. Use loginctl lock-session to lock your screen.
+# xautolock locks the screen after 5 mins, 10 mins (600s) before the locker
+# puts the system in a full hibernation
+# TODO confugure systemd-sleep to use suspend-then-hibernate instead of
+#     hibernate, with timout to full hibernation; needs lock script updating to
+#     be invoked by the systemd-sleep pre-hook
 set $lock_cmd rm -f /tmp/screen.png && scrot "/tmp/screen.png" && convert "/tmp/screen.png" -scale 10% -scale 1000% "/tmp/screen.png" && convert /tmp/screen.png -fill black -colorize 20%  /tmp/screen.png && i3lock -u -i "/tmp/screen.png" && sleep 1 && rm -f /tmp/screen.png
-exec_always --no-startup-id xss-lock --transfer-sleep-lock -- $lock_cmd --nofork
+exec --no-startup-id xautolock -time 15 -locker 'systemctl hibernate' -notify 600 -notifier '$lock_cmd' &
 
 # exit/lock/suspend/hibernate/reboot/shutdown
 set $mode_system System (l) lock, (e) logout, (s) suspend, (h) hibernate, (r) reboot, (Shift+s) shutdown
@@ -53,7 +49,6 @@ mode "$mode_system" {
     bindsym Escape mode "default"
 }
 bindsym $mod+Shift+e mode "$mode_system"
-exec_always --no-startup-id xautolock -time 1 -locker "sh $lock_cmd"
 
 # NetworkManager is the most popular way to manage wireless networks on Linux,
 # and nm-applet is a desktop environment-independent system tray GUI for it.
