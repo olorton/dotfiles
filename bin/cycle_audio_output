@@ -14,3 +14,6 @@ pactl set-default-sink "$next_sink"
 pactl list short sink-inputs | \
   cut -f1 | \
   xargs -I{} pactl move-sink-input {} "$next_sink"
+
+current_sink=$(pactl info | grep "Default Sink:" | cut '-d ' -f3)
+notify-send -t 800 -r 2344123 "Current audio output: " "${current_sink##*.}"
