@@ -66,6 +66,10 @@ bindsym $mod+XF86AudioLowerVolume exec playerctl play-pause
 bindsym $mod+XF86AudioMute exec playerctl previous && playerctl position 0
 bindsym $mod+XF86AudioRaiseVolume exec playerctl next && playerctl position 0
 
+# Bind screenshots
+bindsym $mod+z exec mkdir -p ~/screenshots && cd ~/screenshots && scrot
+bindsym $mod+x exec mkdir -p ~/screenshots && cd ~/screenshots && scrot -s
+
 # Sreen brightness controls
 bindsym XF86MonBrightnessUp exec xbacklight -inc 10 -steps 100 && current_value=`xbacklight -get` && notify-send -t 800 -r 2344123 "Brightness Up" "${current_value%.*} %"
 bindsym XF86MonBrightnessDown exec xbacklight -dec 10 -steps 100 && current_value=`xbacklight -get` && notify-send -t 800 -r 2344123 "Brightness Up" "${current_value%.*} %"
