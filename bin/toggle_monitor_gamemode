@@ -4,7 +4,7 @@
 
 if [[ $(xrandr | grep -v disconnected | grep HDMI | grep 1080 | wc -l) -ge 1 ]];
 then
-    xrandr --output "DisplayPort-0" --primary --auto --output "HDMI-A-0" --off
+    xrandr --output "DP-1" --primary --auto --output "HDMI-1" --off
 else
-    xrandr --output "DisplayPort-0" --primary --auto --output "HDMI-A-0" --above "DisplayPort-0" --auto
+    xrandr --output "DP-1" --primary --auto --output "HDMI-1" --above "DP-1" --auto
 fi
