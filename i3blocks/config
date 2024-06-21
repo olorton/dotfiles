@@ -34,6 +34,10 @@ markup=none
 [battery]
 interval=5
 
+[caffine]
+command=~/dev/dotfiles/bin/caffine --i3blocks-status ; [[ -z "${BLOCK_BUTTON}" ]] || ~/dev/dotfiles/bin/caffine --toggle-sleep
+interval=2
+
 [vpn]
 command=~/.config/i3blocks/scripts/networking tun
 interval=5
