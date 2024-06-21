@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
-music_dir_root="${HOME}/music"
+default_music_dir_root="${HOME}/music"
+music_dir_root="${CMUS_LIBRARY_DIR:-$default_music_dir_root}"
 [[ "$1" == "all" ]] && music_dir="${music_dir_root}"
 [[ "$1" == "classical" ]] && music_dir="${music_dir_root}/classical-and-film-scores"
 [[ "$1" == "main" ]] && music_dir="${music_dir_root}/main"
