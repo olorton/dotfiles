@@ -1,4 +1,4 @@
 Brewfile.lock.json
-alacritty/local.yml
+alacritty/local.toml
 .netrwhist
 .disable_desktop_symlinks
