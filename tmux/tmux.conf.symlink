@@ -79,8 +79,8 @@ set -g status-right "#{?pane_synchronized, #[bg=red]   !!!SYNC!!!   #[default],}
 # # Easy return to Vim from tmux runner zoom runner pane
 # bind C-p run "(tmux display-message -p '#{pane_current_command}' | grep -iqE '(^|\/)vim$' && tmux send-keys ':VtrZoomRunnerPane' 'C-m') || tmux send-keys 'C-c' && tmux select-pane -l"
 
-# Make C-j display a selectable list of sessions
-bind C-j choose-tree
+# Make C-J display a selectable list of sessions
+bind C-J choose-tree
 
 # Keep window names as I set them
 setw -g automatic-rename off
