@@ -13,7 +13,7 @@ source ${DOTFILES}/zsh/ssh-agent
 source ${DOTFILES}/zsh/zsh
 
 if ! { [ -n "$TMUX" ]; } then
-  	cd ~/dev
+    [ -d "~/dev" ] && cd ~/dev || cd ~/Code
 fi
 
 function precmd() {
