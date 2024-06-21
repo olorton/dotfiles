@@ -159,7 +159,8 @@ nmap ; :Buffers<CR>
 nmap <leader>w :w<bar>Bdelete<CR>
 
 " Yank to the system clipboard
-vmap <leader>y "*y<CR>
+set clipboard+=unnamedplus
+vmap <leader>y "+y<CR>
 
 " Format the current file
 nmap <leader>l :Neoformat<CR>
