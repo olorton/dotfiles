@@ -9,7 +9,7 @@ set main-view = \
     author:abbreviated \
     line-number:yes,interval=1 \
     commit-title:graph=v2,refs=true
-set main-view-date-format = "%Y-%m-%d %H:%M"
+set main-view-date-format = "%Y-%m-%d"
 
 bind status a !?git commit --amend
 bind generic P !git push origin
