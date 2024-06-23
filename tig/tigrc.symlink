@@ -13,3 +13,4 @@ set main-view-date-format = "%Y-%m-%d %H:%M"
 
 bind status a !?git commit --amend
 bind generic P !git push origin
+bind generic L !git pull origin
