@@ -3,7 +3,13 @@
 set mouse = false
 set refresh-mode = periodic
 set refresh-interval = 1
-set main-view-id = yes
+set main-view = \
+    id \
+    date:custom \
+    author:abbreviated \
+    line-number:yes,interval=1 \
+    commit-title:graph=v2,refs=true
+set main-view-date-format = "%Y-%m-%d %H:%M"
 
 bind status a !?git commit --amend
 bind generic P !git push origin
