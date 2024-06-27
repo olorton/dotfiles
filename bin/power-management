@@ -6,6 +6,7 @@
 
 set -Eeuo pipefail
 
+SCRIPT_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" &>/dev/null && pwd -P)
 CAFFINATED_PID_FILE=/tmp/caffine.pid
 CAFFINATED_TIME_FILE=/tmp/caffine-revert-state-after.txt
 
@@ -24,6 +25,7 @@ Available options:
 -a, --caffinated
 -d, --decaffinated
 -t, --toggle-caffine    Toggle the state
+-l, --lock-screen       Uses i3lock to lock screen
 -m, --minutes <value>   Amount of time (minutes) to keeps this state before
                         automatically switching to the other state
 EOF
@@ -37,6 +39,7 @@ parse_params() {
     make_caffinated=0
     make_decaffinated=0
     toggle_caffine=0
+    lock_screen=0
     minutes=0
 
     while :; do
@@ -48,6 +51,7 @@ parse_params() {
         -a | --caffinated) make_caffinated=1 ;;
         -d | --decaffinated) make_decaffinated=1 ;;
         -t | --toggle-caffine) toggle_caffine=1 ;;
+        -l | --lock-screen) lock_screen=1 ;;
         -m | --minutes)
             minutes="${2-}"
             shift
@@ -76,7 +80,7 @@ is_caffinated() {
 }
 
 func_make_caffinated() {
-    xautolock -time 15 -locker 'systemctl suspend' -notify 600 &
+    xautolock -time 15 -locker "systemctl suspend" -notify 600 -notifier "${SCRIPT_DIR}/power-management --lock-screen" &
     echo $! > $CAFFINATED_PID_FILE
     chmod 600 $CAFFINATED_PID_FILE
     xset s on
@@ -92,6 +96,16 @@ func_make_decaffinated() {
     xset -dpms
 }
 
+func_lock_screen() {
+    rm -f /tmp/screen.png
+    scrot "/tmp/screen.png"
+    convert "/tmp/screen.png" -scale 10% -scale 1000% "/tmp/screen.png"
+    convert /tmp/screen.png -fill black -colorize 20%  /tmp/screen.png
+    i3lock -u -i "/tmp/screen.png"
+    sleep 1
+    rm -f /tmp/screen.png
+}
+
 parse_params "$@"
 
 if [ $print_i3blocks_status -eq 1 ]; then
@@ -105,6 +119,11 @@ if [ $print_i3blocks_status -eq 1 ]; then
     echo "$ICON"
     echo "$ICON"
     echo "$COLOUR"
+    exit 0
+fi
+
+if [ $lock_screen -eq 1 ]; then
+    func_lock_screen
     exit 0
 fi
 
