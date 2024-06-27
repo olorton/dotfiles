@@ -28,6 +28,9 @@ exec --no-startup-id dex --autostart --environment i3
 # puts the system in a full hibernation
 exec --no-startup-id $dotfiles/bin/power-management --decaffinated
 
+# keybind to toggle caffine
+bindsym $mod+c exec --no-startup-id $dotfiles/bin/power-management --toggle-caffine
+
 # exit/lock/suspend/hibernate/reboot/shutdown
 set $mode_system System (l) lock, (e) logout, (s) suspend, (h) hibernate, (r) reboot, (Shift+s) shutdown
 mode "$mode_system" {
