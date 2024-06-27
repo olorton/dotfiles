@@ -79,7 +79,7 @@ is_caffinated() {
     fi
 }
 
-func_make_caffinated() {
+func_make_decaffinated() {
     xautolock -time 15 -locker "systemctl suspend" -notify 600 -notifier "${SCRIPT_DIR}/power-management --lock-screen" &
     echo $! > $CAFFINATED_PID_FILE
     chmod 600 $CAFFINATED_PID_FILE
@@ -88,7 +88,7 @@ func_make_caffinated() {
     xset +dpms
 }
 
-func_make_decaffinated() {
+func_make_caffinated() {
     kill -15 "$(cat $CAFFINATED_PID_FILE)"
     rm $CAFFINATED_PID_FILE
     xset s off
@@ -137,14 +137,14 @@ if [ $print_status -eq 1 ]; then
 fi
 
 if [ $make_caffinated -eq 1 ]; then
-    if is_caffinated; then
+    if ! is_caffinated; then
         func_make_caffinated
     fi
     exit 0
 fi
 
 if [ $make_decaffinated -eq 1 ]; then
-    if ! is_caffinated; then
+    if is_caffinated; then
         func_make_decaffinated
     fi
     exit 0
@@ -152,9 +152,9 @@ fi
 
 if [ $toggle_caffine -eq 1 ]; then
     if is_caffinated; then
-        func_make_caffinated
-    else
         func_make_decaffinated
+    else
+        func_make_caffinated
     fi
     exit 0
 fi
