@@ -20,10 +20,10 @@ Available options:
 -h, --help              Print this help and exit
 -v, --verbose           Print script debug info
 -s, --status            Show status, either "not caffinated" or "caffinated"
--i, --i3blocks-status   Show status, formatted for i3blocks
--a, --allow-sleep
--d, --disable-sleep
--t, --toggle-sleep      Toggle the state
+-i, --caffine-i3blocks-status   Show status, formatted for i3blocks
+-a, --caffinated
+-d, --decaffinated
+-t, --toggle-caffine    Toggle the state
 -m, --minutes <value>   Amount of time (minutes) to keeps this state before
                         automatically switching to the other state
 EOF
@@ -32,22 +32,22 @@ EOF
 
 parse_params() {
     # default values of variables set from params
-    get_status=0
-    get_i3blocks_status=0
-    allow_sleep=0
-    disable_sleep=0
-    toggle_sleep=0
+    print_status=0
+    print_i3blocks_status=0
+    make_caffinated=0
+    make_decaffinated=0
+    toggle_caffine=0
     minutes=0
 
     while :; do
         case "${1-}" in
         -h | --help) usage ;;
         -v | --verbose) set -x ;;
-        -s | --status) get_status=1 ;;
-        -i | --i3blocks-status) get_i3blocks_status=1 ;;
-        -a | --allow-sleep) allow_sleep=1 ;;
-        -d | --disable-sleep) disable_sleep=1 ;;
-        -t | --toggle-sleep) toggle_sleep=1 ;;
+        -s | --status) print_status=1 ;;
+        -i | --caffine-i3blocks-status) print_i3blocks_status=1 ;;
+        -a | --caffinated) make_caffinated=1 ;;
+        -d | --decaffinated) make_decaffinated=1 ;;
+        -t | --toggle-caffine) toggle_caffine=1 ;;
         -m | --minutes)
             minutes="${2-}"
             shift
@@ -67,9 +67,7 @@ parse_params() {
     return 0
 }
 
-
-
-caffinated() {
+is_caffinated() {
     if [ -f $CAFFINATED_PID_FILE ]; then
         return 1
     else
@@ -77,7 +75,7 @@ caffinated() {
     fi
 }
 
-enable_sleep() {
+func_make_caffinated() {
     xautolock -time 15 -locker 'systemctl suspend' -notify 600 &
     echo $! > $CAFFINATED_PID_FILE
     chmod 600 $CAFFINATED_PID_FILE
@@ -86,7 +84,7 @@ enable_sleep() {
     xset +dpms
 }
 
-disable_sleep() {
+func_make_decaffinated() {
     kill -15 "$(cat $CAFFINATED_PID_FILE)"
     rm $CAFFINATED_PID_FILE
     xset s off
@@ -96,9 +94,9 @@ disable_sleep() {
 
 parse_params "$@"
 
-if [ $get_i3blocks_status -eq 1 ]; then
+if [ $print_i3blocks_status -eq 1 ]; then
     ICON=""
-    if caffinated; then
+    if is_caffinated; then
         COLOUR=#f3f4f5
     else
         COLOUR=#676e7d
@@ -110,8 +108,8 @@ if [ $get_i3blocks_status -eq 1 ]; then
     exit 0
 fi
 
-if [ $get_status -eq 1 ]; then
-    if caffinated; then
+if [ $print_status -eq 1 ]; then
+    if is_caffinated; then
         echo "caffinated"
     else
         echo "not caffinated"
@@ -119,25 +117,25 @@ if [ $get_status -eq 1 ]; then
     exit 0
 fi
 
-if [ $allow_sleep -eq 1 ]; then
-    if caffinated; then
-        enable_sleep
+if [ $make_caffinated -eq 1 ]; then
+    if is_caffinated; then
+        func_make_caffinated
     fi
     exit 0
 fi
 
-if [ $disable_sleep -eq 1 ]; then
-    if ! caffinated; then
-        disable_sleep
+if [ $make_decaffinated -eq 1 ]; then
+    if ! is_caffinated; then
+        func_make_decaffinated
     fi
     exit 0
 fi
 
-if [ $toggle_sleep -eq 1 ]; then
-    if caffinated; then
-        enable_sleep
+if [ $toggle_caffine -eq 1 ]; then
+    if is_caffinated; then
+        func_make_caffinated
     else
-        disable_sleep
+        func_make_decaffinated
     fi
     exit 0
 fi
