@@ -80,6 +80,7 @@ caffinated() {
 enable_sleep() {
     xautolock -time 15 -locker 'systemctl suspend' -notify 600 &
     echo $! > $CAFFINATED_PID_FILE
+    chmod 600 $CAFFINATED_PID_FILE
     xset s on
     xset s blank
     xset +dpms
