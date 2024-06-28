@@ -1,4 +1,5 @@
 {
-    "python.analysis.typeCheckingMode": "off",
+    "pyright.inlayHints.functionReturnTypes": false,
+    "pyright.inlayHints.variableTypes": false,
     "python.linting.flake8Enabled": true
 }
