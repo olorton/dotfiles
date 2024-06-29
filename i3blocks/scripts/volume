@@ -30,7 +30,7 @@ fi
 
 # output
 output_full_text="$icon $volume_value"
-output_short_text="$full_text"
+output_short_text="$output_full_text"
 output_colour="$colour"
 
 echo "$output_full_text"
