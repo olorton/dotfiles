@@ -8,7 +8,7 @@ ICON_OFF=
 ICON_LOW=
 ICON_HIGH=
 ICON_HEADPHONES=
-ICON_UNKNOWN="?"
+ICON_UNKNOWN=""
 
 volume_value=$(pactl get-sink-volume @DEFAULT_SINK@ VOLUME | awk '{print$5}' | tr -dc '0-9')
 mute_string=$(pactl get-sink-mute @DEFAULT_SINK@ | awk '{print$2}' | xargs)
