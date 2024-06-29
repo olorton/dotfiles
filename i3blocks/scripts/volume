@@ -7,20 +7,32 @@ ICON_MUTED=
 ICON_OFF=
 ICON_LOW=
 ICON_HIGH=
+ICON_HEADPHONES=
+ICON_UNKNOWN="?"
 
 volume_value=$(pactl get-sink-volume @DEFAULT_SINK@ VOLUME | awk '{print$5}' | tr -dc '0-9')
 mute_string=$(pactl get-sink-mute @DEFAULT_SINK@ | awk '{print$2}' | xargs)
+current_sink=$(pactl info | grep "Default Sink:" | grep -o '[a-zA-Z0-9_-]*$')
 
 # defaults
 colour=$COLOUR_ENABLED
-icon=$ICON_HIGH
 
-# update icons and colours
 if [[ "$volume_value" -eq "0" ]]; then
-    icon=$ICON_OFF
     colour="$COLOUR_DISABLED"
-elif [[ "$volume_value" -lt "40" ]]; then
-    icon=$ICON_LOW
+fi
+if [[ "$current_sink" =~ ^analog-stereo.* ]]; then
+    # update icons and colours for speaker output
+    if [[ "$volume_value" -eq "0" ]]; then
+        icon=$ICON_OFF
+    elif [[ "$volume_value" -lt "40" ]]; then
+        icon=$ICON_LOW
+    else
+        icon=$ICON_HIGH
+    fi
+elif [[ "$current_sink" =~ ^hdmi.* ]]; then
+    icon=$ICON_HEADPHONES
+else
+    icon=$ICON_UNKNOWN
 fi
 
 if [[ "$mute_string" = "yes" ]]; then
