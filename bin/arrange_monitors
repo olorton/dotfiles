@@ -1,0 +1,126 @@
+#!/usr/bin/env python
+
+import argparse
+import os
+import re
+import shutil
+import sys
+
+
+def parse_args():
+    parser = argparse.ArgumentParser(description="Process some integers.")
+    parser.add_argument(
+        "--startup",
+        dest="startup",
+        action="store_const",
+        const=True,
+        default=False,
+        help="Arrange the monitors normally. For use at startup.",
+    )
+    parser.add_argument(
+        "--toggle-game-mode",
+        dest="toggle_game_mode",
+        action="store_const",
+        const=True,
+        default=False,
+        help="Disable all monitors except the primary, for playing games.",
+    )
+
+    args = parser.parse_args()
+    if args.toggle_game_mode and args.startup:
+        raise UnexpectedArgumentError(
+            "The following arguments are mutually exclusive: "
+            "--toggle-game-mode --startup"
+        )
+
+    return args
+
+
+class UnexpectedArgumentError(ValueError):
+    pass
+
+
+def verify_command_exists(name):
+    if shutil.which(name) is None:
+        sys.exit(
+            f"""
+            Error: Could not find {name}.
+            This script relies on {name} being installed and in your $PATH.
+            """
+        )
+
+
+def get_monitors():
+    stream = os.popen("xrandr --prop | grep connected | grep -v disconnected")
+    monitors = []
+    for line in stream.readlines():
+        attributes = line.split("(")[0].split(" ")
+        name = attributes[0]
+        is_connected = False
+        is_primary = False
+        is_on = False
+        for attribute in attributes[1:]:
+            if attribute == "connected":
+                is_connected = True
+            if attribute == "primary":
+                is_primary = True
+            if re.match(r"^\d+x\d+\+\d+\+\d+$", attribute):
+                is_on = True
+        monitor = {
+            "name": name,
+            "is_connected": is_connected,
+            "is_primary": is_primary,
+            "is_on": is_on,
+        }
+        monitors.append(monitor)
+    return monitors
+
+
+def get_active_monitors(monitors):
+    return [x for x in monitors if x["is_on"] is True]
+
+
+def game_mode_active(monitors):
+    return len(get_active_monitors(monitors)) == 1
+
+
+def get_primary_monitor(monitors):
+    primary_monitors = [x for x in monitors if x["is_primary"] is True]
+    if len(primary_monitors) != 1:
+        print(primary_monitors)
+        raise Exception("Unexpected number of primary monitors!")
+    return primary_monitors[0]
+
+
+def get_all_non_primary_monitors(monitors):
+    return [x for x in monitors if x["is_primary"] is False]
+
+
+def main():
+    # Verify/setup vars
+    verify_command_exists("xrandr")
+    args = parse_args()
+    monitors = get_monitors()
+    enable_all_monitors = True
+    if args.toggle_game_mode and not game_mode_active(monitors):
+        enable_all_monitors = False
+
+    # Build command to run
+    primary_monitor = get_primary_monitor(monitors)
+    cmd = ["xrandr", "--output", primary_monitor["name"], "--primary", "--auto"]
+    other_monitors = get_all_non_primary_monitors(monitors)
+    previous_monitor = primary_monitor["name"]
+    for monitor in other_monitors:
+        monitor_identity = ["--output", monitor["name"]]
+        if enable_all_monitors:
+            monitor_state = ["--above", previous_monitor, "--auto"]
+        else:
+            monitor_state = ["--off"]
+        cmd = cmd + monitor_identity + monitor_state
+        previous_monitor = monitor["name"]
+
+    os.system(" ".join(cmd))
+
+
+if __name__ == "__main__":
+    main()
