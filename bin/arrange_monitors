@@ -86,9 +86,11 @@ def game_mode_active(monitors):
 
 def get_primary_monitor(monitors):
     primary_monitors = [x for x in monitors if x["is_primary"] is True]
-    if len(primary_monitors) != 1:
+    if len(primary_monitors) > 1:
         print(primary_monitors)
         raise Exception("Unexpected number of primary monitors!")
+    if len(primary_monitors) == 0:
+        return monitors[0]
     return primary_monitors[0]
 
 
@@ -111,13 +113,15 @@ def main():
     other_monitors = get_all_non_primary_monitors(monitors)
     previous_monitor = primary_monitor["name"]
     for monitor in other_monitors:
-        monitor_identity = ["--output", monitor["name"]]
-        if enable_all_monitors:
-            monitor_state = ["--above", previous_monitor, "--auto"]
-        else:
-            monitor_state = ["--off"]
-        cmd = cmd + monitor_identity + monitor_state
-        previous_monitor = monitor["name"]
+        if monitor["name"] != primary_monitor["name"]:
+            monitor_identity = ["--output", monitor["name"]]
+            if enable_all_monitors:
+                monitor_state = ["--above", previous_monitor, "--auto"]
+            else:
+                monitor_state = ["--off"]
+            cmd = cmd + monitor_identity + monitor_state
+            previous_monitor = monitor["name"]
+    print(cmd)
 
     os.system(" ".join(cmd))
 
