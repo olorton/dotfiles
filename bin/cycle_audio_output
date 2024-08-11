@@ -2,7 +2,7 @@
 set -e
 
 default_sink=$(pactl info | grep "Default Sink:" | cut '-d ' -f3)
-sinks=$(pactl list short sinks | cut -f2)
+sinks=$(pactl list short sinks | grep -v iec958-stereo | cut -f2)
 
 # for wrap-around
 sinks="$sinks
