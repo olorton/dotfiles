@@ -10,6 +10,7 @@ alias .5='cd ../../../../../'
 alias .6='cd ../../../../../../'
 alias ~="cd ~"
 alias -- -="cd -"
+alias cdd='cd $DOTFILES'
 
 # show paths
 alias path='echo -e ${PATH//:/\\n}'
