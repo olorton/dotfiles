@@ -23,7 +23,7 @@
     col = checkout -
     cob = checkout -b
     cod = checkout develop
-    com = !git checkout master || git checkout main
+    com = !git checkout $(git symbolic-ref refs/remotes/origin/HEAD | sed 's@^refs/remotes/origin/@@')
     bd = branch -d $1
     st = stash
     stp = stash pop
