@@ -6,6 +6,9 @@ import re
 import shutil
 import sys
 
+RATE_GAMING = 120
+RATE_NORMAL = 60
+
 
 def parse_args():
     parser = argparse.ArgumentParser(description="Process some integers.")
@@ -104,12 +107,14 @@ def main():
     args = parse_args()
     monitors = get_monitors()
     enable_all_monitors = True
+    refresh_rate = RATE_NORMAL
     if args.toggle_game_mode and not game_mode_active(monitors):
         enable_all_monitors = False
+        refresh_rate = RATE_GAMING
 
     # Build command to run
     primary_monitor = get_primary_monitor(monitors)
-    cmd = ["xrandr", "--output", primary_monitor["name"], "--primary", "--auto"]
+    cmd = ["xrandr", "--output", primary_monitor["name"], "--primary", "--rate", str(refresh_rate)]
     other_monitors = get_all_non_primary_monitors(monitors)
     previous_monitor = primary_monitor["name"]
     for monitor in other_monitors:
