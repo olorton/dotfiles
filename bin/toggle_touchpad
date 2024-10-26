@@ -28,6 +28,12 @@ notify_send() {
     notify-send -r 848475 "Input devices changed" "${trackpoint_status}\n${touchpad_status}"
 }
 
+if [ "$1" = "--startup" ]; then
+    xinput enable "$TOUCHPAD"
+    xinput set-prop "$TOUCHPAD" "libinput Tapping Enabled" 1
+    xinput set-prop "$TOUCHPAD" "libinput Natural Scrolling Enabled" 1
+    exit 0
+fi
 
 is_enabled "${TOUCHPAD}" && is_enabled "${TRACKPOINT}" && xinput disable "${TOUCHPAD}" && xinput disable "${TRACKPOINT}" && notify_send && exit 0
 is_disabled "${TOUCHPAD}" && is_disabled "${TRACKPOINT}" && xinput enable "${TOUCHPAD}" && notify_send && exit 0
