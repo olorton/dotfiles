@@ -1,3 +1,4 @@
+[general]
 import = [
     "~/.config/alacritty/main.toml",
     "~/.config/alacritty/theme_everforest.toml",
