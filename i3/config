@@ -270,7 +270,7 @@ default_floating_border pixel 1
 bar {
     position top
     status_command i3blocks
-    font pango:monospace 8
+    font pango:monospace 10
     colors {
         background  $bg-color
         separator   $separator-color
