@@ -56,9 +56,9 @@ if [[ "${1}" == "ethernet" ]]; then
         text_value="$(echo ${address})"
     fi
 elif [[ "${1}" == "wifi" ]]; then
-    icon="${ICON_WIFI}"
+    icon="$(signal_strength) ${ICON_WIFI}"
     if [[ "$(echo ${active_connection} | awk '{print$1}')" == "wifi" ]]; then
-        text_value="$(echo ${status_string} | awk '{print$7}') $(signal_strength) ${address}"
+        text_value="$(echo ${status_string} | awk '{print$7}') ${address}"
     fi
 elif [[ "${1}" == "tun" ]]; then
     icon="${ICON_VPN}"
