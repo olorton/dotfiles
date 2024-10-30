@@ -8,6 +8,7 @@ ICON_OFF=
 ICON_LOW=
 ICON_HIGH=
 ICON_HEADPHONES=
+ICON_MONITOR=
 ICON_UNKNOWN=""
 
 volume_value=$(pactl get-sink-volume @DEFAULT_SINK@ VOLUME | awk '{print$5}' | tr -dc '0-9')
@@ -30,6 +31,8 @@ if [[ "$current_sink" =~ ^analog-stereo.* ]]; then
         icon=$ICON_HIGH
     fi
 elif [[ "$current_sink" =~ ^hdmi.* ]]; then
+    icon=$ICON_MONITOR
+elif [[ "$current_sink" =~ ^a2dp_sink$ ]]; then
     icon=$ICON_HEADPHONES
 else
     icon=$ICON_UNKNOWN
