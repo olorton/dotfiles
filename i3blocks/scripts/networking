@@ -8,29 +8,23 @@ ICON_ETHERNET=
 ICON_WIFI=
 ICON_VPN=
 
-EIGHTH_0="0"
-EIGHTH_1="⅛"
-EIGHTH_2="¼"
-EIGHTH_3="⅜"
-EIGHTH_4="½"
-EIGHTH_5="⅝"
-EIGHTH_6="¾"
-EIGHTH_7="⅞"
-EIGHTH_8=""
+BAR_BLANK=" "
+BAR_1="▁"
+BAR_2="▂"
+BAR_3="▃"
+BAR_4="▄"
+BAR_5="▅"
+BAR_6="▆"
+BAR_7="▇"
+BAR_8="█"
 
 signal_strength() {
     value=$(nmcli dev wifi list | awk '/\*/{if (NR!=1) {print $8}}' | xargs)
-    tenth=$(printf "%.0f" $(echo "scale=2;${value}/10" | bc))
-    echo "$tenth"
-    # if [ "$value" -lt "10" ]; then echo "$EIGHTH_0";
-    # elif [ "$value" -lt "20" ]; then echo "$EIGHTH_1";
-    # elif [ "$value" -lt "30" ]; then echo "$EIGHTH_2";
-    # elif [ "$value" -lt "40" ]; then echo "$EIGHTH_3";
-    # elif [ "$value" -lt "50" ]; then echo "$EIGHTH_4";
-    # elif [ "$value" -lt "60" ]; then echo "$EIGHTH_5";
-    # elif [ "$value" -lt "70" ]; then echo "$EIGHTH_6";
-    # elif [ "$value" -lt "80" ]; then echo "$EIGHTH_7";
-    # else echo "$EIGHTH_8"; fi
+
+    if [ "$value" -gt "30" ]; then bar=${bar}$BAR_3; else bar="${bar}${BAR_1}"; fi
+    if [ "$value" -gt "60" ]; then bar=${bar}$BAR_5; else bar="${bar}${BAR_1}"; fi
+    if [ "$value" -ge "90" ]; then bar=${bar}$BAR_7; else bar="${bar}${BAR_1}"; fi
+    echo "$bar"
 }
 
 status_string=$( \
@@ -39,7 +33,7 @@ status_string=$( \
         | grep "${1}" \
 )
 active_connection=$(nmcli -f TYPE,NAME connection show --active | grep -v TYPE | head -n 1)
-device_name="$(echo $active_connection | awk '{$1= ""; print $0}' | xargs)"
+device_name="$(echo $active_connection | awk '{$1= "" ; print $0}' | xargs)"
 
 # defaults
 colour=$COLOUR_DISABLED
@@ -58,9 +52,9 @@ if [[ "${1}" == "ethernet" ]]; then
         text_value="$(echo ${address})"
     fi
 elif [[ "${1}" == "wifi" ]]; then
-    icon="$(signal_strength) ${ICON_WIFI}"
+    icon="${ICON_WIFI}"
     if [[ "$(echo ${active_connection} | awk '{print$1}')" == "wifi" ]]; then
-        text_value="$(echo ${status_string} | awk '{print$7}') ${address}"
+        text_value="$(signal_strength) $(echo ${status_string} | awk '{print$7}') ${address}"
     fi
 elif [[ "${1}" == "tun" ]]; then
     icon="${ICON_VPN}"
