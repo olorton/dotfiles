@@ -1,1 +1,17 @@
 [[ $OSTYPE == "linux"* ]] && [[ -x "$(command -v keychain)" ]] && eval $(keychain --eval --quiet id_rsa)
+
+if [[ $OSTYPE == "darwin"* ]]; then
+    if [[ ! "$XDG_RUNTIME_DIR" ]]; then
+        XDG_RUNTIME_DIR=/tmp/${UID}-runtime-dir
+    fi
+    if ! pgrep -u "$USER" ssh-agent > /dev/null; then
+        ssh-agent > "$XDG_RUNTIME_DIR/ssh-agent.env"
+    fi
+    if [[ ! "$SSH_AUTH_SOCK" ]]; then
+        eval "$(<"$XDG_RUNTIME_DIR/ssh-agent.env")"
+    fi
+
+    [[ -f $HOME/.ssh/id_ed25519 ]] && ssh-add --apple-use-keychain  $HOME/.ssh/id_ed25519
+fi
+
+# vim: set filetype=bash syntax=bash:
