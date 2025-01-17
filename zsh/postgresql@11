@@ -7,3 +7,5 @@ export CPPFLAGS="-I/usr/local/opt/postgresql@11/include"
 
 # For pkg-config to find postgresql@11 you may need to set:
 export PKG_CONFIG_PATH="/usr/local/opt/postgresql@11/lib/pkgconfig"
+
+# vim: set filetype=bash syntax=bash:

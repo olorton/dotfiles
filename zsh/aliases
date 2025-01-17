@@ -115,3 +115,5 @@ alias mux="tmuxinator"
 
 alias vs="vagrant ssh"
 alias vu="vagrant up"
+
+# vim: set filetype=bash syntax=bash:

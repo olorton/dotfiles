@@ -10,3 +10,5 @@ ZSH_TMUX_AUTOCONNECT="true"
 ZSH_TMUX_AUTOQUIT="true"
 # When running tmux, the variable $TERM is supposed to be set to screen or one of its derivatives. This option will set the default-terminal option of tmux to screen-256color if 256 color terminal support is detected, and screen otherwise. The term values it uses can be overridden by changing the ZSH_TMUX_FIXTERM_WITH_256COLOR and ZSH_TMUX_FIXTERM_WITHOUT_256COLOR variables respectively. Set to true by default.
 ZSH_TMUX_FIXTERM="true"
+
+# vim: set filetype=bash syntax=bash:

@@ -5,3 +5,5 @@ show_virtual_env() {
   fi
 }
 PS1='$(show_virtual_env)'$PS1
+
+# vim: set filetype=bash syntax=bash:
