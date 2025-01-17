@@ -14,6 +14,7 @@ export PATH="$DOTFILES/bin:$PATH"                       # dotfiles scripts
 if command -v go &> /dev/null; then
     export PATH="$(go env GOPATH)/bin:$PATH"            # Go binaries
 fi
+[ -d "$HOME/bin" ] && export PATH="$HOME/bin:$PATH"     # Home bin dir
 
 # Note: NPM path is set in $DOTFILES/zsh/javascript
 
