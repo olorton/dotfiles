@@ -39,10 +39,7 @@ For Slack: `#282A36,#44475A,#44475A,#8BE9FD,#6272A4,#FFFFFF,#50FA7B,#FF5555`
 
 ### Fix font rendering on 1080p screens
 
-    defaults -currentHost delete -globalDomain AppleFontSmoothing
-    defaults write -g CGFontRenderingFontSmoothingDisabled -bool YES
-
-Source: [nvucuong.medium.com/macos-blurry-texts-on-an-external-full-hd-monitor-d2a955c25607](https://nvucuong.medium.com/macos-blurry-texts-on-an-external-full-hd-monitor-d2a955c25607)
+    defaults -currentHost write -g AppleFontSmoothing -int 0
 
 ## Tips
 
