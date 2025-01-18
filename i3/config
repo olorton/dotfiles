@@ -296,7 +296,7 @@ bindsym $mod+minus scratchpad show
 exec --no-startup-id i3-msg 'workspace $ws1; exec /usr/bin/alacritty --command "tmux"; workspace $ws1'
 exec --no-startup-id i3-msg 'workspace $ws2;  exec /usr/bin/firefox; workspace $ws1'
 exec --no-startup-id i3-msg 'workspace $ws3; exec /usr/bin/signal-desktop; workspace $ws1'
-# exec --no-startup-id i3-msg 'workspace $ws4; exec /usr/bin/steam; workspace $ws1'
+exec --no-startup-id i3-msg 'workspace $ws4; exec /usr/bin/steam; workspace $ws1'
 assign [class="steam"] $ws4
 assign [class="steamwebhelper"] $ws4
 exec --no-startup-id $dotfiles/bin/toggle_touchpad --startup
