@@ -22,8 +22,8 @@ signal_strength() {
     value=$(nmcli dev wifi list | awk '/\*/{if (NR!=1) {print $8}}' | xargs)
 
     if [ "$value" -gt "30" ]; then bar=${bar}$BAR_3; else bar="${bar}${BAR_1}"; fi
-    if [ "$value" -gt "60" ]; then bar=${bar}$BAR_5; else bar="${bar}${BAR_1}"; fi
-    if [ "$value" -ge "90" ]; then bar=${bar}$BAR_7; else bar="${bar}${BAR_1}"; fi
+    if [ "$value" -gt "55" ]; then bar=${bar}$BAR_5; else bar="${bar}${BAR_1}"; fi
+    if [ "$value" -ge "80" ]; then bar=${bar}$BAR_7; else bar="${bar}${BAR_1}"; fi
     echo "$bar"
 }
 
