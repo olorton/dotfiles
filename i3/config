@@ -315,7 +315,7 @@ exec --no-startup-id udiskie --no-automount --no-notify --tray &
 exec_always feh --bg-scale /home/oliver/Wallpapers/wallpaper.jpg
 
 # Monitor arrangement
-exec_always $dotfiles/bin/arrange_monitors --setup
+exec_always $dotfiles/bin/arrange_monitors --startup
 
 # Fix for TF2 fullscreen
 for_window [class="hl2_linux"] floating enable fullscreen enable
