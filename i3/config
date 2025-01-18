@@ -317,5 +317,8 @@ exec_always feh --bg-scale /home/oliver/Wallpapers/wallpaper.jpg
 # Monitor arrangement
 exec_always $dotfiles/bin/arrange_monitors --startup
 
+# System tray startup
+exec --no-startup-id blueman-applet &
+
 # Fix for TF2 fullscreen
 for_window [class="hl2_linux"] floating enable fullscreen enable
