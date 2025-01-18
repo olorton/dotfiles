@@ -9,6 +9,9 @@ set -Eeuo pipefail
 SCRIPT_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" &>/dev/null && pwd -P)
 CAFFINATED_PID_FILE=/tmp/caffine.pid
 CAFFINATED_TIME_FILE=/tmp/caffine-revert-state-after.txt
+MINUTES_TILL_HIBERNATE=40
+MINUTES_TILL_SCREEN_LOCK=5
+SECONDS_TILL_SCREEN_LOCK=$((MINUTES_TILL_SCREEN_LOCK * 60))
 
 usage() {
     cat <<EOF
@@ -80,7 +83,7 @@ is_caffinated() {
 }
 
 func_make_decaffinated() {
-    xautolock -time 15 -locker "systemctl suspend" -notify 600 -notifier "${SCRIPT_DIR}/power-management --lock-screen" &
+    xautolock -time $MINUTES_TILL_HIBERNATE -locker "systemctl suspend-then-hibernate" -notify $SECONDS_TILL_SCREEN_LOCK -notifier "${SCRIPT_DIR}/power-management --lock-screen" &
     echo $! > $CAFFINATED_PID_FILE
     chmod 600 $CAFFINATED_PID_FILE
     xset s on
