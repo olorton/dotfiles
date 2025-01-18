@@ -38,6 +38,7 @@ Plug 'hashivim/vim-terraform'
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 Plug 'b4b4r07/vim-hcl'
 Plug 'darrikonn/vim-gofmt', { 'do': ':GoUpdateBinaries' }
+Plug 'sudar/vim-arduino-syntax'
 
 call plug#end()
 
