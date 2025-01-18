@@ -34,6 +34,8 @@ elif [[ "$current_sink" =~ ^hdmi.* ]]; then
     icon=$ICON_MONITOR
 elif [[ "$current_sink" =~ ^a2dp_sink$ ]]; then
     icon=$ICON_HEADPHONES
+elif [[ "$current_sink" =~ handsfree_head_unit ]]; then
+    icon=$ICON_HEADPHONES
 else
     icon=$ICON_UNKNOWN
 fi
