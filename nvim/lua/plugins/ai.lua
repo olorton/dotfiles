@@ -1,8 +1,9 @@
-return {
-    "yetone/avante.nvim",
-    event = "VeryLazy",
-    lazy = false,
-    version = false, -- Set this to "*" to always pull the latest release version, or set it to false to update to the latest code changes.
+local opts
+
+opts = nil
+if os.getenv("GEMINI_API_KEY") then
+    opts = nil
+elseif os.getenv("OPENAI_API_KEY") then
     opts = {
         provider = "openai",
         auto_suggestions_provider = "openai",
@@ -10,7 +11,19 @@ return {
             model = "gpt-4o-mini",
             max_tokens = 4096,
         },
-    },
+    }
+end
+
+if opts == nil then
+    return {}
+end
+
+return {
+    "yetone/avante.nvim",
+    event = "VeryLazy",
+    lazy = false,
+    version = false, -- Set this to "*" to always pull the latest release version, or set it to false to update to the latest code changes.
+    opts = opts,
     -- if you want to build from source then do `make BUILD_FROM_SOURCE=true`
     build = "make",
     dependencies = {
