@@ -1,53 +1,3 @@
-" Plugin manager -------------------------------------------------------------
-
-let data_dir = has('nvim') ? stdpath('data') . '/site' : '~/.vim'
-if empty(glob(data_dir . '/autoload/plug.vim'))
-  silent execute '!curl -fLo '.data_dir.'/autoload/plug.vim --create-dirs  https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
-  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
-endif
-
-call plug#begin()
-
-Plug 'sainnhe/everforest'
-Plug 'tpope/vim-fugitive'
-Plug 'airblade/vim-gitgutter'
-Plug 'christoomey/vim-tmux-navigator'
-Plug 'itchyny/lightline.vim'
-Plug 'scrooloose/nerdtree'
-Plug 'bling/vim-bufferline'
-Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-Plug 'junegunn/fzf.vim'
-Plug 'tpope/vim-commentary'
-Plug 'tpope/vim-surround'
-Plug 'famiu/bufdelete.nvim'
-Plug 'ekalinin/Dockerfile.vim'
-" Plug 'mboughaba/i3config.vim'
-Plug 'hrsh7th/nvim-cmp'
-Plug 'hrsh7th/cmp-buffer'
-Plug 'hrsh7th/cmp-path'
-Plug 'hrsh7th/cmp-cmdline'
-Plug 'heavenshell/vim-pydocstring'
-Plug 'sbdchd/neoformat'
-" TODO Neomake
-" TODO shellcheck
-Plug 'martinda/jenkinsfile-vim-syntax'
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'wfxr/protobuf.vim'
-Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
-Plug 'hashivim/vim-terraform'
-Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
-Plug 'b4b4r07/vim-hcl'
-Plug 'darrikonn/vim-gofmt', { 'do': ':GoUpdateBinaries' }
-Plug 'sudar/vim-arduino-syntax'
-
-call plug#end()
-
-let g:pydocstring_doq_path = '~/.local/bin/doq'
-
-source ~/.vimrc_basic
-
-
-
 " Lightline ------------------------------------------------------------------
 
 set laststatus=2
@@ -117,6 +67,7 @@ lua <<EOF
           "javascript",
           "jq",
           "json",
+          "lua",
           "make",
           "php",
           "python",
@@ -152,7 +103,8 @@ let g:neoformat_enabled_javascript = ['prettier']
 let g:neoformat_enabled_javascriptreact = ['prettier']
 let g:neoformat_enabled_jsx = ['prettier']
 let g:neoformat_enabled_python = ['black']
-" let g:neoformat_enabled_bzl = ["buildifier"]
+let g:neoformat_enabled_bzl = ["buildifier"]
+let g:neoformat_enabled_lua = ["stylua"]
 
 
 " Git blame toggle -----------------------------------------------------------
@@ -198,7 +150,7 @@ augroup ft_python
 augroup END
 
 " Disable visual tab chars in go, by disabling all visual listchars
-au FileType go setlocal nolist
+"au FileType go setlocal nolist
 
 if has('autocmd')
   if has('spell')
