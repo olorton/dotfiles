@@ -2,5 +2,10 @@
     "pyright.inlayHints.functionReturnTypes": false,
     "pyright.inlayHints.variableTypes": false,
     "pyright.inlayHints.parameterTypes": false,
-    "python.linting.flake8Enabled": true
+    "python.linting.flake8Enabled": true,
+    "Lua": {
+        "diagnostics": {
+            "globals": ["vim"]
+        }
+    }
 }

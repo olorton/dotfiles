@@ -68,6 +68,7 @@ set nowritebackup
 
 nnoremap <SPACE> <Nop>
 let mapleader = " "
+let maplocalleader = "\\"
 
 
 
