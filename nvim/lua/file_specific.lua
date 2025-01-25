@@ -16,7 +16,7 @@ vim.api.nvim_create_autocmd("FileType", {
     callback = function()
         vim.bo.omnifunc = "pythoncomplete#Complete"
         vim.bo.define = "^\\s*\\(def\\|class\\)"
-        vim.bo.foldnestmax = 1
+        vim.wo.foldnestmax = 1
     end,
 })
 
