@@ -25,12 +25,13 @@ vim.g.python_highlight_all = 1
 
 -------------------------------------------------------------------------------
 -- Golang
-vim.api.nvim_create_autocmd("FileType", {
-    pattern = "go",
-    callback = function()
-        vim.opt_local.list = false
-    end,
-})
+
+-- Hide tab chars when writing go files.
+-- TODO `nolist` hides all list chars including non-breaking spaces and 
+-- trailing spaces, consider reworking this so that it only affects tab chars.
+vim.cmd [[
+au FileType go setlocal nolist
+]]
 
 -------------------------------------------------------------------------------
 -- PHP
