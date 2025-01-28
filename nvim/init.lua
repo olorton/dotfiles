@@ -23,6 +23,3 @@ require("lazy").setup("plugins")
 
 require("keymaps")
 require("file_specific")
-
--- TODO migrate this stuff...
-vim.cmd("source ~/dev/dotfiles/nvim/todo_migrate_this_old_config_to_lua.vim")
