@@ -1,5 +1,4 @@
 return {
-    -- { "darrikonn/vim-gofmt", build = ":GoUpdateBinaries" },
     -- {
     --     "sbdchd/neoformat",
     --     cmd = { "Neoformat" },
@@ -15,6 +14,7 @@ return {
     --         -- Global variables for Neoformat settings
     --         vim.g.neoformat_run_all_formatters = 1
     --         vim.g.neoformat_try_formatprg = 1
+    { "darrikonn/vim-gofmt", build = ":GoUpdateBinaries" },
 
     --         -- Enable formatters for specific file types
     --         vim.g.neoformat_enabled_css = { "prettier" }
