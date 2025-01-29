@@ -35,8 +35,11 @@ Terminal typefaces I've used in the past, and leave here because I might come ba
 
 - Replace oh-my-zsh with something more vanilla, I barely use these features.
 - Add pre-commit hook to check I'm commiting as the right user, e.g.
+
+    ```
     #!/bin/sh
     if [ "$(git config user.name)" = "username" ]; then
         echo "Direct commits from this account are not allowed."
         exit 1
     fi
+    ```
