@@ -1,15 +1,9 @@
 TODOs
 =====
 
-- Re-structure lua config
-    - Try to move all current config (as-is)
 - Consider installing Noice for better error/message viewing
-- Find a plugin to show my current keymappings
-- CoC Automatically import
-- CoC find next error
+- LSP find next error
     - Is there a way to navigate and fix these? Maybe look at a plugin called Trouble?
-- CoC rename var/func
+- LSP rename var/func - fix keymap
 - Add a plugin for .EditorConfig ?
 - Lightline, fix missing char; is this working LightlineCharcode?
-- Upgrade global npm, maybe use nvm, as many of our coc plugins work with this
-- Disable notifactions of lazyvim, maybe show something in lightline instead?
