@@ -5,7 +5,7 @@ export XDG_CONFIG_HOME="$HOME/.config"
 export EDITOR=nvim
 export XDEBUG_CONFIG="idekey=PHPSTORM"
 export LANG=en_GB.UTF-8
-export SSH_KEY_PATH="~/.ssh/id_rsa"
+export SSH_KEY_PATH="$HOME/.ssh/id_rsa"
 
 export PYTHON_CONFIGURE_OPTS="--enable-shared"  # Required for YouCompleteMe/Vim
 export PYENV_ROOT="$HOME/.pyenv"
