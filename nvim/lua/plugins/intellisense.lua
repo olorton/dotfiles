@@ -68,7 +68,7 @@ return {
                         if cmp.visible() then
                             cmp.select_next_item()
                         else
-                            cmp.complete() -- Manually trigger completion
+                            fallback() -- Use fallback to perform the default tab action
                         end
                     end, { "i", "s" }),
                     ["<S-Tab>"] = cmp.mapping.select_prev_item(), -- Navigate to previous item
