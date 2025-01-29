@@ -14,7 +14,7 @@ source ${DOTFILES}/zsh/ssh-agent
 source ${DOTFILES}/zsh/zsh
 
 # Change directory to dev
-if ! { [ -n "$TMUX" ]; } then
+if ! { [ -n "$TMUX" ]; }; then
     [ -d "$HOME/dev" ] && cd $HOME/dev
 fi
 
