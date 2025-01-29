@@ -141,20 +141,6 @@ nmap <leader>n :NERDTreeFind<CR>
 let NERDTreeQuitOnOpen=1  " Close nerdtree after a file is opened
 let NERDTreeIgnore = ['\.pyc$', '__pycache__']
 
-" Fzf settings
-let g:fzf_vim = {}
-let g:fzf_vim.preview_window = ['right,50%,<70(up,40%)', 'ctrl-/']
-
-" Fuzzy search project file contents
-command! -bang -nargs=* Ag call fzf#vim#ag(<q-args>, fzf#vim#with_preview({'options': '--delimiter : --nth 4..'}), <bang>0)
-nnoremap <C-g> :Ag<Cr>
-
-" Fuzzy search project file names
-nnoremap <C-p> :Files<Cr>
-
-" Fuzzy search open buffers
-nmap ; :Buffers<CR>
-
 " Close buffer, but leave the split open and switch to next buffer in the list
 nmap <leader>w :w<bar>Bdelete<CR>
 
