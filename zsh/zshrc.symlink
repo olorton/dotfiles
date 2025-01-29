@@ -1,26 +1,27 @@
 # Path to dotfiles source directory
-export DOTFILES=$(builtin cd $(dirname "$(readlink ~/.zshrc)") && git rev-parse --show-toplevel)
+DOTFILES="$(builtin cd "$(dirname "$(readlink ~/.zshrc)")" && git rev-parse --show-toplevel)"
+export DOTFILES
 
-source ${DOTFILES}/zsh/vars
-source ${DOTFILES}/zsh/tmux
-source ${DOTFILES}/zsh/path
-source ${DOTFILES}/zsh/python
-source ${DOTFILES}/zsh/postgresql@11
-source ${DOTFILES}/zsh/javascript
-source ${DOTFILES}/zsh/aliases
-source ${DOTFILES}/zsh/keybindings
-source ${DOTFILES}/zsh/gcloud
-source ${DOTFILES}/zsh/ssh-agent
-source ${DOTFILES}/zsh/zsh
+source "${DOTFILES}/zsh/vars"
+source "${DOTFILES}/zsh/tmux"
+source "${DOTFILES}/zsh/path"
+source "${DOTFILES}/zsh/python"
+source "${DOTFILES}/zsh/postgresql@11"
+source "${DOTFILES}/zsh/javascript"
+source "${DOTFILES}/zsh/aliases"
+source "${DOTFILES}/zsh/keybindings"
+source "${DOTFILES}/zsh/gcloud"
+source "${DOTFILES}/zsh/ssh-agent"
+source "${DOTFILES}/zsh/zsh"
 
 # Change directory to dev
 if ! { [ -n "$TMUX" ]; }; then
-    [ -d "$HOME/dev" ] && cd $HOME/dev
+    [ -d "$HOME/dev" ] && cd "$HOME/dev" || return
 fi
 
 function precmd() {
     if [[ "$(pwd | awk -F/ '{print $(NF-1)}')" == "dev" ]]; then
-        tmux rename-window -t${TMUX_PANE} "$(pwd | awk -F/ '{print $NF}')"
+        tmux rename-window -t"${TMUX_PANE}" "$(pwd | awk -F/ '{print $NF}')"
     fi
 }
 
