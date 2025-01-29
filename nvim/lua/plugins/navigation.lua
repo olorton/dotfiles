@@ -1,8 +1,6 @@
 return {
     "christoomey/vim-tmux-navigator",
     "scrooloose/nerdtree",
-    "bling/vim-bufferline",
-    -- "bling/vim-bufferline",
     {
         "nvim-telescope/telescope.nvim",
         branch = "0.1.x",
