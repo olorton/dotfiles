@@ -1,7 +1,9 @@
-# Add alt-left/alt-right to jump words
-# TODO this isn't needed on alacritty/OSX, needs checking on linux before removing
-# bindkey -e
-# bindkey '[C' forward-word
-# bindkey '[D' backward-word
+# Edit command in $EDITOR
+# In Emacs mode: Ctrl+x Ctrl+e
+# In Vi mode: v
+autoload -U edit-command-line
+zle -N edit-command-line
+bindkey '^xe' edit-command-line  # For Ctrl+x e
+bindkey -M vicmd v edit-command-line  # For 'v' in vi mode
 
 # vim: set filetype=bash syntax=bash:
