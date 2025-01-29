@@ -10,26 +10,17 @@ Then:
 ```bash
 git clone git@github.com:olorton/dotfiles.git ~/dev/dotfiles
 cd ~/dev/dotfiles
-brew bundle
 bin/dotfiles-symlink
-git clone https://github.com/dracula/alacritty.git ~/dev/dracula_alacritty
 cat ~/.python-version | pyenv install -
+source ~/.zshrc
+dedit
 ```
 
-TODO:
-- Add pre-commit to check I'm not using the wrong account
-
-When running Vim for the first time, install plugins using [vim-plug instructions](https://github.com/junegunn/vim-plug#installation). Because of how I have configured vim you will also need to create the following dirs: `mkdir -p ~/.vim/tmp/{undo,backup}`
-
-Terminal typefaces I've used:
+Terminal typefaces I've used in the past, and leave here because I might come back to them:
 - Current: [DOSEGA](https://sourceforge.net/projects/dosega/)
 - [M+1m console font](http://sourceforge.jp/projects/mplus-fonts/downloads/62344/mplus-TESTFLIGHT-059.tar.xz/)
 
-### Colour theme: Dracula
-
-Already configured for vim and alacritty.
-
-For Slack: `#282A36,#44475A,#44475A,#8BE9FD,#6272A4,#FFFFFF,#50FA7B,#FF5555`
+## macOS fixes
 
 ### Speed up key repeat
 
@@ -40,10 +31,12 @@ For Slack: `#282A36,#44475A,#44475A,#8BE9FD,#6272A4,#FFFFFF,#50FA7B,#FF5555`
 
     defaults -currentHost write -g AppleFontSmoothing -int 0
 
-## Tips
+## TODOs
 
-Sync dotfiles to vagrant box:
-
-```bash
-rsync -av --delete -e "vagrant ssh --" $DOTFILES :~/
-```
+- Replace oh-my-zsh with something more vanilla, I barely use these features.
+- Add pre-commit hook to check I'm commiting as the right user, e.g.
+    #!/bin/sh
+    if [ "$(git config user.name)" = "username" ]; then
+        echo "Direct commits from this account are not allowed."
+        exit 1
+    fi
