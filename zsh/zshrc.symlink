@@ -19,9 +19,9 @@ if ! { [ -n "$TMUX" ]; }; then
 fi
 
 function precmd() {
-     if [[ "$(pwd | awk -F/ '{print $(NF-1)}')" == "dev" ]]; then
-         tmux rename-window -t${TMUX_PANE} "$(pwd | awk -F/ '{print $NF}')"
-     fi
+    if [[ "$(pwd | awk -F/ '{print $(NF-1)}')" == "dev" ]]; then
+        tmux rename-window -t${TMUX_PANE} "$(pwd | awk -F/ '{print $NF}')"
+    fi
 }
 
 export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
