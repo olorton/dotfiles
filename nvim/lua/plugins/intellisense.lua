@@ -29,8 +29,11 @@ return {
                     "json",
                     "lua",
                     "make",
+                    "markdown",
+                    "markdown_inline",
                     "php",
                     "python",
+                    "query",
                     "rst",
                     "rust",
                     "sql",
@@ -40,13 +43,34 @@ return {
                     "twig",
                     "typescript",
                     "vim",
+                    "vimdoc",
                     "yaml",
                 },
-                indent = {
-                    disable = { "python" },
-                },
+                sync_install = false, -- Install parsers synchronously
+                auto_install = true, -- Automatically install missing parsers
+                ignore_install = {}, -- Parsers to ignore installing
                 highlight = {
                     enable = true, -- Enable highlighting
+                    disable = { "c", "rust" }, -- Disable highlighting for specific languages
+                    additional_vim_regex_highlighting = false, -- Use Vim's regex highlighting alongside Tree-sitter
+                },
+                incremental_selection = {
+                    enable = true,
+                    keymaps = {
+                        init_selection = "gnn", -- Start incremental selection
+                        node_incremental = "grn", -- Increment to the upper node
+                        scope_incremental = "grc", -- Increment to the upper scope
+                        node_decremental = "grm", -- Decrement to the previous node
+                    },
+                },
+                folding = {
+                    enable = false, -- Enable Tree-sitter based folding
+                    foldmethod = "expr",
+                    foldexpr = "v:lua.vim.treesitter.foldexpr()",
+                },
+                indent = {
+                    enable = true,
+                    disable = { "python" },
                 },
             })
         end,
