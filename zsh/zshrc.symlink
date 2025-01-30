@@ -12,6 +12,7 @@ source "${DOTFILES}/zsh/aliases"
 source "${DOTFILES}/zsh/keybindings"
 source "${DOTFILES}/zsh/gcloud"
 source "${DOTFILES}/zsh/ssh-agent"
+source "${DOTFILES}/zsh/completion"
 source "${DOTFILES}/zsh/zsh"
 
 # Change directory to dev
