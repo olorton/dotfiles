@@ -116,13 +116,6 @@ return {
             { "hrsh7th/cmp-nvim-lsp" },
             { "williamboman/mason.nvim" },
             { "williamboman/mason-lspconfig.nvim" },
-            -- Adding folke/neodev.nvim helps prevent lsp errors for init.lua
-            {
-                "folke/neodev.nvim",
-                config = function()
-                    require("neodev").setup()
-                end,
-            },
         },
         init = function()
             -- Reserve a space in the gutter
