@@ -1,4 +1,4 @@
-[[ $OSTYPE == "linux"* ]] && [[ -x "$(command -v keychain)" ]] && eval $(keychain --eval --quiet id_rsa)
+[[ $OSTYPE == "linux"* ]] && [[ -x "$(command -v keychain)" ]] && eval "$(keychain --eval --quiet id_rsa)"
 
 if [[ $OSTYPE == "darwin"* ]]; then
     if [[ ! "$XDG_RUNTIME_DIR" ]]; then
