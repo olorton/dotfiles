@@ -140,6 +140,8 @@ map <leader>e :NERDTreeToggle<CR>
 nmap <leader>n :NERDTreeFind<CR>
 let NERDTreeQuitOnOpen=1  " Close nerdtree after a file is opened
 let NERDTreeIgnore = ['\.pyc$', '__pycache__']
+autocmd FileType nerdtree nnoremap <buffer> <Tab> <nop>
+autocmd FileType nerdtree nnoremap <buffer> <Esc> :NERDTreeClose<CR>
 
 " Close buffer, but leave the split open and switch to next buffer in the list
 nmap <leader>w :w<bar>Bdelete<CR>
