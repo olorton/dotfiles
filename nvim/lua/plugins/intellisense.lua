@@ -71,7 +71,7 @@ return {
                             fallback() -- Use fallback to perform the default tab action
                         end
                     end, { "i", "s" }),
-                    ["<S-Tab>"] = cmp.mapping.select_prev_item(), -- Navigate to previous item
+                    ["<S-Tab>"] = cmp.mapping.select_prev_item(),      -- Navigate to previous item
                     ["<CR>"] = cmp.mapping.confirm({ select = true }), -- Confirm
                 }),
                 snippet = {
