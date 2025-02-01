@@ -79,12 +79,21 @@ return {
     -- Autocompletion
     {
         "hrsh7th/nvim-cmp",
+        dependencies = {
+            { "hrsh7th/cmp-buffer" },
+            { "hrsh7th/cmp-path" },
+            { "hrsh7th/cmp-cmdline" },
+        },
         event = "InsertEnter",
         config = function()
             local cmp = require("cmp")
             cmp.setup({
                 sources = {
-                    { name = "nvim_lsp" },
+                    { name = "path", keyword_length = 3 },
+                    { name = "buffer", keyword_length = 3 },
+                    { name = "nvim_lsp", keyword_length = 3 },
+                    { name = "avante", keyword_length = 3 },
+                    { name = "cmdline", keyword_length = 3 },
                 },
                 mapping = cmp.mapping.preset.insert({
 
@@ -98,6 +107,19 @@ return {
                     ["<S-Tab>"] = cmp.mapping.select_prev_item(),      -- Navigate to previous item
                     ["<CR>"] = cmp.mapping.confirm({ select = true }), -- Confirm
                 }),
+                formatting = {
+                    format = function(entry, vim_item)
+                        -- Show the source of the completion item
+                        vim_item.menu = ({
+                            path = "[Pth]",
+                            buffer = "[Buf]",
+                            nvim_lsp = "[LSP]",
+                            avante = "[Ai]",
+                            cmdline = "[Cmd]",
+                        })[entry.source.name]
+                        return vim_item
+                    end,
+                },
                 snippet = {
                     expand = function(args)
                         vim.snippet.expand(args.body)
