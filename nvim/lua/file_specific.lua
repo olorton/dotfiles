@@ -17,7 +17,7 @@ vim.api.nvim_create_autocmd("FileType", {
         vim.bo.omnifunc = "pythoncomplete#Complete"
         vim.bo.define = "^\\s*\\(def\\|class\\)"
         vim.wo.foldmethod = "indent"
-        vim.bo.foldnestmax = 2
+        vim.wo.foldnestmax = 2
     end,
 })
 
