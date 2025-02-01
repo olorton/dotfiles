@@ -104,7 +104,7 @@ return {
                             fallback() -- Use fallback to perform the default tab action
                         end
                     end, { "i", "s" }),
-                    ["<S-Tab>"] = cmp.mapping.select_prev_item(),      -- Navigate to previous item
+                    ["<S-Tab>"] = cmp.mapping.select_prev_item(), -- Navigate to previous item
                     ["<CR>"] = cmp.mapping.confirm({ select = true }), -- Confirm
                 }),
                 formatting = {
@@ -166,11 +166,15 @@ return {
                     vim.keymap.set("n", "go", "<cmd>lua vim.lsp.buf.type_definition()<cr>", opts)
                     vim.keymap.set("n", "gr", "<cmd>lua vim.lsp.buf.references()<cr>", opts)
                     vim.keymap.set("n", "gs", "<cmd>lua vim.lsp.buf.signature_help()<cr>", opts)
-                    vim.keymap.set("n", "<F2>", "<cmd>lua vim.lsp.buf.rename()<cr>", opts)
+                    vim.keymap.set("n", "<leader>rn", "<cmd>lua vim.lsp.buf.rename()<cr>", opts)
                     vim.keymap.set({ "n", "x" }, "<F3>", "<cmd>lua vim.lsp.buf.format({async = true})<cr>", opts)
-                    vim.keymap.set("n", "<F4>", "<cmd>lua vim.lsp.buf.code_action()<cr>", opts)
-                    vim.keymap.set('n', '<leader>E', '<cmd>lua vim.diagnostic.open_float()<CR>',
-                        { noremap = true, silent = true })
+                    vim.keymap.set("n", "ga", "<cmd>lua vim.lsp.buf.code_action()<cr>", opts)
+                    vim.keymap.set(
+                        "n",
+                        "<leader>E",
+                        "<cmd>lua vim.diagnostic.open_float()<CR>",
+                        { noremap = true, silent = true }
+                    )
                 end,
             })
 
