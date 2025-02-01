@@ -17,7 +17,13 @@ FG_BLUE="\033[34m"
 # FG_CYAN="\033[36m"
 FG_LIGHT_GRAY="\033[37m"
 
-symlink_dotfile () {
+set_gituser_for_dotfiles() {
+    cd "$DOTFILES_ROOT"
+    git config user.name "Oliver Lorton"
+    git config user.email "oliverlorton@gmail.com"
+}
+
+symlink_dotfile() {
     SOURCE="${1}"
     TARGET="${2}"
 
@@ -126,6 +132,7 @@ desktop_tasks() {
 }
 
 parse_params "$@"
+set_gituser_for_dotfiles
 if [[ $ALLOW_DESKTOP == 1 ]]; then
     cli_tasks
     desktop_tasks
