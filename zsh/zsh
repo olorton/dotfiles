@@ -56,3 +56,5 @@ source $ZSH/oh-my-zsh.sh
 
 # Unset shared zsh history
 unsetopt share_history
+
+# vim: ft=zsh

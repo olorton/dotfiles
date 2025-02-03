@@ -18,4 +18,4 @@ fi
 
 # Note: NPM path is set in $DOTFILES/zsh/javascript
 
-# vim: set filetype=bash syntax=bash:
+# vim: ft=zsh

@@ -14,4 +14,4 @@ if [[ $OSTYPE == "darwin"* ]]; then
     [[ -f $HOME/.ssh/id_ed25519 ]] && ssh-add --apple-use-keychain  $HOME/.ssh/id_ed25519
 fi
 
-# vim: set filetype=bash syntax=bash:
+# vim: ft=zsh

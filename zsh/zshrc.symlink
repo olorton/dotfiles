@@ -28,4 +28,4 @@ function precmd() {
 
 export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
 
-# vim: set filetype=bash syntax=bash:
+# vim: ft=zsh

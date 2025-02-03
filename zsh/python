@@ -6,4 +6,4 @@ show_virtual_env() {
 }
 PS1='$(show_virtual_env)'$PS1
 
-# vim: set filetype=bash syntax=bash:
+# vim: ft=zsh

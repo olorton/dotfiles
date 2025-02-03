@@ -6,4 +6,4 @@ zle -N edit-command-line
 bindkey '^xe' edit-command-line  # For Ctrl+x e
 bindkey -M vicmd v edit-command-line  # For 'v' in vi mode
 
-# vim: set filetype=bash syntax=bash:
+# vim: ft=zsh
