@@ -20,7 +20,7 @@ alias cp='cp -iv'
 alias mv='mv -iv'
 
 # IP addresses
-alias ip="dig +short myip.opendns.com @resolver1.opendns.com"
+alias ip-external="dig +short myip.opendns.com @resolver1.opendns.com"
 # TODO fix localip alias
 #alias localip="ipconfig getifaddr en1"
 
