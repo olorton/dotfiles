@@ -13,6 +13,10 @@ MINUTES_TILL_HIBERNATE=40
 MINUTES_TILL_SCREEN_LOCK=5
 SECONDS_TILL_SCREEN_LOCK=$((MINUTES_TILL_SCREEN_LOCK * 60))
 
+COLOUR_ENABLED=#f3f4f5
+COLOUR_DISABLED=#676e7d
+COLOUR_ALERT=#e53935
+
 usage() {
     cat <<EOF
 Usage: $(basename "${BASH_SOURCE[0]}") [-h] [-v] [-s] [-a] [-d] -t minutes
@@ -114,9 +118,9 @@ parse_params "$@"
 if [ $print_i3blocks_status -eq 1 ]; then
     ICON=""
     if is_caffinated; then
-        COLOUR=#f3f4f5
+        COLOUR=$COLOUR_ALERT
     else
-        COLOUR=#676e7d
+        COLOUR=$COLOUR_DISABLED
     fi
 
     echo "$ICON"
