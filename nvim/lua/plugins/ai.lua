@@ -11,6 +11,15 @@ elseif os.getenv("OPENAI_API_KEY") then
             model = "gpt-4o-mini",
             max_tokens = 4096,
         },
+        behavior = {
+            auto_set_highlight_group = true,
+        },
+        highlights = {
+            diff = {
+                current = "DiffDelete",
+                incoming = "DiffAdd",
+            },
+        },
     }
 end
 
@@ -18,8 +27,18 @@ if opts == nil then
     return {}
 end
 
+local dir = nil
+local branch = nil
+local dev_dir = "~/dev/avante.nvim/"
+if tonumber(vim.fn.system("ls -l ~/dev/avante.nvim 2>/dev/null | wc -l")) > 0 then
+    dir = dev_dir
+    branch = vim.fn.system("cd " .. dev_dir .. " && git branch --show-current")
+end
+
 return {
     "yetone/avante.nvim",
+    dir = dir,
+    branch = branch,
     event = "VeryLazy",
     lazy = false,
     version = false, -- Set this to "*" to always pull the latest release version, or set it to false to update to the latest code changes.
