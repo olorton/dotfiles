@@ -24,6 +24,7 @@ return {
             },
             component_function = {
                 gitbranch = "FugitiveHead",
+                charvaluehex = "LightlineCharcode",
             },
         }
     end,
