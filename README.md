@@ -1,5 +1,7 @@
 # My dotfiles
 
+This repository contains configuration files that help customize my development environment, including settings for the shell, editor, and various applications. Do not try to use this repo as it is! These dotfiles are intended to serve as a reference for others looking to set up their own dotfiles. Feel free to explore and use these to influence your own ideas!
+
 ## Setup
 
 * [Install homebrew](http://brew.sh)
@@ -16,7 +18,8 @@ source ~/.zshrc
 dedit
 ```
 
-Terminal typefaces I've used in the past, and leave here because I might come back to them:
+#
+Here are some terminal typefaces I've used in the past, included here for future reference:
 - Current: [DOSEGA](https://sourceforge.net/projects/dosega/)
 - [M+1m console font](http://sourceforge.jp/projects/mplus-fonts/downloads/62344/mplus-TESTFLIGHT-059.tar.xz/)
 
