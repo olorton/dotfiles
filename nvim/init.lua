@@ -1,6 +1,5 @@
 vim.cmd("source ~/.vimrc_basic")
 require("options")
-require("functions")
 require("commands")
 
 -- Bootstrap lazy.nvim
