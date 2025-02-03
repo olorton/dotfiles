@@ -153,6 +153,27 @@ vmap <leader>y "+y<CR>
 " Refresh the state of the buffer, clear hightlights, and write file
 nnoremap <Esc> :nohl<CR>:w<CR>:GitGutterAll<CR>
 
+" Toggle line numbers
+function! ToggleLineNumbers()
+    if &number && &relativenumber
+        set norelativenumber
+    elseif &number
+        set relativenumber
+    else
+        set number relativenumber
+    endif
+endfunction
+nnoremap <silent> <leader>sn :call ToggleLineNumbers()<CR>
+
+" Toggle hide/show of gutter and numbers
+function! ToggleGutter()
+    if &number
+        setlocal nonumber signcolumn=no
+    else
+        setlocal number signcolumn=yes
+    endif
+endfunction
+nnoremap <leader>stg :call ToggleGutter()<CR>
 
 
 " Movement -------------------------------------------------------------------
