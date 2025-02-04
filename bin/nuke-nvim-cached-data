@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+RED="\033[31m"
+NO_COLOR="\033[0m"
+
+if [ "$(pgrep nvim -u "${USER}" -c)" -le 1 ]; then
+    rm -rf ~/.local/share/nvim
+    rm -rf ~/.local/state/nvim
+else
+    echo -e "${RED}Error: nvim still running for user ${USER}${NO_COLOR}"
+    pgrep nvim -u "${USER}" -a
+    exit 1
+fi
