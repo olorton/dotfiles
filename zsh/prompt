@@ -17,7 +17,7 @@ function dir_segment() {
 }
 
 function parse_git_dirty() {
-    git status --porcelain --untracked-files 2>/dev/null | wc -l
+    git status --porcelain --untracked-files 2>/dev/null | wc -l | sed 's/^[[:space:]]*//;s/[[:space:]]*$//'
 }
 
 function git_prompt_info() {
