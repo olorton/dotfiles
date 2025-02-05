@@ -1,0 +1,109 @@
+# A Chunky ZSH prompt
+# Influenced by agnoster/agnoster-zsh-theme but without the need for fancy fonts
+
+# Features:
+# - PWD shown
+# - Red background shown when the previous command exited with a non-0 status
+# - Current git branch shown, and coloured if on a dirty working tree
+# - New line added if PWD gets too long, an attempt to maintain a sensible
+#   prompt lenght
+
+ZSH_PROMPT_PREFIX=""
+ZSH_PROMPT_SUFFIX=""
+GIT_SHOW_MISSING_UPSTREAM="no upstream?"
+
+function dir_segment() {
+    print -n "%(?.%{%K{blue}%}.%{%K{red}%})%{%F{white}%} %~ "
+}
+
+function parse_git_dirty() {
+    git status --porcelain --untracked-files 2>/dev/null | wc -l
+}
+
+function git_prompt_info() {
+    # If we are not in a git repo
+    if ! git rev-parse --git-dir &>/dev/null; then
+        return 0
+    fi
+
+    # Get either:
+    # - the current branch name
+    # - the tag name if we are on a tag
+    # - the short SHA of the current commit
+    local ref
+    ref=$(git symbolic-ref --short HEAD 2>/dev/null) ||
+        ref=$(git describe --tags --exact-match HEAD 2>/dev/null) ||
+        ref=$(git rev-parse --short HEAD 2>/dev/null) ||
+        return 0
+
+    # Use global GIT_SHOW_UPSTREAM=1 for including upstream remote info
+    local upstream
+    if [[ -n $GIT_SHOW_MISSING_UPSTREAM ]]; then
+        upstream=$(git rev-parse --abbrev-ref --symbolic-full-name "@{upstream}" 2>/dev/null) &&
+            upstream="" || upstream=" %{%K{yellow}%}%{%F{black}%} (${GIT_SHOW_MISSING_UPSTREAM})"
+    fi
+
+    local dirty
+    dirty=""
+    local dirty_count
+    dirty_count=$(parse_git_dirty)
+
+    if [[ $dirty_count -gt 0 ]]; then
+        dirty=" ($dirty_count)"
+    fi
+    echo "${ZSH_PROMPT_PREFIX}${ref}${upstream}${dirty}${ZSH_PROMPT_SUFFIX}"
+}
+
+function git_segment() {
+    local -i working_tree_is_clean
+    working_tree_is_clean=0  # Assume clean by default
+    if [[ "$(parse_git_dirty)" != "0" ]]; then
+        working_tree_is_clean=1  # Set to dirty if parse_git_dirty returns non-zero
+    fi
+
+    ref="$vcs_info_msg_0_"
+    if [[ -n "$ref" ]]; then
+        if [[ $working_tree_is_clean -eq 0 ]]; then
+            print -n "%{%K{green}%}%{%F{white}%} $(git_prompt_info) "
+        else
+            print -n "%{%K{yellow}%}%{%F{black}%} $(git_prompt_info) "
+        fi
+        # Stashes
+        c=$(git rev-list --walk-reflogs --count refs/stash 2>/dev/null)
+        [[ -n "$c" ]] && (
+            print -n "%{%K{blue}%}%{%F{white}%} $c stash "
+        )
+    fi
+
+}
+
+function end_prompt() {
+    declare -i cols
+    declare -i pwd_len
+    declare -i max_len
+    cols=$(tput cols)
+    pwd_len="${#PWD}"
+    max_len=$((cols / 2))
+    if ((pwd_len > max_len)); then
+        print -R -e "\n$"
+    fi
+}
+
+autoload -Uz vcs_info
+# zstyle ':vcs_info:git:*' formats '%b ' # Display current branch name
+setopt PROMPT_SUBST                    # Enable command substitution in prompts
+function prompt_precmd() {
+    vcs_info
+    PROMPT="%{%f%b%k%}$(dir_segment)$(git_segment)%{%f%b%k%}$(end_prompt) "
+}
+
+# TODO TODO TODO
+# Add the virtual env to prompt something like this:
+# show_virtual_env() {
+#   if [[ -n "$VIRTUAL_ENV" && -n "$DIRENV_DIR" ]]; then
+#     echo "($(basename $VIRTUAL_ENV))"
+#   fi
+# }
+# PS1='$(show_virtual_env)'$PS1
+
+# vim: ft=bash

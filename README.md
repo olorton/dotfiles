@@ -36,7 +36,6 @@ Here are some terminal typefaces I've used in the past, included here for future
 
 ## TODOs
 
-- Replace oh-my-zsh with something more vanilla, I barely use these features.
 - Add pre-commit hook to check I'm commiting as the right user, e.g.
 
     ```

@@ -1,21 +1,37 @@
-# Ensure user-installed binaries take precedence
-export PATH="$HOME/.cargo/bin:$PATH"                    # Rust
-export PATH="/usr/local/bin:$PATH"                      # Homebrew stuff
-export PATH="/usr/local/sbin:$PATH"                     # Homebrew stuff
-export PATH="$(ruby -e 'puts Gem.user_dir')/bin:$PATH"  # Ruby
-export PATH="/usr/local/opt/ruby/bin:$PATH"             # Ruby
-export PATH="/usr/local/opt/php@7.3/bin:$PATH"          # PHP
-export PATH="/usr/local/opt/php@7.3/sbin:$PATH"         # PHP
-export PATH="$PYENV_ROOT/bin:$PATH"                     # Pyenv
-eval "$(pyenv init --path)"                             # Pyenv
-export PATH="$HOME/.local/bin:$PATH"                    # pipx stuff
-export PATH="$HOME/.poetry/bin:$PATH"                   # Poetry
-export PATH="$DOTFILES/bin:$PATH"                       # dotfiles scripts
-if command -v go &> /dev/null; then
-    export PATH="$(go env GOPATH)/bin:$PATH"            # Go binaries
-fi
-[ -d "$HOME/bin" ] && export PATH="$HOME/bin:$PATH"     # Home bin dir
+# Function to add a directory to PATH if the directory is valid and a command exists
+build_path() {
+    local dir="$1"
+    local command="$2"
 
-# Note: NPM path is set in $DOTFILES/zsh/javascript
+    # Check if the command exists, if provided
+    if [[ -n "$command" && ! $(command -v "$command") ]]; then
+        # Command does not exist, return unmodified path
+        return 0
+    fi
+
+    # TODO If dir already in path, then remove it so we can add it at the front
+
+    # Check if the directory exists
+    if [[ -d "$dir" ]]; then
+        export PATH="$dir:$PATH" # Add the directory to the path
+    fi
+
+    return 0
+}
+
+build_path /usr/local/bin brew                       # Homebrew stuff
+build_path /usr/local/sbin brew                      # Homebrew stuff
+build_path "$(ruby -e 'puts Gem.user_dir')/bin" ruby # Ruby
+build_path "/usr/local/opt/ruby/bin" ruby            # Ruby
+build_path "$PYENV_ROOT/bin"                         # Pyenv
+build_path "$(eval "$(pyenv init --path)")"          # Pyenv
+build_path "$HOME/.local/bin"                        # pipx stuff
+build_path "$HOME/.poetry/bin"                       # Poetry
+build_path "$HOME/.cargo/bin"                        # Rust
+build_path "$(go env GOPATH)/bin" go                 # Go binaries
+build_path "$DOTFILES/bin"                           # dotfiles scripts
+build_path "$HOME/bin"                               # Home bin dir
+
+# Note: NPM path is set in $DOTFILES/zsh/3rd-party
 
 # vim: ft=zsh

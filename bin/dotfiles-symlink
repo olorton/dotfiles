@@ -105,6 +105,8 @@ cli_tasks() {
 
     # Zsh
     symlink_dotfile "zsh/zshrc.symlink" "$HOME/.zshrc"
+    # Remove any old oh-my-zsh installs
+    rm -rf "$HOME/.oh-my-zsh/"
 
     # Pyenv
     symlink_dotfile "pyenv/python-version" "$HOME/.python-version"

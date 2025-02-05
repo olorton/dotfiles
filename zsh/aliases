@@ -90,6 +90,7 @@ git() {
         command git "$@";
     fi;
 }
+alias g="git $@"
 
 # Set tmux window name when launching cmus
 cmus() {

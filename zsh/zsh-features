@@ -1,3 +1,9 @@
+# Tab completion
+autoload -Uz compinit && compinit
+zstyle ':completion:*' menu select
+zstyle ':completion:*' list-colors '=(#b)blue'
+zstyle ':completion::complete:*' gain-privileges 1
+
 # Edit command in $EDITOR
 # In Emacs mode: Ctrl+x Ctrl+e
 # In Vi mode: v
