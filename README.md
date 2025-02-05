@@ -33,15 +33,3 @@ Here are some terminal typefaces I've used in the past, included here for future
 ### Fix font rendering on 1080p screens
 
     defaults -currentHost write -g AppleFontSmoothing -int 0
-
-## TODOs
-
-- Add pre-commit hook to check I'm commiting as the right user, e.g.
-
-    ```
-    #!/bin/sh
-    if [ "$(git config user.name)" = "username" ]; then
-        echo "Direct commits from this account are not allowed."
-        exit 1
-    fi
-    ```
