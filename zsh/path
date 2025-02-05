@@ -1,13 +1,19 @@
-# Function to add a directory to PATH if the directory is valid and a command exists
-build_path() {
-    local dir="$1"
-    local command="$2"
+chk_cmd() {
+    local command="$1"
 
-    # Check if the command exists, if provided
-    if [[ -n "$command" && ! $(command -v "$command") ]]; then
-        # Command does not exist, return unmodified path
+    if [[ -z "$command" ]]; then
         return 0
     fi
+
+    if ! command -v "$command" >/dev/null 2>&1; then # Check if command exists (suppress output)
+        return 1
+    else
+        return 0
+    fi
+}
+
+build_path() {
+    local dir="$1"
 
     # TODO If dir already in path, then remove it so we can add it at the front
 
@@ -19,18 +25,24 @@ build_path() {
     return 0
 }
 
-build_path /usr/local/bin brew                       # Homebrew stuff
-build_path /usr/local/sbin brew                      # Homebrew stuff
-build_path "$(ruby -e 'puts Gem.user_dir')/bin" ruby # Ruby
-build_path "/usr/local/opt/ruby/bin" ruby            # Ruby
-build_path "$PYENV_ROOT/bin"                         # Pyenv
-build_path "$(eval "$(pyenv init --path)")"          # Pyenv
-build_path "$HOME/.local/bin"                        # pipx stuff
-build_path "$HOME/.poetry/bin"                       # Poetry
-build_path "$HOME/.cargo/bin"                        # Rust
-build_path "$(go env GOPATH)/bin" go                 # Go binaries
-build_path "$DOTFILES/bin"                           # dotfiles scripts
-build_path "$HOME/bin"                               # Home bin dir
+# Homebrew
+chk_cmd "brew" && build_path "/usr/local/bin"
+chk_cmd "brew" && build_path "/usr/local/sbin"
+# Ruby
+chk_cmd "ruby" && build_path "$(ruby -e 'puts Gem.user_dir')/bin"
+chk_cmd "ruby" && build_path "/usr/local/opt/ruby/bin"
+# Python
+chk_cmd "pyenv" && build_path "$PYENV_ROOT/bin"
+chk_cmd "pyenv" && build_path "$(eval "$(pyenv init --path)")"
+build_path "$HOME/.local/bin" # pipx stuff
+build_path "$HOME/.poetry/bin"
+# Rust
+build_path "$HOME/.cargo/bin"
+# Go
+chk_cmd "go" && build_path "$(go env GOPATH)/bin"
+# My stuff
+build_path "$DOTFILES/bin"
+build_path "$HOME/bin"
 
 # Note: NPM path is set in $DOTFILES/zsh/3rd-party
 
