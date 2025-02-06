@@ -21,7 +21,10 @@ alias mv='mv -iv'
 
 # zsh history
 # TODO add color for legibility
-alias h='fc -li | less'
+# history (full)
+alias h='fc -li 0 | less +G'
+# history (internal, ignores history file)
+alias hi='fc -liI 0 | less +G'
 
 # IP addresses
 alias ip-external="dig +short myip.opendns.com @resolver1.opendns.com"
