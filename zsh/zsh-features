@@ -1,3 +1,6 @@
+# Set emacs mode... which sucks, but muscle-memory needs fixing.
+bindkey -e
+
 # Tab completion
 autoload -Uz compinit && compinit
 zstyle ':completion:*' menu select
