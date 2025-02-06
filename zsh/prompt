@@ -11,13 +11,19 @@
 ZSH_PROMPT_PREFIX=""
 ZSH_PROMPT_SUFFIX=""
 GIT_SHOW_MISSING_UPSTREAM="no upstream?"
+GIT_SHOW_UNTRACKED_AS_DIRTY="false"
 
 function dir_segment() {
     print -n "%(?.%{%K{blue}%}.%{%K{red}%})%{%F{white}%} %~ "
 }
 
 function parse_git_dirty() {
-    git status --porcelain --untracked-files 2>/dev/null | wc -l | sed 's/^[[:space:]]*//;s/[[:space:]]*$//'
+    local flags
+    flags="--untracked-files=no"
+    if [ "$GIT_SHOW_UNTRACKED_AS_DIRTY" = "true" ]; then
+        flags="--untracked-files=all"
+    fi
+    git status --porcelain $flags 2>/dev/null | wc -l | sed 's/^[[:space:]]*//;s/[[:space:]]*$//'
 }
 
 function git_prompt_info() {
@@ -49,7 +55,7 @@ function git_prompt_info() {
     dirty_count=$(parse_git_dirty)
 
     if [[ $dirty_count -gt 0 ]]; then
-        dirty=" ($dirty_count)"
+        dirty=" $dirty_count"
     fi
     echo "${ZSH_PROMPT_PREFIX}${ref}${upstream}${dirty}${ZSH_PROMPT_SUFFIX}"
 }
