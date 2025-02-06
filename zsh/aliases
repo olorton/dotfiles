@@ -19,6 +19,10 @@ alias path='echo -e ${PATH//:/\\n}'
 alias cp='cp -iv'
 alias mv='mv -iv'
 
+# zsh history
+# TODO add color for legibility
+alias h='fc -li | less'
+
 # IP addresses
 alias ip-external="dig +short myip.opendns.com @resolver1.opendns.com"
 # TODO fix localip alias

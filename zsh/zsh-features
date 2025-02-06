@@ -15,4 +15,29 @@ zle -N edit-command-line
 bindkey '^xe' edit-command-line  # For Ctrl+x e
 bindkey -M vicmd v edit-command-line  # For 'v' in vi mode
 
+# Location of zsh history file.
+HISTFILE=~/.zsh_history
+# Controls the number of commands stored in memory for the current session.
+HISTSIZE=10000
+# Controls the number of commands saved to the history file.
+SAVEHIST=100000
+# Ensures that all zsh sessions share the same history file in real-time.
+setopt SHARE_HISTORY
+# By default, zsh writes the history to the file when the shell exits. Setting
+# this option makes zsh write each command to the history file as soon as it's
+# entered, making it immediately available for other sessions.
+setopt INC_APPEND_HISTORY
+# This option adds timestamps and other details to the history entries, making
+# it easier to track when commands were executed.
+setopt EXTENDED_HISTORY
+# DISABLED: Prevents duplicate commands from being added to the history.
+#### setopt HIST_IGNORE_DUPS
+# Prevents commands that start with a space from being added to the history.
+setopt HIST_IGNORE_SPACE
+# When the history file reaches its limit, this option ensures that duplicate entries are removed first before older entries are deleted
+setopt HIST_EXPIRE_DUPS_FIRST
+# Reverse search
+# TODO try using something like fzf on this?
+bindkey '^R' history-incremental-search-backward
+
 # vim: ft=zsh
