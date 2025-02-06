@@ -20,3 +20,6 @@ if [[ ! $REPLY =~ ^[Yy]$ ]]; then
 fi
 
 git checkout $SWITCH_BRANCH && git fetch --prune && git branch --merged | grep -E -v "^((\* )|\s*(develop|master)$)" | xargs git branch -d
+
+## TODO
+#git for-each-ref --format '%(refname:short) %(upstream:track)' | awk '$2 == "[gone]" {print $1}' | xargs -r git branch -D
