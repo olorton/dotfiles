@@ -1,6 +1,7 @@
 " Basics ---------------------------------------------------------------------
 
-set relativenumber
+set number
+set norelativenumber
 set encoding=utf-8
 
 " For file related tasks, tab complete into sub-folders
@@ -160,7 +161,8 @@ function! ToggleLineNumbers()
     elseif &number
         set relativenumber
     else
-        set number relativenumber
+        set number
+        set norelativenumber
     endif
 endfunction
 nnoremap <silent> <leader>sn :call ToggleLineNumbers()<CR>
