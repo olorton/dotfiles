@@ -2,8 +2,4 @@ TODOs
 =====
 
 - Consider installing Noice for better error/message viewing
-- LSP find next error
-    - Is there a way to navigate and fix these? Maybe look at a plugin called Trouble?
-- LSP rename var/func - fix keymap
 - Add a plugin for .EditorConfig ?
-- Lightline, fix missing char; is this working LightlineCharcode?
