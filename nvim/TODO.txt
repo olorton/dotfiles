@@ -2,4 +2,3 @@ TODOs
 =====
 
 - Consider installing Noice for better error/message viewing
-- Add a plugin for .EditorConfig ?
