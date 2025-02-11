@@ -55,7 +55,7 @@ function git_prompt_info() {
     dirty_count=$(parse_git_dirty)
 
     if [[ $dirty_count -gt 0 ]]; then
-        dirty=" $dirty_count"
+        dirty=" *"
     fi
     echo "${ZSH_PROMPT_PREFIX}${ref}${upstream}${dirty}${ZSH_PROMPT_SUFFIX}"
 }
