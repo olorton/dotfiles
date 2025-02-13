@@ -29,3 +29,5 @@ layout_poetry() {
 
   poetry debug info
 }
+
+# vim: ft=bash
