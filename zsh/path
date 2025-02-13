@@ -32,8 +32,8 @@ chk_cmd "brew" && build_path "/usr/local/sbin"
 chk_cmd "ruby" && build_path "$(ruby -e 'puts Gem.user_dir')/bin"
 chk_cmd "ruby" && build_path "/usr/local/opt/ruby/bin"
 # Python
-chk_cmd "pyenv" && build_path "$PYENV_ROOT/bin"
-chk_cmd "pyenv" && build_path "$(eval "$(pyenv init --path)")"
+build_path "$PYENV_ROOT/bin"
+chk_cmd "pyenv" && eval "$(pyenv init --path)"
 build_path "$HOME/.local/bin" # pipx stuff
 build_path "$HOME/.poetry/bin"
 # Rust
