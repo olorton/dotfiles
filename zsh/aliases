@@ -26,6 +26,9 @@ alias h='fc -li 0 | less +G'
 # history (internal, ignores history file)
 alias hi='fc -liI 0 | less +G'
 
+# pring $PATH, 1 path per line
+alias showpath="sed 's/:/\n/g' <<< "$PATH""
+
 # IP addresses
 alias ip-external="dig +short myip.opendns.com @resolver1.opendns.com"
 # TODO fix localip alias
