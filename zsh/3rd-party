@@ -1,7 +1,8 @@
 # Javascript
-if [ -d "$XDG_CONFIG_HOME/.nvm" ]; then
-    export NVM_DIR="$XDG_CONFIG_HOME/.nvm"
-    [ -s "$XDG_CONFIG_HOME/nvm/nvm.sh" ] && . "$XDG_CONFIG_HOME/nvm/nvm.sh"  # Loads nvm
+if [ -d "$XDG_CONFIG_HOME/nvm" ]; then
+    export NVM_DIR="$XDG_CONFIG_HOME/nvm"
+    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+    [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 fi
 
 # Google Cloud
