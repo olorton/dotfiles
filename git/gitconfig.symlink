@@ -1,14 +1,43 @@
 [include]
     path = ~/.gitconfig.local
-[push]
-    default = current
-    autoSetupRemote = true
 [user]
     email = oliverlorton@gmail.com
     name = Oliver Lorton
 [core]
     editor=vim
     excludesfile = ~/.gitignore_global
+[diff]
+    algorithm = histogram
+    colorMoved = plain
+    mnemonicPrefix = true
+    renames = true
+[tag]
+    sort = version:refname
+[push]
+    default = current
+    autoSetupRemote = true
+[pull]
+    default = current
+    rebase = true
+[branch]
+    autosetuprebase = always
+[branch "master"]
+    remote = origin
+    merge = refs/heads/master
+[branch "main"]
+    remote = origin
+    merge = refs/heads/main
+[branch "develop"]
+    remote = origin
+    merge = refs/heads/develop
+[init]
+    defaultBranch = main
+[fetch]
+    prune = true
+[commit]
+    verbose = true
+[rebase]
+    autoStash = true
 [alias]
     s = status -s
     d = diff
@@ -37,29 +66,3 @@
     tl = for-each-ref --sort='*authordate' --format='%(taggerdate:short) | %(taggername) | %(tag) | %(contents:subject)' refs/tags
     who = shortlog --numbered --summary --email --no-merges
     nuke = !sh -c 'git branch -D $1 && git push origin :$1' -
-[diff]
-    tool = vimdiff
-[tag]
-    sort = version:refname
-[pull]
-    default = current
-    ff = only
-[branch]
-    autosetuprebase = always
-[branch "master"]
-    remote = origin
-    merge = refs/heads/master
-[branch "main"]
-    remote = origin
-    merge = refs/heads/main
-[branch "develop"]
-    remote = origin
-    merge = refs/heads/develop
-[init]
-    defaultBranch = main
-[fetch]
-    prune = true
-[commit]
-    verbose = true
-[rebase]
-    autoStash = true
