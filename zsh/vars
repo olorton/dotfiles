@@ -16,4 +16,9 @@ if command -v "brew" >/dev/null 2>&1; then
     export HOMEBREW_NO_INSTALL_UPGRADE=1
 fi
 
+if command -v "/usr/bin/ksshaskpass" >/dev/null 2>&1; then
+    export SSH_ASKPASS=/usr/bin/ksshaskpass
+    export SSH_ASKPASS_REQUIRE=prefer
+fi
+
 # vim: ft=zsh
