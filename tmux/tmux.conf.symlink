@@ -37,6 +37,9 @@ set -g history-limit 10000
 # disable mouse
 set -g mouse off
 
+# set focus events, mostly for (n)vim to detect switching focus back
+set -g focus-events on
+
 # synchronize-panes
 bind C-a setw synchronize-panes
 

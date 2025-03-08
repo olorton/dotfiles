@@ -16,7 +16,3 @@ call plug#end()
 set undodir=~/.vim/tmp/undo//
 source ~/.vimrc_basic
 colorscheme everforest
-
-" Fix issue where vim starts in replace mode
-" https://stackoverflow.com/a/51388837/2554826
-nnoremap <esc>^[ <esc>^[
