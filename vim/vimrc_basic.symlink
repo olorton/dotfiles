@@ -177,8 +177,8 @@ nnoremap <leader>stg :call ToggleGutter()<CR>
 
 
 " Fix behaviour around search
-map <Esc> <Esc>:nohlsearch<CR>
-imap <Esc> <Esc>:nohlsearch<CR><Right>
+map <silent> <Esc> <Esc>:nohlsearch<CR>
+imap <silent> <Esc> <Esc>:nohlsearch<CR><Right>
 
 
 " Movement -------------------------------------------------------------------
