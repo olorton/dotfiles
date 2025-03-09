@@ -6,6 +6,8 @@
 [core]
     editor=vim
     excludesfile = ~/.gitignore_global
+    fsmonitor = true
+    untrackedCache = true
 [diff]
     algorithm = histogram
     colorMoved = plain
@@ -16,11 +18,13 @@
 [push]
     default = current
     autoSetupRemote = true
+    followTags = true
 [pull]
     default = current
     rebase = true
 [branch]
     autosetuprebase = always
+    sort = -committerdate
 [branch "master"]
     remote = origin
     merge = refs/heads/master
@@ -34,10 +38,23 @@
     defaultBranch = main
 [fetch]
     prune = true
+    pruneTags = true
+    all = true
 [commit]
     verbose = true
 [rebase]
+    autoSquash = true
     autoStash = true
+    updateRefs = true
+[merge]
+    conflictstyle = zdiff3
+[column]
+    ui = auto
+[help]
+    autocorrect = prompt
+[rerere]
+    enabled = true
+    autoupdate = true
 [alias]
     s = status -s
     d = diff
@@ -66,3 +83,5 @@
     tl = for-each-ref --sort='*authordate' --format='%(taggerdate:short) | %(taggername) | %(tag) | %(contents:subject)' refs/tags
     who = shortlog --numbered --summary --email --no-merges
     nuke = !sh -c 'git branch -D $1 && git push origin :$1' -
+
+# vim: set filetype=gitconfig:
