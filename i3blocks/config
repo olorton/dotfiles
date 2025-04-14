@@ -39,7 +39,7 @@ command=~/dev/dotfiles/bin/power-management --caffine-i3blocks-status ; [[ -z "$
 interval=1
 
 [vpn]
-command=~/.config/i3blocks/scripts/networking tun
+command=~/.config/i3blocks/scripts/networking tun; [[ -z "${BLOCK_BUTTON}" ]] || ~/dev/dotfiles/bin/toggle-vpn
 interval=5
 
 [wifi]

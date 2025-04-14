@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+function vpn_is_active {
+    if [[ $(nmcli connection show VPNConfig 2> /dev/null | grep ADDRESS | head -n 1 | awk '{print$2}' | cut -d '/' -f 1 | wc -l) -eq 0 ]]; then
+        nmcli connection up VPNConfig
+    else
+        nmcli connection down VPNConfig
+    fi
+
+}
+
+vpn_is_active
