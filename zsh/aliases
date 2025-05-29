@@ -37,6 +37,9 @@ alias ip-external="dig +short myip.opendns.com @resolver1.opendns.com"
 # Copy my public key to the pasteboard
 alias pubkey="more ${SSH_KEY_PATH}.pub | pbcopy | printf '=> Public key copied to pasteboard.\n'"
 
+# Fix ssh agent in tmux session
+alias fixssh='eval $(tmux showenv -s SSH_AUTH_SOCK)'
+
 # Flush DNS cache
 alias flushdns="dscacheutil -flushcache"
 
