@@ -1,87 +1,86 @@
+# vim: filetype=gitconfig noexpandtab
 [include]
-    path = ~/.gitconfig.local
+	path = ~/.gitconfig.local
 [user]
-    email = oliverlorton@gmail.com
-    name = Oliver Lorton
+	email = oliverlorton@gmail.com
+	name = Oliver Lorton
 [core]
-    editor=vim
-    excludesfile = ~/.gitignore_global
-    fsmonitor = true
-    untrackedCache = true
+	editor=vim
+	excludesfile = ~/.gitignore_global
+	fsmonitor = true
+	untrackedCache = true
 [diff]
-    algorithm = histogram
-    colorMoved = plain
-    mnemonicPrefix = true
-    renames = true
+	algorithm = histogram
+	colorMoved = plain
+	mnemonicPrefix = true
+	renames = true
 [tag]
-    sort = version:refname
+	sort = version:refname
 [push]
-    default = current
-    autoSetupRemote = true
-    followTags = true
+	default = current
+	autoSetupRemote = true
+	followTags = true
 [pull]
-    default = current
-    rebase = true
+	default = current
+	rebase = true
 [branch]
-    autosetuprebase = always
-    sort = -committerdate
+	autosetuprebase = always
+	sort = -committerdate
 [branch "master"]
-    remote = origin
-    merge = refs/heads/master
+	remote = origin
+	merge = refs/heads/master
 [branch "main"]
-    remote = origin
-    merge = refs/heads/main
+	remote = origin
+	merge = refs/heads/main
 [branch "develop"]
-    remote = origin
-    merge = refs/heads/develop
+	remote = origin
+	merge = refs/heads/develop
 [init]
-    defaultBranch = main
+	defaultBranch = main
 [fetch]
-    prune = true
-    pruneTags = true
-    all = true
+	prune = true
+	pruneTags = true
+	all = true
 [commit]
-    verbose = true
+	verbose = true
 [rebase]
-    autoSquash = true
-    autoStash = true
-    updateRefs = true
+	autoSquash = true
+	autoStash = true
+	updateRefs = true
 [merge]
-    conflictstyle = zdiff3
+	conflictstyle = zdiff3
 [column]
-    ui = auto
+	ui = auto
 [help]
-    autocorrect = prompt
+	autocorrect = prompt
 [rerere]
-    enabled = true
-    autoupdate = true
+	enabled = true
+	autoupdate = true
 [alias]
-    s = status -s
-    d = diff
-    c = commit
-    ca = commit -a
-    cam = commit --amend
-    caam = commit -a --amend
-    ph = push
-    phf = push -f
-    su = !git branch --set-upstream-to=origin/$(git symbolic-ref --short HEAD) $(git symbolic-ref --short HEAD)
-    phsu = !git push -u origin $(git symbolic-ref --short HEAD)
-    pl = pull
-    co = checkout
-    col = checkout -
-    cob = checkout -b
-    cod = checkout develop
-    com = !git checkout $(git symbolic-ref refs/remotes/origin/HEAD | sed 's@^refs/remotes/origin/@@')
-    bd = branch -d $1
-    st = stash
-    stp = stash pop
-    stl = stash list
-    fr = !git fetch origin && git rebase origin/master || git rebase origin/main
-    ls = log --pretty=format:"%C(yellow)%h\\ %ad%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --date=short
-    ll = log --pretty=format:"%C(yellow)%h%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --numstat
-    b = "!git for-each-ref --sort='-authordate' --format='%(authordate)%09%(objectname:short)%09%(refname)' refs/heads | sed -e 's-refs/heads/--'"
-    tl = for-each-ref --sort='*authordate' --format='%(taggerdate:short) | %(taggername) | %(tag) | %(contents:subject)' refs/tags
-    who = shortlog --numbered --summary --email --no-merges
-    nuke = !sh -c 'git branch -D $1 && git push origin :$1' -
-
-# vim: set filetype=gitconfig:
+	s = status -s
+	d = diff
+	c = commit
+	ca = commit -a
+	cam = commit --amend
+	caam = commit -a --amend
+	ph = push
+	phf = push -f
+	su = !git branch --set-upstream-to=origin/$(git symbolic-ref --short HEAD) $(git symbolic-ref --short HEAD)
+	phsu = !git push -u origin $(git symbolic-ref --short HEAD)
+	pl = pull
+	co = checkout
+	col = checkout -
+	cob = checkout -b
+	cod = checkout develop
+	com = !git checkout $(git symbolic-ref refs/remotes/origin/HEAD | sed 's@^refs/remotes/origin/@@')
+	bd = branch -d $1
+	st = stash
+	stp = stash pop
+	stl = stash list
+	fr = !git fetch origin && git rebase origin/master || git rebase origin/main
+	ls = log --pretty=format:"%C(yellow)%h\\ %ad%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --date=short
+	ll = log --pretty=format:"%C(yellow)%h%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --numstat
+	b = "!git for-each-ref --sort='-authordate' --format='%(authordate)%09%(objectname:short)%09%(refname)' refs/heads | sed -e 's-refs/heads/--'"
+	tl = for-each-ref --sort='*authordate' --format='%(taggerdate:short) | %(taggername) | %(tag) | %(contents:subject)' refs/tags
+	who = shortlog --numbered --summary --email --no-merges
+	nuke = !sh -c 'git branch -D $1 && git push origin :$1' -
