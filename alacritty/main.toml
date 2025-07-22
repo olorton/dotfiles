@@ -497,6 +497,21 @@ chars = "#"
 key = "Key3"
 mods = "Alt"
 
+[[keyboard.bindings]]
+key = "Key0"
+mods = "Alt"
+action = "ResetFontSize"
+
+[[keyboard.bindings]]
+key = "k"
+mods = "Alt"
+action = "IncreaseFontSize"
+
+[[keyboard.bindings]]
+key = "j"
+mods = "Alt"
+action = "DecreaseFontSize"
+
 [scrolling]
 history = 0
 multiplier = 0
