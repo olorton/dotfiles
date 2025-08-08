@@ -82,7 +82,6 @@ return {
         dependencies = {
             { "hrsh7th/cmp-buffer" },
             { "hrsh7th/cmp-path" },
-            { "hrsh7th/cmp-cmdline" },
         },
         event = "InsertEnter",
         config = function()
@@ -93,7 +92,6 @@ return {
                     { name = "buffer", keyword_length = 3 },
                     { name = "nvim_lsp", keyword_length = 3 },
                     { name = "avante", keyword_length = 3 },
-                    { name = "cmdline", keyword_length = 3 },
                 },
                 mapping = cmp.mapping.preset.insert({
 
@@ -115,7 +113,6 @@ return {
                             buffer = "[Buf]",
                             nvim_lsp = "[LSP]",
                             avante = "[Ai]",
-                            cmdline = "[Cmd]",
                         })[entry.source.name]
                         return vim_item
                     end,
