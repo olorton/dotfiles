@@ -57,7 +57,7 @@ alias fuckingdsfiles="find . -type f -name '*.DS_Store' -ls -delete"
 # Add TODO count to git status
 git() {
     if [[ $@ == "status" ]] || [[ $@ == "s" ]]; then
-        count_doto="`git grep TODO | wc -l | tr -d ' '`"
+        count_doto="$(git grep TODO | wc -l | tr -d ' ')"
         command git $@
         command echo "There are ${count_doto} TODOs in the codebase"
         if [[ -f "$(git rev-parse --show-toplevel)/TODO.md" ]]; then
@@ -65,15 +65,15 @@ git() {
             cat $(git rev-parse --show-toplevel)/TODO.md | grep -v -e '^$' | grep -v -e '^#' | head
         fi
     else
-        command git "$@";
-    fi;
+        command git "$@"
+    fi
 }
 alias g="git $@"
 
 # Set tmux window name when launching cmus
 cmus() {
-    tmux rename-window -t${TMUX_PANE} "cmus";
-    command cmus "$@";
+    tmux rename-window -t${TMUX_PANE} "cmus"
+    command cmus "$@"
 }
 
 # Allow me to change the default docker behaviour
