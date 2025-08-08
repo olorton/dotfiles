@@ -9,3 +9,4 @@ vim.api.nvim_create_autocmd("InsertLeave", {
         end
     end,
 })
+vim.o.laststatus = 3

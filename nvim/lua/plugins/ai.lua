@@ -1,18 +1,46 @@
-local opts
+local opts, model
 
 opts = nil
 if os.getenv("GEMINI_API_KEY") then
     opts = nil
 elseif os.getenv("OPENAI_API_KEY") then
+    model = os.getenv("OPENAI_MODEL") or "gpt-4o-mini"
+    print("Avante using OpenAI model: " .. model)
     opts = {
         provider = "openai",
         auto_suggestions_provider = "openai",
         openai = {
-            model = "gpt-4o-mini",
+            model = model,
             max_tokens = 4096,
         },
         behavior = {
             auto_set_highlight_group = true,
+        },
+        windows = {
+            ---@type "right" | "left" | "top" | "bottom"
+            position = "right", -- the position of the sidebar
+            wrap = true, -- similar to vim.o.wrap
+            width = 30, -- default % based on available width
+            sidebar_header = {
+                enabled = true, -- true, false to enable/disable the header
+                align = "right", -- left, center, right for title
+                rounded = false,
+            },
+            input = {
+                prefix = "> ",
+                height = 8, -- Height of the input window in vertical layout
+            },
+            edit = {
+                border = "none",
+                start_insert = true, -- Start insert mode when opening the edit window
+            },
+            ask = {
+                floating = false, -- Open the 'AvanteAsk' prompt in a floating window
+                start_insert = true, -- Start insert mode when opening the ask window
+                border = "none",
+                ---@type "ours" | "theirs"
+                focus_on_apply = "ours", -- which diff to focus after applying
+            },
         },
         highlights = {
             diff = {
@@ -28,9 +56,10 @@ if opts == nil then
 end
 
 local dir = nil
-local branch = nil
+local branch = main
 local dev_dir = "~/dev/avante.nvim/"
-if tonumber(vim.fn.system("ls -l ~/dev/avante.nvim 2>/dev/null | wc -l")) > 0 then
+local use_local_dev_version = true
+if use_local_dev_version and tonumber(vim.fn.system("ls -l ~/dev/avante.nvim 2>/dev/null | wc -l")) > 0 then
     dir = dev_dir
     branch = vim.fn.system("cd " .. dev_dir .. " && git branch --show-current")
 end

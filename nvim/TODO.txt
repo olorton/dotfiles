@@ -1,4 +1,9 @@
 TODOs
 =====
 
-- Consider installing Noice for better error/message viewing
+- Dynamically load lsp languages if exists
+- Why does avante and some other plugins have lualine?
+- <Esc> binding, also check a buffer is writable, and if not then :q
+- Hide the gd pane when leaving it
+- Disable cmd completion
+- Show errors when NeoFormat fails

@@ -14,8 +14,12 @@ local function is_buffer_empty()
 end
 
 local function lualine_char_code()
-    if is_buffer_empty() then return "----" end
-    if vim.api.nvim_buf_line_count(0) == 0 then return "----" end
+    if is_buffer_empty() then
+        return "----"
+    end
+    if vim.api.nvim_buf_line_count(0) == 0 then
+        return "----"
+    end
     local line = vim.fn.getline(".")
     local col = vim.fn.col(".")
     local char = vim.fn.getline("."):sub(col, col) or ""
