@@ -74,6 +74,7 @@ alias g="git $@"
 cmus() {
     tmux rename-window -t${TMUX_PANE} "cmus";
     command cmus "$@";
+}
 
 # Allow me to change the default docker behaviour
 docker() {
