@@ -33,3 +33,9 @@ Here are some terminal typefaces I've used in the past, included here for future
 ### Fix font rendering on 1080p screens
 
     defaults -currentHost write -g AppleFontSmoothing -int 0
+
+### TODO
+
+- Set the local includes up for zsh, vim, nvim, bin, alacritty, use the name <thing>.local
+- Set up cmus dir based on a .zshrc.local file
+- Add venv details to prompt, either use poetry to show python version and erros if not valid. OR just show the output of $VIRTUAL_ENV
