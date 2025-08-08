@@ -34,6 +34,7 @@ return {
                     "php",
                     "python",
                     "query",
+                    "regex",
                     "rst",
                     "rust",
                     "sql",
