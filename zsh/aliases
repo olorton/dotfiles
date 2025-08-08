@@ -74,6 +74,30 @@ alias g="git $@"
 cmus() {
     tmux rename-window -t${TMUX_PANE} "cmus";
     command cmus "$@";
+
+# Allow me to change the default docker behaviour
+docker() {
+    echo "$@"
+    # Column options:
+    # .ID         Container ID
+    # .Image      Image ID
+    # .Command    Quoted command
+    # .CreatedAt  Time when the container was created
+    # .RunningFor Elapsed time since the container started
+    # .Ports      Exposed ports
+    # .State      Container status (e.g., "created", "running", "exited")
+    # .Status     Container status with details
+    # .Size       Container disk size
+    # .Names      Container names
+    # .Labels     All labels assigned to the container
+    # .Mounts     Names of the volumes mounted
+    # .Networks   Names of the networks attached
+    if [[ "$1" == "ps" && ! "$@" =~ "--format" ]]; then
+        shift
+        set -- ps --format="table {{.ID}}\t{{.Image}}\t{{ .Names }}" "$@"
+    fi
+
+    command docker "$@"
 }
 
 alias rbdevelop="git checkout develop && git pull && git checkout - && git rebase develop"
@@ -82,6 +106,8 @@ alias dotedit="tmux rename-window -t${TMUX_PANE} dotfiles ; cd $DOTFILES && nvim
 alias dedit="dotedit"
 alias wikiedit="tmux rename-window -t${TMUX_PANE} wiki ; cd ~/wiki/ && nvim ."
 alias wedit="wikiedit"
+alias muxedit="nvim $XDG_CONFIG_HOME/tmuxinator"
+alias medit="muxedit"
 
 alias brupod="brew update && brew outdated"
 
