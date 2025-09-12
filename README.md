@@ -1,6 +1,6 @@
 # My dotfiles
 
-This repository contains configuration files that help customize my development environment, including settings for the shell, editor, and various applications. Do not try to use this repo as it is! These dotfiles are intended to serve as a reference for others looking to set up their own dotfiles. Feel free to explore and use these to influence your own ideas!
+This repository contains my personal dotfiles for customizing my development environment, including settings for the shell, editor, and various applications. It's primarily intended for personal reference, but feel free to explore it for inspiration.
 
 ## Setup
 
@@ -18,24 +18,30 @@ source ~/.zshrc
 dedit
 ```
 
-#
-Here are some terminal typefaces I've used in the past, included here for future reference:
-- Current: [DOSEGA](https://sourceforge.net/projects/dosega/)
+## Terminal Typefaces
+
+A reference of fonts I've previously used:
+
+- [DOSEGA](https://sourceforge.net/projects/dosega/)
 - [M+1m console font](http://sourceforge.jp/projects/mplus-fonts/downloads/62344/mplus-TESTFLIGHT-059.tar.xz/)
 
 ## macOS fixes
 
 ### Speed up key repeat
 
-    defaults write NSGlobalDomain KeyRepeat -int 1           # normal minimum is 2 (30 ms)
-    defaults write NSGlobalDomain InitialKeyRepeat -int 10   # normal minimum is 15 (225 ms)
+```bash
+defaults write NSGlobalDomain KeyRepeat -int 1           # normal minimum is 2 (30 ms)
+defaults write NSGlobalDomain InitialKeyRepeat -int 10   # normal minimum is 15 (225 ms)
+```
 
 ### Fix font rendering on 1080p screens
 
-    defaults -currentHost write -g AppleFontSmoothing -int 0
+```bash
+defaults -currentHost write -g AppleFontSmoothing -int 0
+```
 
 ### TODO
 
-- Set the local includes up for zsh, vim, nvim, bin, alacritty, use the name <thing>.local
-- Set up cmus dir based on a .zshrc.local file
-- Add venv details to prompt, either use poetry to show python version and erros if not valid. OR just show the output of $VIRTUAL_ENV
+- Configure local includes for `zsh`, `vim`, `nvim`, `bin`, and `alacritty` using a `.local` suffix pattern.
+- Configure the `cmus` directory via `.zshrc.local`.
+- Enhance the shell prompt to display Python virtual environment details (e.g., from Poetry or `$VIRTUAL_ENV`).
