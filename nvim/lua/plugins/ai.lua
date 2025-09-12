@@ -1,62 +1,91 @@
-local opts, model
+local opts, providers
 
-opts = nil
+providers = {}
 if os.getenv("GEMINI_API_KEY") then
-    opts = nil
-elseif os.getenv("OPENAI_API_KEY") then
-    model = os.getenv("OPENAI_MODEL") or "gpt-4o-mini"
-    print("Avante using OpenAI model: " .. model)
-    opts = {
-        provider = "openai",
-        auto_suggestions_provider = "openai",
-        openai = {
-            model = model,
-            max_tokens = 4096,
-        },
-        behavior = {
-            auto_set_highlight_group = true,
-        },
-        windows = {
-            ---@type "right" | "left" | "top" | "bottom"
-            position = "right", -- the position of the sidebar
-            wrap = true, -- similar to vim.o.wrap
-            width = 30, -- default % based on available width
-            sidebar_header = {
-                enabled = true, -- true, false to enable/disable the header
-                align = "right", -- left, center, right for title
-                rounded = false,
-            },
-            input = {
-                prefix = "> ",
-                height = 8, -- Height of the input window in vertical layout
-            },
-            edit = {
-                border = "none",
-                start_insert = true, -- Start insert mode when opening the edit window
-            },
-            ask = {
-                floating = false, -- Open the 'AvanteAsk' prompt in a floating window
-                start_insert = true, -- Start insert mode when opening the ask window
-                border = "none",
-                ---@type "ours" | "theirs"
-                focus_on_apply = "ours", -- which diff to focus after applying
-            },
-        },
-        highlights = {
-            diff = {
-                current = "DiffDelete",
-                incoming = "DiffAdd",
-            },
+    providers.vertex =  {
+        -- The model to use. You can specify any of the available Gemini models.
+        -- For example: 'gemini-2.5-pro' for reasoning maths and code; or
+        -- 'gemini-2.5-flash' for all-round help (probably not good for code
+        -- assist).
+        model = os.getenv("GEMINI_MODEL") or "gemini-2.5-flash",
+
+        -- Google Cloud Project ID
+        -- This is a required field for authentication and billing.
+        project = os.getenv("GOOGLE_CLOUD_PROJECT") or "fail-because-no-project-id-set",
+
+        -- The region where you want to use the Vertex AI endpoint.
+        -- You should use the region that best suits your needs and model
+        -- availability.
+        location = os.getenv("GOOGLE_CLOUD_LOCATION") or "us-central1",
+
+        -- An optional timeout for API requests in milliseconds.
+        -- Adjust this value based on your network and model response times.
+        timeout = 60000,
+
+        -- Additional request body parameters can be set here.
+        -- This is where you would configure model-specific options if needed.
+        extra_request_body = {
+            -- Example: You could set a temperature here, although it's often best
+            -- to let the model defaults handle it for code assistance.
+            -- temperature = 0.5,
+            -- max_tokens = 8192,
         },
     }
+    print("Avante using vertex ai model: " .. providers.vertex.model)
+
+elseif os.getenv("OPENAI_API_KEY") then
+    providers.openai = {
+        model = os.getenv("OPENAI_MODEL") or "gpt-4o-mini",
+        max_tokens = 4096,
+    }
+    print("Avante using openai ai model: " .. providers.openai.model)
 end
 
-if opts == nil then
+if not providers then
     return {}
 end
 
+opts = {
+    providers = providers,
+    behavior = {
+        auto_set_highlight_group = true,
+    },
+    windows = {
+        ---@type "right" | "left" | "top" | "bottom"
+        position = "right", -- the position of the sidebar
+        wrap = true, -- similar to vim.o.wrap
+        width = 30, -- default % based on available width
+        sidebar_header = {
+            enabled = true, -- true, false to enable/disable the header
+            align = "right", -- left, center, right for title
+            rounded = false,
+        },
+        input = {
+            prefix = "> ",
+            height = 8, -- Height of the input window in vertical layout
+        },
+        edit = {
+            border = "none",
+            start_insert = true, -- Start insert mode when opening the edit window
+        },
+        ask = {
+            floating = false, -- Open the 'AvanteAsk' prompt in a floating window
+            start_insert = true, -- Start insert mode when opening the ask window
+            border = "none",
+            ---@type "ours" | "theirs"
+            focus_on_apply = "ours", -- which diff to focus after applying
+        },
+    },
+    highlights = {
+        diff = {
+            current = "DiffDelete",
+            incoming = "DiffAdd",
+        },
+    },
+}
+
 local dir = nil
-local branch = main
+local branch = "main"
 local dev_dir = "~/dev/avante.nvim/"
 local use_local_dev_version = true
 if use_local_dev_version and tonumber(vim.fn.system("ls -l ~/dev/avante.nvim 2>/dev/null | wc -l")) > 0 then
