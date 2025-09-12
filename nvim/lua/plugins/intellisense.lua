@@ -191,15 +191,34 @@ return {
                 },
                 automatic_installation = true,
                 handlers = {
-                    -- this first function is the "default handler"
-                    -- it applies to every language server without a "custom handler"
+                    -- The default handler that applies to all servers
+                    -- It sets the global root detection pattern
                     function(server_name)
-                        require("lspconfig")[server_name].setup({})
+                        require("lspconfig")[server_name].setup({
+                            root_dir = require("lspconfig").util.root_pattern('.git') or vim.loop.cwd()
+                        })
+                    end,
+
+                    -- A special handler for a specific server (e.g., ts_ls)
+                    ["ts_ls"] = function()
+                        require("lspconfig").ts_ls.setup({
+                            -- The `root_dir` function should not return a table. We ensure a string is always returned.
+                            root_dir = require("lspconfig.util").find_git_ancestor(vim.loop.cwd()) or require("lspconfig.util").root_pattern('package.json', 'tsconfig.json') or vim.loop.cwd()
+                        })
+                    end,
+
+                    -- A special handler for a specific server (e.g., lua_ls)
+                    ["lua_ls"] = function()
+                        require("lspconfig").lua_ls.setup({
+                            -- Add custom settings for lua_ls here if needed
+                        })
                     end,
                 },
             })
         end,
     },
+
+    -- Trouble diagnostic
     {
         "folke/trouble.nvim",
         opts = {
