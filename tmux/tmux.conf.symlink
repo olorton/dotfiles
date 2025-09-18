@@ -136,4 +136,4 @@ set-window-option -g window-status-format " #I: #W "
 set-window-option -g window-status-current-format " #I: #W "
 set-window-option -g window-status-current-style fg=green,bg=black
 
-set-option -s status-interval 1
+set-option -g status-interval 1
