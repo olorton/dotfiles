@@ -22,4 +22,6 @@ if command -v "/usr/bin/ksshaskpass" >/dev/null 2>&1; then
     export SSH_ASKPASS_REQUIRE=prefer
 fi
 
+export GOOGLE_APPLICATION_CREDENTIALS="${HOME}/.config/gcloud/application_default_credentials.json"
+
 # vim: ft=zsh
