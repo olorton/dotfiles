@@ -199,7 +199,7 @@ return {
                     -- It sets the global root detection pattern
                     function(server_name)
                         require("lspconfig")[server_name].setup({
-                            root_dir = require("lspconfig").util.root_pattern('.git') or vim.loop.cwd()
+                            root_dir = require("lspconfig").util.root_pattern(".git") or vim.loop.cwd(),
                         })
                     end,
 
@@ -207,7 +207,9 @@ return {
                     ["ts_ls"] = function()
                         require("lspconfig").ts_ls.setup({
                             -- The `root_dir` function should not return a table. We ensure a string is always returned.
-                            root_dir = require("lspconfig.util").find_git_ancestor(vim.loop.cwd()) or require("lspconfig.util").root_pattern('package.json', 'tsconfig.json') or vim.loop.cwd()
+                            root_dir = require("lspconfig.util").find_git_ancestor(vim.loop.cwd()) or require(
+                                "lspconfig.util"
+                            ).root_pattern("package.json", "tsconfig.json") or vim.loop.cwd(),
                         })
                     end,
 
