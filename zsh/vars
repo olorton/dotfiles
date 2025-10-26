@@ -24,7 +24,6 @@ fi
 
 export GOOGLE_APPLICATION_CREDENTIALS="${HOME}/.config/gcloud/application_default_credentials.json"
 
-# TODO move to a local only var?
-export CMUS_LIBRARY_DIR="$HOME/music-cmus"
+export CMUS_LIBRARY_DIR="$HOME/music"
 
 # vim: ft=zsh

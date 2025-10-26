@@ -105,6 +105,10 @@ cli_tasks() {
 
     # Zsh
     symlink_dotfile "zsh/zshrc.symlink" "$HOME/.zshrc"
+    if [ ! -f "$DOTFILES_ROOT/zsh/local" ]; then
+        echo "# vim: ft=zsh" > "$DOTFILES_ROOT/zsh/local"
+    fi
+    symlink_dotfile "zsh/local" "$HOME/.zshrc-local"
     # Remove any old oh-my-zsh installs
     rm -rf "$HOME/.oh-my-zsh/"
 
