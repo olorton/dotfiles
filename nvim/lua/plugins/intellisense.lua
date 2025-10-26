@@ -72,7 +72,6 @@ return {
                 },
                 indent = {
                     enable = true,
-                    disable = { "python" },
                 },
             })
         end,
@@ -80,52 +79,56 @@ return {
 
     -- Autocompletion
     {
-        "hrsh7th/nvim-cmp",
-        dependencies = {
-            { "hrsh7th/cmp-buffer" },
-            { "hrsh7th/cmp-path" },
-        },
-        event = "InsertEnter",
-        config = function()
-            local cmp = require("cmp")
-            cmp.setup({
-                sources = {
-                    { name = "path", keyword_length = 3 },
-                    { name = "buffer", keyword_length = 3 },
-                    { name = "nvim_lsp", keyword_length = 3 },
-                    { name = "avante", keyword_length = 3 },
-                },
-                mapping = cmp.mapping.preset.insert({
+        "saghen/blink.cmp",
+        -- optional: provides snippets for the snippet source
 
-                    ["<Tab>"] = cmp.mapping(function(fallback)
-                        if cmp.visible() then
-                            cmp.select_next_item()
-                        else
-                            fallback() -- Use fallback to perform the default tab action
-                        end
-                    end, { "i", "s" }),
-                    ["<S-Tab>"] = cmp.mapping.select_prev_item(), -- Navigate to previous item
-                    ["<CR>"] = cmp.mapping.confirm({ select = true }), -- Confirm
-                }),
-                formatting = {
-                    format = function(entry, vim_item)
-                        -- Show the source of the completion item
-                        vim_item.menu = ({
-                            path = "[Pth]",
-                            buffer = "[Buf]",
-                            nvim_lsp = "[LSP]",
-                            avante = "[Ai]",
-                        })[entry.source.name]
-                        return vim_item
-                    end,
-                },
-                snippet = {
-                    expand = function(args)
-                        vim.snippet.expand(args.body)
-                    end,
-                },
-            })
-        end,
+        -- use a release tag to download pre-built binaries
+        version = "1.*",
+        -- AND/OR build from source, requires nightly: https://rust-lang.github.io/rustup/concepts/channels.html#working-with-nightly-rust
+        -- build = 'cargo build --release',
+        -- If you use nix, you can build from source using latest nightly rust with:
+        -- build = 'nix run .#build-plugin',
+
+        ---@module 'blink.cmp'
+        ---@type blink.cmp.Config
+        opts = {
+            -- 'default' (recommended) for mappings similar to built-in completions (C-y to accept)
+            -- 'super-tab' for mappings similar to vscode (tab to accept)
+            -- 'enter' for enter to accept
+            -- 'none' for no mappings
+            --
+            -- All presets have the following mappings:
+            -- C-space: Open menu or open docs if already open
+            -- C-n/C-p or Up/Down: Select next/previous item
+            -- C-e: Hide menu
+            -- C-k: Toggle signature help (if signature.enabled = true)
+            --
+            -- See :h blink-cmp-config-keymap for defining your own keymap
+            keymap = { preset = "default" },
+
+            appearance = {
+                -- 'mono' (default) for 'Nerd Font Mono' or 'normal' for 'Nerd Font'
+                -- Adjusts spacing to ensure icons are aligned
+                nerd_font_variant = "mono",
+            },
+
+            -- (Default) Only show the documentation popup when manually triggered
+            completion = { documentation = { auto_show = false } },
+
+            -- Default list of enabled providers defined so that you can extend it
+            -- elsewhere in your config, without redefining it, due to `opts_extend`
+            sources = {
+                default = { "lsp", "path", "buffer" },
+            },
+
+            -- (Default) Rust fuzzy matcher for typo resistance and significantly better performance
+            -- You may use a lua implementation instead by using `implementation = "lua"` or fallback to the lua implementation,
+            -- when the Rust fuzzy matcher is not available, by using `implementation = "prefer_rust"`
+            --
+            -- See the fuzzy documentation for more information
+            fuzzy = { implementation = "prefer_rust_with_warning" },
+        },
+        opts_extend = { "sources.default" },
     },
 
     -- LSP
@@ -134,7 +137,7 @@ return {
         cmd = { "LspInfo", "LspInstall", "LspStart" },
         event = { "BufReadPre", "BufNewFile" },
         dependencies = {
-            { "hrsh7th/cmp-nvim-lsp" },
+            -- { "hrsh7th/cmp-nvim-lsp" },
             { "williamboman/mason.nvim" },
             { "williamboman/mason-lspconfig.nvim" },
         },
@@ -146,10 +149,10 @@ return {
         config = function()
             local lsp_defaults = require("lspconfig").util.default_config
 
-            -- Add cmp_nvim_lsp capabilities settings to lspconfig
+            -- Add blink.cmp capabilities settings to lspconfig
             -- This should be executed before you configure any language server
             lsp_defaults.capabilities =
-                vim.tbl_deep_extend("force", lsp_defaults.capabilities, require("cmp_nvim_lsp").default_capabilities())
+                vim.tbl_deep_extend("force", lsp_defaults.capabilities, require("blink.cmp").get_lsp_capabilities())
 
             -- LspAttach is where you enable features that only work
             -- if there is a language server active in the file
