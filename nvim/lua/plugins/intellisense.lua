@@ -64,6 +64,7 @@ return {
                         node_decremental = "grm", -- Decrement to the previous node
                     },
                 },
+                -- TODO try enabling this?
                 folding = {
                     enable = false, -- Enable Tree-sitter based folding
                     foldmethod = "expr",
