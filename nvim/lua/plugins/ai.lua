@@ -7,7 +7,7 @@ if os.getenv("GEMINI_API_KEY") then
         -- For example: 'gemini-2.5-pro' for reasoning maths and code; or
         -- 'gemini-2.5-flash' for all-round help (probably not good for code
         -- assist).
-        model = os.getenv("GEMINI_MODEL") or "gemini-2.5-flash",
+        model = os.getenv("GEMINI_MODEL") or "gemini-2.5-pro",
 
         -- Google Cloud Project ID
         -- This is a required field for authentication and billing.
