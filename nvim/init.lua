@@ -20,7 +20,15 @@ end
 vim.opt.rtp:prepend(lazypath)
 require("lazy").setup("plugins", {
     change_detection = {
-        enabled = false,
+        enabled = true,
+    },
+    checker = {
+        -- automatically check for plugin updates
+        enabled = true,
+        concurrency = nil, ---@type number? set to 1 to check for updates very slowly
+        notify = true, -- get a notification when new updates are found
+        frequency = 8640, -- check for updates every 6 days
+        check_pinned = false, -- check for pinned packages that can't be updated
     },
 })
 
