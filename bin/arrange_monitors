@@ -4,6 +4,7 @@ import argparse
 import os
 import re
 import shutil
+import subprocess
 import sys
 
 RATE_GAMING = 120
@@ -128,7 +129,7 @@ def main():
             previous_monitor = monitor["name"]
     print(cmd)
 
-    os.system(" ".join(cmd))
+    subprocess.run(cmd, check=True)
 
 
 if __name__ == "__main__":
