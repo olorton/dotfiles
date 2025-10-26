@@ -47,6 +47,7 @@ end
 
 opts = {
     providers = providers,
+    provider = "vertex",
     behavior = {
         auto_set_highlight_group = true,
     },
