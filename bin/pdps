@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+format="table {{.ID}}\t{{.Names}}\t{{.RunningFor}}\t{{.Status}}\t{{.Ports}}"
+
+if [[ "$1" == "unhealthy" ]]; then
+    docker ps --format="${format}" | grep -E "Restarting|unhealthy|seconds|CONTAINER\sID"
+else
+    docker ps --format="${format}"
+fi
