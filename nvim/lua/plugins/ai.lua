@@ -1,6 +1,8 @@
-local opts, providers
+local opts, providers, provider
 
+provider = nil
 providers = {}
+-- TODO - allow multiple providers, and toggle between them with shortcut
 if os.getenv("GEMINI_API_KEY") then
     providers.vertex =  {
         -- The model to use. You can specify any of the available Gemini models.
@@ -31,9 +33,11 @@ if os.getenv("GEMINI_API_KEY") then
             -- max_tokens = 8192,
         },
     }
+    provider = "vertex"
     print("Avante using vertex ai model: " .. providers.vertex.model)
 
 elseif os.getenv("OPENAI_API_KEY") then
+    provider = "openai"
     providers.openai = {
         model = os.getenv("OPENAI_MODEL") or "gpt-4o-mini",
         max_tokens = 4096,
@@ -47,7 +51,7 @@ end
 
 opts = {
     providers = providers,
-    provider = "vertex",
+    provider = provider,
     behavior = {
         auto_set_highlight_group = true,
     },
