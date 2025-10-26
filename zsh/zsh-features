@@ -22,7 +22,8 @@ HISTSIZE=10000
 # Controls the number of commands saved to the history file.
 SAVEHIST=100000
 # Ensures that all zsh sessions share the same history file in real-time.
-setopt SHARE_HISTORY
+# Disabled as it has been annoying me
+# setopt SHARE_HISTORY
 # By default, zsh writes the history to the file when the shell exits. Setting
 # this option makes zsh write each command to the history file as soon as it's
 # entered, making it immediately available for other sessions.
