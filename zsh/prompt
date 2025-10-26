@@ -12,6 +12,18 @@ ZSH_PROMPT_PREFIX=""
 ZSH_PROMPT_SUFFIX=""
 GIT_SHOW_MISSING_UPSTREAM="no upstream?"
 GIT_SHOW_UNTRACKED_AS_DIRTY="false"
+SHOW_HOSTNAME="${PROMPT_SHOW_HOSTNAME-0}"
+
+function hostname_segment() {
+    if [[ $SHOW_HOSTNAME -eq 0 ]]; then
+        return 0
+    fi
+    if [[ -z $PROMPT_USE_HOSTNAME ]]; then
+        print -n "%{%K{black}%}%{%F{yellow}%} %m "
+        return 0
+    fi
+    print -n "%{%K{black}%}%{%F{yellow}%} ${PROMPT_USE_HOSTNAME} "
+}
 
 function dir_segment() {
     print -n "%(?.%{%K{blue}%}.%{%K{red}%})%{%F{white}%} %~ "
@@ -100,7 +112,7 @@ autoload -Uz vcs_info
 setopt PROMPT_SUBST                    # Enable command substitution in prompts
 function prompt_precmd() {
     vcs_info
-    PROMPT="%{%f%b%k%}$(dir_segment)$(git_segment)%{%f%b%k%}$(end_prompt) "
+    PROMPT="%{%f%b%k%}$(hostname_segment)$(dir_segment)$(git_segment)%{%f%b%k%}$(end_prompt) "
 }
 
 # TODO TODO TODO
