@@ -1,0 +1,39 @@
+#!/usr/bin/env bash
+
+current_dir="$(dirname "$(realpath "$0")")"
+dev_dir=$(realpath "$current_dir/../..")
+status_icon=""
+
+count_only=false
+list_status=false
+
+if [ "$1" == "--status" ]; then
+    count_only=true
+elif [ "$1" == "--list" ]; then
+    list_status=true
+fi
+
+count=0
+
+for dir in "$dev_dir"/*; do
+    if [ -d "$dir/.git" ]; then
+        cd "$dir" || continue
+        repo_name=$(basename "$dir")
+        if [ -n "$(git status --porcelain)" ] && [ -n "$(git remote)" ]; then
+            if [ "$count_only" = true ]; then
+                ((count++))
+            else
+                if [ "$list_status" = true ]; then
+                    echo -e "\e[7m$repo_name\e[0m"
+                    git status --porcelain
+                else
+                    echo "$repo_name"
+                fi
+            fi
+        fi
+    fi
+done
+
+if [ "$count_only" = true ] && [ "$count" -gt 0 ]; then
+    echo " ${status_icon} ${count} "
+fi

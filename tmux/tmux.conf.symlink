@@ -128,7 +128,8 @@ set -g status-right-length 150
 set-window-option -g status-left " #S "
 set-window-option -g status-left-style fg=black,bg=white
 
-set-window-option -g status-right " #($DOTFILES/bin/currentlyplaying --trim 30) %H:%M:%S %Z %Y-%m-%d "
+# TODO sort out spacing in this status line
+set-window-option -g status-right "#($DOTFILES/bin/git-push-check --status) #($DOTFILES/bin/currentlyplaying --trim 30) %H:%M:%S %Z %Y-%m-%d "
 set-window-option -g status-right-style fg=black,bg=white
 
 set-window-option -g window-status-format " #I: #W "
