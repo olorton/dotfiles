@@ -92,7 +92,7 @@ opts = {
 local dir = nil
 local branch = "main"
 local dev_dir = "~/dev/avante.nvim/"
-local use_local_dev_version = true
+local use_local_dev_version = false
 if use_local_dev_version and tonumber(vim.fn.system("ls -l ~/dev/avante.nvim 2>/dev/null | wc -l")) > 0 then
     dir = dev_dir
     branch = vim.fn.system("cd " .. dev_dir .. " && git branch --show-current")
