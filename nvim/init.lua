@@ -2,6 +2,11 @@ vim.cmd("source ~/.vimrc_basic")
 require("options")
 require("commands")
 
+print(vim.version())
+if not (vim.fn.has("nvim-0.12.0-dev")) then
+    print("this is something")
+end
+
 -- Bootstrap lazy.nvim
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not (vim.uv or vim.loop).fs_stat(lazypath) then

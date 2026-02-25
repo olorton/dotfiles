@@ -31,10 +31,14 @@ if os.getenv("GEMINI_API_KEY") then
             -- to let the model defaults handle it for code assistance.
             -- temperature = 0.5,
             -- max_tokens = 8192,
+
+        -- Avante enables tools by default, but some LLM models do not support tools.
+        -- You can disable tools by setting disable_tools = true for the provider.
+        disable_tools = true,
         },
     }
     provider = "vertex"
-    print("Avante using vertex ai model: " .. providers.vertex.model)
+    print("Avante using vertex ai model: " .. providers.vertex.model .. " :: " .. providers.vertex.location .. ":" .. providers.vertex.project)
 
 elseif os.getenv("OPENAI_API_KEY") then
     provider = "openai"
@@ -90,7 +94,7 @@ opts = {
 }
 
 local dir = nil
-local branch = "main"
+local branch = nil
 local dev_dir = "~/dev/avante.nvim/"
 local use_local_dev_version = false
 if use_local_dev_version and tonumber(vim.fn.system("ls -l ~/dev/avante.nvim 2>/dev/null | wc -l")) > 0 then

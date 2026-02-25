@@ -8,10 +8,11 @@ return {
     -- Treesitter
     {
         "nvim-treesitter/nvim-treesitter",
-        run = ":TSUpdate", -- Update parsers on install
-        config = function()
-            require("nvim-treesitter.configs").setup({
-                ensure_installed = {
+        build = ":TSUpdate",
+        opts = {
+            -- 'ensure_installed' is now passed to the install function,
+            -- but we can keep it here to pass it manually in 'config'
+            ensure_installed = {
                     "bash",
                     "c",
                     "cpp",
@@ -40,40 +41,28 @@ return {
                     "sql",
                     "terraform",
                     "toml",
-                    "toml",
                     "twig",
                     "typescript",
                     "vim",
                     "vimdoc",
                     "yaml",
-                },
-                sync_install = false, -- Install parsers synchronously
-                auto_install = true, -- Automatically install missing parsers
-                ignore_install = {}, -- Parsers to ignore installing
-                highlight = {
-                    enable = true, -- Enable highlighting
-                    disable = { "c", "rust" }, -- Disable highlighting for specific languages
-                    additional_vim_regex_highlighting = false, -- Use Vim's regex highlighting alongside Tree-sitter
-                },
-                incremental_selection = {
-                    enable = true,
-                    keymaps = {
-                        init_selection = "gnn", -- Start incremental selection
-                        node_incremental = "grn", -- Increment to the upper node
-                        scope_incremental = "grc", -- Increment to the upper scope
-                        node_decremental = "grm", -- Decrement to the previous node
-                    },
-                },
-                -- TODO try enabling this?
-                folding = {
-                    enable = false, -- Enable Tree-sitter based folding
-                    foldmethod = "expr",
-                    foldexpr = "v:lua.vim.treesitter.foldexpr()",
-                },
-                indent = {
-                    enable = true,
-                },
-            })
+            },
+            highlight = {
+                enable = true,
+                disable = { "c", "rust" },
+                additional_vim_regex_highlighting = false,
+            },
+            -- Note: incremental_selection and indent might require
+            -- manual enablement in 'main' via autocmds, but let's
+            -- try passing them to the new setup first.
+            indent = { enable = true },
+        },
+        config = function(_, opts)
+            local ts = require("nvim-treesitter")
+            ts.setup(opts)
+            if opts.ensure_installed then
+                ts.install(opts.ensure_installed)
+            end
         end,
     },
 
