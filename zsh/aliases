@@ -78,7 +78,6 @@ cmus() {
 
 # Allow me to change the default docker behaviour
 docker() {
-    echo "$@"
     # Column options:
     # .ID         Container ID
     # .Image      Image ID
@@ -93,9 +92,9 @@ docker() {
     # .Labels     All labels assigned to the container
     # .Mounts     Names of the volumes mounted
     # .Networks   Names of the networks attached
-    if [[ "$1" == "ps" && ! "$@" =~ "--format" ]]; then
+    if [[ "$1" == "ps" && ! "$@" =~ "--format"&& ! "$@" =~ "-f"&& ! "$@" =~ "--quiet"   && ! "$@" =~ "-q" ]]; then
         shift
-        set -- ps --format="table {{.ID}}\t{{.Image}}\t{{ .Names }}" "$@"
+        set -- ps --format="table {{.ID}}\t{{ .Names }}\t{{ .Ports }}" "$@"
     fi
 
     command docker "$@"
