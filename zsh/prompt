@@ -12,10 +12,10 @@ ZSH_PROMPT_PREFIX=""
 ZSH_PROMPT_SUFFIX=""
 GIT_SHOW_MISSING_UPSTREAM="no upstream?"
 GIT_SHOW_UNTRACKED_AS_DIRTY="false"
-SHOW_HOSTNAME="${PROMPT_SHOW_HOSTNAME-0}"
+PROMPT_SHOW_HOSTNAME="${PROMPT_SHOW_HOSTNAME-0}"
 
 function hostname_segment() {
-    if [[ $SHOW_HOSTNAME -eq 0 ]]; then
+    if [[ $PROMPT_SHOW_HOSTNAME -eq 0 ]]; then
         return 0
     fi
     if [[ -z $PROMPT_USE_HOSTNAME ]]; then
