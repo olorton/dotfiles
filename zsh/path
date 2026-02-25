@@ -39,7 +39,7 @@ build_path "$HOME/.poetry/bin"
 # Rust
 build_path "$HOME/.cargo/bin"
 # Go
-chk_cmd "go" && build_path "$(go env GOPATH)/bin"
+chk_cmd "go" && build_path "$(go env GOPATH)/bin" || build_path "/usr/local/go/bin"
 # My stuff
 build_path "$DOTFILES/bin"
 build_path "$HOME/bin"
