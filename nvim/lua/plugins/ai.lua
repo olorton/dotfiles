@@ -32,10 +32,11 @@ if os.getenv("GEMINI_API_KEY") then
             -- temperature = 0.5,
             -- max_tokens = 8192,
 
+        },
+
         -- Avante enables tools by default, but some LLM models do not support tools.
         -- You can disable tools by setting disable_tools = true for the provider.
         disable_tools = true,
-        },
     }
     provider = "vertex"
     print("Avante using vertex ai model: " .. providers.vertex.model .. " :: " .. providers.vertex.location .. ":" .. providers.vertex.project)
