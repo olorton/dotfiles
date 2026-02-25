@@ -1,0 +1,126 @@
+#!/usr/bin/env bash
+
+SCRIPT_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
+cd "$SCRIPT_DIR" || exit 1
+DOTFILES_ROOT=$(git rev-parse --show-toplevel)
+cd "$DOTFILES_ROOT" || exit 1
+
+# Check for required tools
+HAS_BLACK=$(command -v black)
+HAS_SHELLCHECK=$(command -v shellcheck)
+
+get_filetype() {
+    local file="$1"
+    # Ensure file still exists (it might have been deleted in the commit)
+    if [[ ! -f "$file" ]]; then echo "deleted"; return; fi
+
+    local ext="${file##*.}"
+    if [[ "$ext" =~ ^(py)$ ]]; then echo "python"; return; fi
+    if [[ "$ext" =~ ^(sh|bash|dash|ksh)$ ]]; then echo "shell"; return; fi
+
+    local first_line
+    first_line=$(head -n 1 "$file" 2>/dev/null)
+    if [[ "$first_line" =~ python ]]; then echo "python"; return; fi
+    if [[ "$first_line" =~ (zsh) ]]; then echo "unknown"; return; fi
+    if [[ "$first_line" =~ (sh|bash|dash|ksh) ]]; then echo "shell"; return; fi
+
+    local modeline
+    modeline=$( (head -n 5 "$file"; tail -n 5 "$file") 2>/dev/null | grep -Ei "vim:.*(ft|filetype)=")
+    if [[ "$modeline" =~ (python) ]]; then echo "python"; return; fi
+    if [[ "$modeline" =~ (zsh) ]]; then echo "unknown"; return; fi
+    if [[ "$modeline" =~ (sh|bash|dash|ksh) ]]; then echo "shell"; return; fi
+
+    echo "unknown"
+}
+
+# Determine File List Logic
+text_files=()
+if [[ "$1" == "--all" ]]; then
+    echo "Running checks manually, on all files in: git ls-files"
+    GIT_CMD="git ls-files -z"
+else
+    # diff-filter=d excludes deleted files from the check
+    GIT_CMD="git diff-tree --no-commit-id --name-only --diff-filter=d -r -z HEAD"
+fi
+
+while IFS= read -r -d '' file; do
+    # Only process if it's a real file (not a directory) and not binary
+    if [[ -f "$file" ]]; then
+        encoding=$(file -b --mime-encoding "$file")
+        if [[ "$encoding" != "binary" ]]; then
+            text_files+=("$file")
+        fi
+    fi
+done < <($GIT_CMD)
+
+# Accumulators for reports
+black_report=""
+shellcheck_report=""
+exit_code=0
+
+for f in "${text_files[@]}"; do
+    if [[ "$(realpath "$f")" == "$(realpath "${BASH_SOURCE[0]}")" ]]; then
+        continue
+    fi
+
+    # Enforce a trailing new line (Actioned immediately)
+    if [ -n "$(tail -c 1 "$f")" ]; then
+        echo "" >> "$f"
+    fi
+
+    ftype=$(get_filetype "$f")
+
+    # Capture Python formatting issues
+    if [[ "$ftype" == "python" ]] && [ -n "$HAS_BLACK" ]; then
+        diff_output=$(black --check --diff --color "$f" 2>&1)
+        if [ $? -ne 0 ]; then
+            black_report+="\n--- Black Diff: $f ---\n$diff_output\n"
+            exit_code=1
+        fi
+    fi
+
+    # Capture ShellCheck errors
+    if [[ "$ftype" == "shell" ]] && [ -n "$HAS_SHELLCHECK" ]; then
+        sc_output=$(shellcheck --color --severity=error -f gcc "$f" 2>&1)
+        if [ $? -ne 0 ]; then
+            shellcheck_report+="\n--- ShellCheck Errors: $f ---\n$sc_output\n"
+            exit_code=1
+        fi
+    fi
+done
+
+# Final Output Phase
+if [ -n "$black_report" ]; then
+    echo "=============================="
+    echo "        PYTHON REPORTS"
+    echo "=============================="
+    echo -e "$black_report"
+fi
+
+if [ -n "$shellcheck_report" ]; then
+    echo "=============================="
+    echo "      SHELLCHECK REPORTS"
+    echo "=============================="
+    echo -e "$shellcheck_report"
+fi
+
+if [ -z "$black_report" ] && [ -z "$shellcheck_report" ]; then
+    echo "✅ Black passed"
+    echo "✅ ShellCheck passed"
+else
+    echo "=============================="
+    echo "      Post-Commit Results"
+    echo "=============================="
+    if [ -n "$black_report" ]; then
+        echo "❌ Black checks failed"
+    else
+        echo "✅ Black passed"
+    fi
+    if [ -n "$shellcheck_report" ]; then
+        echo "❌ ShellCheck checks failed"
+    else
+        echo "✅ ShellCheck passed"
+    fi
+fi
+
+exit $exit_code

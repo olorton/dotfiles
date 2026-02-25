@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+pane_id=$(tmux display-message -p '#{pane_id}')
+
+if [[ -z "$pane_id" ]]; then
+  echo "No active pane found."
+  exit 1
+fi
+
+# Extract the pane number (remove the %)
+pane_number="${pane_id:1}"  # Remove the first character (%)
+
+# Use -t:. for pane targeting
+tmux set-window-option -t:."$pane_number" pane-border-style 'fg=black,bg=default'
+tmux set-window-option -t:."$pane_number" pane-active-border-style 'fg=green,bg=default'
+

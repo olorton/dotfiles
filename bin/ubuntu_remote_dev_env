@@ -1,0 +1,18 @@
+#!/bin/bash
+
+sudo add-apt-repository --yes --no-update ppa:neovim-ppa/stable
+sudo add-apt-repository --yes ppa:neovim-ppa/unstable
+sudo apt-get install --yes \
+    direnv \
+    fzf \
+    git \
+    htop \
+    mate-desktop-environment \
+    neovim \
+    ruby \
+    silversearcher-ag \
+    slim \
+    tig \
+    tmux \
+    vim \
+    zsh
