@@ -3,7 +3,6 @@
 import os
 import re
 
-
 # TODO
 # - Handle indented (sub-tasks)
 
@@ -33,7 +32,7 @@ with open(filename, "r") as file:
                 #   - If line is numbered, i.e. incomplete, convert it to "1. [ ]"
                 if date is None:
                     date = line
-                elif bool(re.search(r'^\d\.', line)):
+                elif bool(re.search(r"^\d\.", line)):
                     # Add line to prioritised list if it starts with int followed by "."
                     list_next.append(line.replace(".", f". [{date}]", 1))
                 elif line[0] == "-":

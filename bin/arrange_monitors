@@ -46,12 +46,10 @@ class UnexpectedArgumentError(ValueError):
 
 def verify_command_exists(name):
     if shutil.which(name) is None:
-        sys.exit(
-            f"""
+        sys.exit(f"""
             Error: Could not find {name}.
             This script relies on {name} being installed and in your $PATH.
-            """
-        )
+            """)
 
 
 def get_monitors():
@@ -115,7 +113,14 @@ def main():
 
     # Build command to run
     primary_monitor = get_primary_monitor(monitors)
-    cmd = ["xrandr", "--output", primary_monitor["name"], "--primary", "--rate", str(refresh_rate)]
+    cmd = [
+        "xrandr",
+        "--output",
+        primary_monitor["name"],
+        "--primary",
+        "--rate",
+        str(refresh_rate),
+    ]
     other_monitors = get_all_non_primary_monitors(monitors)
     previous_monitor = primary_monitor["name"]
     for monitor in other_monitors:
