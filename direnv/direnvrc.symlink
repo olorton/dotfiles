@@ -15,19 +15,47 @@ layout_anaconda() {
 }
 
 layout_poetry() {
-  if [[ ! -f pyproject.toml ]]; then
-    log_error 'No pyproject.toml found. Use `poetry new` or `poetry init` to create one first.'
-    exit 2
-  fi
+    if [[ ! -f pyproject.toml ]]; then
+        log_error 'No pyproject.toml found.'
+        exit 2
+    fi
 
-  # create venv if it doesn't exist
-  poetry run true
+    # 1. Get Desired Version
+    local desired_ver="3.12.12" # Or parse from file as before
+    if [[ -f .python-version ]]; then desired_ver=$(cat .python-version); fi
+    # TODO or just get this from pyproject.toml
 
-  export VIRTUAL_ENV=$(poetry env info --path)
-  export POETRY_ACTIVE=1
-  PATH_add "$VIRTUAL_ENV/bin"
+    # 2. Define the Target Path (Centralized)
+    # We construct the path ourselves so we control it.
+    # Note: We use a hash of the path to keep it unique per project, mimicking Poetry.
+    local env_name=$(basename "$PWD")
+    local env_hash=$(echo -n "$PWD" | md5sum | cut -d" " -f1 | head -c 8)
+    local venv_path="$HOME/.cache/pypoetry/virtualenvs/${env_name}-${env_hash}-py${desired_ver}"
 
-  poetry debug info
+    # 3. Check if we need to CREATE it manually
+    if [[ ! -d "$venv_path" ]]; then
+        log_status "Manually creating virtualenv at $venv_path..."
+
+        # Find the python executable
+        local python_exe=$(pyenv prefix "$desired_ver")/bin/python
+
+        # Run the BUILD command manually (bypassing Poetry's logic)
+        "$python_exe" -m venv "$venv_path"
+
+        if [[ $? -ne 0 ]]; then
+            log_error "Failed to create venv. Your python install of $desired_ver is broken."
+            return 1
+        fi
+    fi
+
+    # 4. Activate
+    export VIRTUAL_ENV="$venv_path"
+    export POETRY_ACTIVE=1
+    PATH_add "$venv_path/bin"
+
+    # 5. Tell Poetry "We are already active"
+    # This prevents Poetry from trying to look up or create anything.
+    export POETRY_VIRTUALENVS_PATH="$HOME/.cache/pypoetry/virtualenvs"
 }
 
 # vim: ft=bash
