@@ -45,7 +45,7 @@ elseif os.getenv("OPENAI_API_KEY") then
     provider = "openai"
     providers.openai = {
         model = os.getenv("OPENAI_MODEL") or "gpt-4o-mini",
-        max_tokens = 4096,
+        max_tokens = 2000000,
     }
     print("Avante using openai ai model: " .. providers.openai.model)
 end
