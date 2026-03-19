@@ -9,7 +9,7 @@ if os.getenv("GEMINI_API_KEY") then
         -- For example: 'gemini-2.5-pro' for reasoning maths and code; or
         -- 'gemini-2.5-flash' for all-round help (probably not good for code
         -- assist).
-        model = os.getenv("GEMINI_MODEL") or "gemini-2.5-pro",
+        model = "gemini-3-pro-preview",
 
         -- Google Cloud Project ID
         -- This is a required field for authentication and billing.
@@ -22,7 +22,7 @@ if os.getenv("GEMINI_API_KEY") then
 
         -- An optional timeout for API requests in milliseconds.
         -- Adjust this value based on your network and model response times.
-        timeout = 60000,
+        timeout = 20000,
 
         -- Additional request body parameters can be set here.
         -- This is where you would configure model-specific options if needed.
@@ -36,7 +36,9 @@ if os.getenv("GEMINI_API_KEY") then
 
         -- Avante enables tools by default, but some LLM models do not support tools.
         -- You can disable tools by setting disable_tools = true for the provider.
-        disable_tools = true,
+        disable_tools = false,
+
+        api_key_name = "GEMINI_API_KEY", -- Even on Vertex, some wrappers look for this or ADC
     }
     provider = "vertex"
     print("Avante using vertex ai model: " .. providers.vertex.model .. " :: " .. providers.vertex.location .. ":" .. providers.vertex.project)
@@ -55,9 +57,13 @@ if not providers then
 end
 
 opts = {
+    debug = false,
+    instructions_file = "avante.md",
     providers = providers,
     provider = provider,
-    behavior = {
+    behaviour = {
+        auto_apply_diff_after_generation = false, -- Keeps the legacy check disabled
+        auto_approve_tool_permissions = false,    -- 👈 ADD THIS: Stops the AI from bypassing the diff view
         auto_set_highlight_group = true,
     },
     windows = {
@@ -75,7 +81,7 @@ opts = {
             height = 8, -- Height of the input window in vertical layout
         },
         edit = {
-            border = "none",
+            border = "shadow",
             start_insert = true, -- Start insert mode when opening the edit window
         },
         ask = {
@@ -94,26 +100,13 @@ opts = {
     },
 }
 
-local dir = nil
-local branch = nil
-local dev_dir = "~/dev/avante.nvim/"
-local use_local_dev_version = false
-if use_local_dev_version and tonumber(vim.fn.system("ls -l ~/dev/avante.nvim 2>/dev/null | wc -l")) > 0 then
-    dir = dev_dir
-    branch = vim.fn.system("cd " .. dev_dir .. " && git branch --show-current")
-end
-
 return {
     "yetone/avante.nvim",
-    dir = dir,
-    branch = branch,
     event = "VeryLazy",
     lazy = false,
     version = false, -- Set this to "*" to always pull the latest release version, or set it to false to update to the latest code changes.
-    opts = opts,
     -- if you want to build from source then do `make BUILD_FROM_SOURCE=true`
     build = "make",
-    mode = "legacy",
     dependencies = {
         "stevearc/dressing.nvim",
         "nvim-lua/plenary.nvim",
@@ -152,4 +145,8 @@ return {
             -- },
         },
     },
+
+    ---@module 'avante'
+    ---@type avante.Config
+    opts = opts
 }
