@@ -24,6 +24,7 @@ TOOLS_TO_CHECK=(
     black
     stylua
     gofmt
+    shellcheck
 
     # Command-Line Utilities
     fzf
@@ -127,6 +128,13 @@ get_install_suggestion() {
             ;;
         "gofmt")
             suggestion="Install the Go toolchain (package is usually 'go' or 'golang')."
+            ;;
+        "shellcheck")
+            if [[ "$install_cmd" != "your_package_manager" ]]; then
+                suggestion="$install_cmd shellcheck"
+            else
+                suggestion="Install 'shellcheck' using your system's package manager."
+            fi
             ;;
         "xrandr")
             case "$OS" in
