@@ -1,25 +1,31 @@
 #!/usr/bin/env bash
 
+BLUE='\033[0;34m'
+NOFORMAT='\033[0m'
 
-# Based on @peterjwest's script https://gist.github.com/peterjwest/cdb9ec06240b84f3a628
+msg() {
+    echo >&2 -e "${1-}:: ${2-}${NOFORMAT}"
+}
 
-# Identify branch to switch to
-SWITCH_BRANCH=master
-if [[ `git branch --list develop` ]]; then
-   SWITCH_BRANCH=develop
+msg "${BLUE}" "Pruning unreachable objects..."
+git fetch --prune
+msg "${BLUE}" "Pruning done.\n"
+
+
+BRANCHES_TO_PRUNE=$(git branch -vv | grep ': gone]' | grep -v -E '\*' | awk '{print $1;}')
+
+if [ -z "$BRANCHES_TO_PRUNE" ]; then
+    msg "${BLUE}" "No branches to remove"
+    exit 0
 fi
 
-BRANCHES_TO_PRUNE=`git checkout $SWITCH_BRANCH &> /dev/null && git fetch --prune &> /dev/null && git branch --merged | grep -E -v "^((\* )|\s*(develop|master)$)"`
-printf '%s\n' $BRANCHES_TO_PRUNE
-
+msg "${BLUE}" "Branches to remove"
+echo "$BRANCHES_TO_PRUNE"
 read -p "Are you sure that you want to delete these branches? " -n 1 -r
-echo "" # Echo line break after input question
-
 if [[ ! $REPLY =~ ^[Yy]$ ]]; then
+    msg "${BLUE}" "Stopped.\n"
     exit 1
 fi
 
-git checkout $SWITCH_BRANCH && git fetch --prune && git branch --merged | grep -E -v "^((\* )|\s*(develop|master)$)" | xargs git branch -d
-
-## TODO
-#git for-each-ref --format '%(refname:short) %(upstream:track)' | awk '$2 == "[gone]" {print $1}' | xargs -r git branch -D
+echo "$BRANCHES_TO_PRUNE" | xargs -r git branch -D
+msg "${BLUE}" "Done"
