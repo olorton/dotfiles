@@ -149,3 +149,4 @@ else
     echo "To disable delete $DISABLE_DESKTOP_SYMLINKS_FILE"
     cli_tasks
 fi
+"${DOTFILES_ROOT}/bin/dotfiles-check"

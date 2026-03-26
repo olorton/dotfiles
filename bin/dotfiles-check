@@ -1,0 +1,200 @@
+#!/usr/bin/env bash
+
+# This script checks for the presence of prerequisite CLI tools
+# for this dotfiles setup and suggests installation methods.
+
+# --- Configuration ---
+# List of CLI tools to check for.
+TOOLS_TO_CHECK=(
+    # Development Tooling
+    git
+    zsh
+    tmux
+    nvim
+    direnv
+    pyenv
+    nvm
+    gcloud
+    tree-sitter
+    cargo
+
+    # Formatters & Linters
+    prettier
+    black
+    buildifier
+    stylua
+    gofmt
+
+    # Command-Line Utilities
+    fzf
+    tig
+)
+
+if [[ ! -f "$DOTFILES/.disable_desktop_symlinks" ]]; then
+    TOOLS_TO_CHECK+=(
+        alacritty
+        cmus
+        flac
+        lame
+    )
+fi
+
+# OS-specific tools are added below after OS detection.
+
+# --- Main Logic ---
+GREEN='\033[0;32m'
+RED='\033[0;31m'
+YELLOW='\033[1;33m'
+NC='\033[0m' # No Color
+
+# Use Unicode characters for checks if the shell supports them.
+if locale -a 2>/dev/null | grep -q -i "utf-8"; then
+    CHECK_MARK="✅"
+    CROSS_MARK="❌"
+else
+    CHECK_MARK="[OK]"
+    CROSS_MARK="[FAIL]"
+fi
+
+# --- OS Detection ---
+OS="unknown"
+PM="your_package_manager"
+
+detect_os() {
+    if [[ "$(uname)" == "Darwin" ]]; then
+        OS="macos"
+        PM="brew"
+    elif [ -f /etc/os-release ]; then
+        # freedesktop.org and systemd
+        . /etc/os-release
+        OS=$ID
+        case "$OS" in
+            debian|ubuntu) PM="apt-get" ;;
+            fedora) PM="dnf" ;;
+            arch) PM="pacman" ;;
+        esac
+    elif type lsb_release >/dev/null 2>&1; then
+        # For older systems
+        OS=$(lsb_release -si | tr '[:upper:]' '[:lower:]')
+    fi
+}
+
+# --- Installation Suggestions ---
+get_install_suggestion() {
+    local tool=$1
+    local suggestion
+
+    # Default suggestion
+    suggestion="Install '$tool' using your system's package manager."
+
+    # Handle special installation methods and package name differences.
+    case "$tool" in
+        "pyenv")
+            suggestion="Install via pyenv-installer: curl https://pyenv.run | bash"
+            ;;
+        "nvm")
+            suggestion="Install via official script (see nvm GitHub for latest version): https://github.com/nvm-sh/nvm?tab=readme-ov-file#install--update-script"
+            ;;
+        "gcloud")
+            suggestion="Follow the official Google Cloud SDK installation guide for your OS."
+            ;;
+        "tree-sitter")
+            case "$OS" in
+                "macos") suggestion="brew install tree-sitter" ;;
+                "debian"|"ubuntu") suggestion="sudo $PM install tree-sitter-cli" ;;
+                "arch") suggestion="sudo $PM -S tree-sitter-cli" ;;
+                *) suggestion="Install 'tree-sitter-cli' via your package manager or from source." ;;
+            esac
+            ;;
+        "cargo")
+            suggestion="Install Rust and Cargo via rustup: curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh"
+            ;;
+        "prettier")
+            suggestion="npm install -g prettier"
+            ;;
+        "black")
+            suggestion="pip3 install black"
+            ;;
+        "stylua")
+            case "$OS" in
+                "macos") suggestion="brew install stylua" ;;
+                *) suggestion="Download from https://github.com/JohnnyMorganz/StyLua/releases or install via cargo: cargo install stylua" ;;
+            esac
+            ;;
+        "gofmt")
+            suggestion="Install the Go toolchain (package is usually 'go' or 'golang')."
+            ;;
+        "xrandr")
+            case "$OS" in
+                "debian"|"ubuntu") suggestion="sudo $PM install x11-xserver-utils" ;;
+                "fedora"|"arch") suggestion="sudo $PM install xorg-xrandr" ;;
+                "macos") suggestion="Not applicable on macOS." ;;
+            esac
+            ;;
+        *) # For tools with consistent names, provide the default package manager command.
+            if [[ "$PM" != "your_package_manager" ]]; then
+                if [[ "$OS" == "macos" ]]; then
+                    suggestion="$PM install $tool"
+                else
+                    # Use 'pacman -S' for Arch, and 'install' for others.
+                    local install_cmd="install"
+                    if [[ "$PM" == "pacman" ]]; then
+                        install_cmd="-S"
+                    fi
+                    suggestion="sudo $PM $install_cmd $tool"
+                fi
+            fi
+            ;;
+    esac
+
+    echo -e "      ${YELLOW}-> Suggestion:${NC} $suggestion"
+}
+
+# --- Main Execution ---
+detect_os
+
+echo "Checking for required CLI tools..."
+echo "Detected OS: $OS (using $PM)"
+echo ""
+
+all_found=true
+missing_tools=0
+
+for tool in "${TOOLS_TO_CHECK[@]}"; do
+    found=false
+    # nvm is a shell function loaded interactively, so a check script
+    # needs to look for the installation directory instead.
+    if [[ "$tool" == "nvm" ]]; then
+        # Check for the nvm directory as defined in the zsh config,
+        # with a fallback for shells where XDG_CONFIG_HOME might not be set.
+        if [ -d "${XDG_CONFIG_HOME:-$HOME/.config}/nvm" ]; then
+            found=true
+        fi
+    else
+        if command -v "$tool" &> /dev/null; then
+            found=true
+        fi
+    fi
+
+    if [ "$found" = true ]; then
+        echo -e "${GREEN}${CHECK_MARK}${NC}  $tool"
+    else
+        # Skip suggesting for tools not applicable to the current OS.
+        if [[ "$tool" == "xrandr" && "$OS" == "macos" ]] || [[ "$tool" == "i3" && "$OS" == "macos" ]]; then
+            continue
+        fi
+        echo -e "${RED}${CROSS_MARK}${NC}  $tool"
+        get_install_suggestion "$tool"
+        all_found=false
+        ((missing_tools++))
+    fi
+done
+
+echo ""
+if [ "$all_found" = true ]; then
+    echo -e "${GREEN}All checks passed!${NC}"
+    exit 0
+else
+    echo -e "${RED}$missing_tools tool(s) are missing. Please install them.${NC}"
+    exit 1
+fi
