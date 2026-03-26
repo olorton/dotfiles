@@ -56,20 +56,20 @@ fi
 
 # --- OS Detection ---
 OS="unknown"
-PM="your_package_manager"
+install_cmd="your_package_manager install"
 
 detect_os() {
     if [[ "$(uname)" == "Darwin" ]]; then
         OS="macos"
-        PM="brew"
+        install_cmd="brew install"
     elif [ -f /etc/os-release ]; then
         # freedesktop.org and systemd
         . /etc/os-release
         OS=$ID
         case "$OS" in
-            debian|ubuntu) PM="apt-get" ;;
-            fedora) PM="dnf" ;;
-            arch) PM="pacman" ;;
+            debian|ubuntu) install_cmd="sudo apt-get install" ;;
+            fedora) install_cmd="sudo dnf install" ;;
+            arch) install_cmd="sudo pacman -S" ;;
         esac
     elif type lsb_release >/dev/null 2>&1; then
         # For older systems
@@ -99,8 +99,7 @@ get_install_suggestion() {
         "tree-sitter")
             case "$OS" in
                 "macos") suggestion="brew install tree-sitter" ;;
-                "debian"|"ubuntu") suggestion="sudo $PM install tree-sitter-cli" ;;
-                "arch") suggestion="sudo $PM -S tree-sitter-cli" ;;
+                "debian"|"ubuntu"|"arch") suggestion="$install_cmd tree-sitter-cli" ;;
                 *) suggestion="Install 'tree-sitter-cli' via your package manager or from source." ;;
             esac
             ;;
@@ -113,8 +112,7 @@ get_install_suggestion() {
         "pipx")
             case "$OS" in
                 "macos") suggestion="brew install pipx && pipx ensurepath" ;;
-                "debian"|"ubuntu") suggestion="sudo $PM install pipx" ;;
-                "arch") suggestion="sudo $PM -S pipx" ;;
+                "debian"|"ubuntu"|"arch") suggestion="$install_cmd pipx" ;;
                 *) suggestion="Install 'pipx' via your package manager or from source." ;;
             esac
             ;;
@@ -123,7 +121,7 @@ get_install_suggestion() {
             ;;
         "stylua")
             case "$OS" in
-                "macos") suggestion="brew install stylua" ;;
+                "macos") suggestion="$install_cmd stylua" ;;
                 *) suggestion="Download from https://github.com/JohnnyMorganz/StyLua/releases or install via cargo: cargo install stylua" ;;
             esac
             ;;
@@ -132,23 +130,14 @@ get_install_suggestion() {
             ;;
         "xrandr")
             case "$OS" in
-                "debian"|"ubuntu") suggestion="sudo $PM install x11-xserver-utils" ;;
-                "fedora"|"arch") suggestion="sudo $PM install xorg-xrandr" ;;
+                "debian"|"ubuntu") suggestion="$install_cmd x11-xserver-utils" ;;
+                "fedora"|"arch") suggestion="$install_cmd xorg-xrandr" ;;
                 "macos") suggestion="Not applicable on macOS." ;;
             esac
             ;;
         *) # For tools with consistent names, provide the default package manager command.
-            if [[ "$PM" != "your_package_manager" ]]; then
-                if [[ "$OS" == "macos" ]]; then
-                    suggestion="$PM install $tool"
-                else
-                    # Use 'pacman -S' for Arch, and 'install' for others.
-                    local install_cmd="install"
-                    if [[ "$PM" == "pacman" ]]; then
-                        install_cmd="-S"
-                    fi
-                    suggestion="sudo $PM $install_cmd $tool"
-                fi
+            if [[ "$install_cmd" != "your_package_manager" ]]; then
+                suggestion="$install_cmd $tool"
             fi
             ;;
     esac
@@ -160,7 +149,7 @@ get_install_suggestion() {
 detect_os
 
 echo "Checking for required CLI tools..."
-echo "Detected OS: $OS (using $PM)"
+echo "Detected OS: $OS (using $install_cmd)"
 echo ""
 
 all_found=true
