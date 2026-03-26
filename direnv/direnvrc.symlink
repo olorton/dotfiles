@@ -1,47 +1,88 @@
 #!/usr/bin/env bash
 
+# This function is intended to be used as a direnv layout.
+# It sets up a poetry environment for the current project.
 layout_poetry() {
-    if [[ ! -f pyproject.toml ]]; then
-        log_error 'No pyproject.toml found.'
-        exit 2
+    # Deactivate any active virtual environment.
+    if [[ -n "$VIRTUAL_ENV" ]]; then
+        log_status "Deactivating active virtual environment: $VIRTUAL_ENV"
+        unset POETRY_ACTIVE
+        unset VIRTUAL_ENV
     fi
 
-    # 1. Get Desired Version
-    local desired_ver="3.12.12" # Or parse from file as before
-    if [[ -f .python-version ]]; then desired_ver=$(cat .python-version); fi
-    # TODO or just get this from pyproject.toml
+    log_status "Direnv: Setting up poetry environment"
+    if [[ ! -f pyproject.toml ]]; then
+        log_error 'No pyproject.toml found.'
+        return 1
+    fi
 
-    # 2. Define the Target Path (Centralized)
-    # We construct the path ourselves so we control it.
-    # Note: We use a hash of the path to keep it unique per project, mimicking Poetry.
-    local env_name=$(basename "$PWD")
-    local env_hash=$(echo -n "$PWD" | md5sum | cut -d" " -f1 | head -c 8)
-    local venv_path="$HOME/.cache/pypoetry/virtualenvs/${env_name}-${env_hash}-py${desired_ver}"
+    # Determine desired Python version.
+    local desired_ver
+    if [[ -f .python-version ]]; then
+        desired_ver=$(cat .python-version)
+    else
+        # If version not specified, use the latest version available.
+        # I expect this to fail the poetry install step if we have a 
+        # restriction on the python version there.
+        desired_ver=$(pyenv install -l | grep -E '^\s*3[\.0-9]*$' | sort --version-sort | tail -n 1 | awk '{$1=$1};1')
+    fi
 
-    # 3. Check if we need to CREATE it manually
-    if [[ ! -d "$venv_path" ]]; then
-        log_status "Manually creating virtualenv at $venv_path..."
-
-        # Find the python executable
-        local python_exe=$(pyenv prefix "$desired_ver")/bin/python
-
-        # Run the BUILD command manually (bypassing Poetry's logic)
-        "$python_exe" -m venv "$venv_path"
-
-        if [[ $? -ne 0 ]]; then
-            log_error "Failed to create venv. Your python install of $desired_ver is broken."
+    # Ensure the desired python version is installed via pyenv.
+    if ! pyenv versions --bare | grep -q "^${desired_ver}$"; then
+        echo >&2 "Python version $desired_ver is not installed."
+        echo >&2 -n "Would you like to install it with pyenv? (y/n) "
+        read -r answer
+        if [[ "$answer" != "y" ]]; then
+            log_error "Installation aborted by user."
+            return 1
+        fi
+        if ! pyenv install "$desired_ver"; then
+            log_error "pyenv failed to install Python $desired_ver."
             return 1
         fi
     fi
+    
+    # Get the full path to the python executable from the pyenv version.
+    local python_exe
+    python_exe="$(pyenv root)/versions/${desired_ver}/bin/python"
 
-    # 4. Activate
+    # Tell poetry to use this python version.
+    # This will create and/or switch to the correct virtualenv.
+    log_status "Running 'poetry env use $python_exe'..."
+    if ! poetry env use "$python_exe"; then
+        log_error "poetry env use failed. Your pyenv/poetry setup might be broken."
+        return 1
+    fi
+
+    # Get the path of the virtualenv that poetry is now using.
+    local venv_path
+    venv_path=$(poetry env info --path)
+    if [[ ! -d "$venv_path" ]]; then
+        log_error "Could not determine virtualenv path from poetry."
+        return 1
+    fi
+
+    # Activate the virtualenv
+    log_status "Activating virtualenv: $venv_path"
     export VIRTUAL_ENV="$venv_path"
+    PATH_add "$VIRTUAL_ENV/bin"
     export POETRY_ACTIVE=1
-    PATH_add "$venv_path/bin"
 
-    # 5. Tell Poetry "We are already active"
-    # This prevents Poetry from trying to look up or create anything.
-    export POETRY_VIRTUALENVS_PATH="$HOME/.cache/pypoetry/virtualenvs"
+    # Install dependencies if lock file is newer.
+    local last_install_marker="$venv_path/direnv_last_install"
+    if [[ poetry.lock -nt "$last_install_marker" ]]; then
+        log_status "poetry.lock updated. Running 'poetry install'."
+        if poetry install; then
+            touch "$last_install_marker"
+        else
+            log_error "poetry install failed."
+            return 1
+        fi
+    else
+        log_status "Dependencies are up to date."
+    fi
+
+    poetry env info
+    poetry check
 }
-
 # vim: ft=bash
