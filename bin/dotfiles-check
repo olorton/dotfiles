@@ -17,6 +17,7 @@ TOOLS_TO_CHECK=(
     gcloud
     tree-sitter
     cargo
+    pipx
 
     # Formatters & Linters
     prettier
@@ -37,8 +38,6 @@ if [[ ! -f "$DOTFILES/.disable_desktop_symlinks" ]]; then
         lame
     )
 fi
-
-# OS-specific tools are added below after OS detection.
 
 # --- Main Logic ---
 GREEN='\033[0;32m'
@@ -111,8 +110,16 @@ get_install_suggestion() {
         "prettier")
             suggestion="npm install -g prettier"
             ;;
+        "pipx")
+            case "$OS" in
+                "macos") suggestion="brew install pipx && pipx ensurepath" ;;
+                "debian"|"ubuntu") suggestion="sudo $PM install pipx" ;;
+                "arch") suggestion="sudo $PM -S pipx" ;;
+                *) suggestion="Install 'pipx' via your package manager or from source." ;;
+            esac
+            ;;
         "black")
-            suggestion="pip3 install black"
+            suggestion="pipx install black"
             ;;
         "stylua")
             case "$OS" in
