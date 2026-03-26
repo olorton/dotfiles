@@ -21,7 +21,6 @@ TOOLS_TO_CHECK=(
     # Formatters & Linters
     prettier
     black
-    buildifier
     stylua
     gofmt
 

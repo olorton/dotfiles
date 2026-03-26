@@ -18,7 +18,7 @@ return {
             vim.g.neoformat_enabled_jsx = { "prettier" }
             vim.g.neoformat_enabled_yaml = { "prettier" }
             vim.g.neoformat_enabled_python = { "black" }
-            vim.g.neoformat_enabled_bzl = { "buildifier" }
+
             vim.g.neoformat_enabled_lua = { "stylua" }
         end,
     },
