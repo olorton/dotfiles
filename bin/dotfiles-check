@@ -51,7 +51,7 @@ if locale -a 2>/dev/null | grep -q -i "utf-8"; then
     CHECK_MARK="✅"
     CROSS_MARK="❌"
 else
-    CHECK_MARK="[OK]"
+    CHECK_MARK=" [OK] "
     CROSS_MARK="[FAIL]"
 fi
 
