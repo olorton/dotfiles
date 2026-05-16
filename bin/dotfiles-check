@@ -14,7 +14,7 @@ TOOLS_TO_CHECK=(
     direnv
     pyenv
     nvm
-    gcloud
+    rg
     tree-sitter
     cargo
     pipx
@@ -33,7 +33,6 @@ TOOLS_TO_CHECK=(
 
 if [[ ! -f "$DOTFILES/.disable_desktop_symlinks" ]]; then
     TOOLS_TO_CHECK+=(
-        alacritty
         cmus
         flac
         lame
@@ -94,12 +93,9 @@ get_install_suggestion() {
         "nvm")
             suggestion="Install via official script (see nvm GitHub for latest version): https://github.com/nvm-sh/nvm?tab=readme-ov-file#install--update-script"
             ;;
-        "gcloud")
-            suggestion="Follow the official Google Cloud SDK installation guide for your OS."
-            ;;
         "tree-sitter")
             case "$OS" in
-                "macos") suggestion="brew install tree-sitter" ;;
+                "macos") suggestion="brew install tree-sitter-cli" ;;
                 "debian"|"ubuntu"|"arch") suggestion="$install_cmd tree-sitter-cli" ;;
                 *) suggestion="Install 'tree-sitter-cli' via your package manager or from source." ;;
             esac
