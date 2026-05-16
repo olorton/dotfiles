@@ -30,6 +30,7 @@ return {
                     "diff",
                     "dockerfile",
                     "git_config",
+                    "gitcommit",
                     "gitignore",
                     "go",
                     "html",
