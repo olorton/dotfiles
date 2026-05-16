@@ -118,6 +118,9 @@ cli_tasks() {
 
     # Direnv
     symlink_dotfile "direnv/direnvrc.symlink" "$HOME/.direnvrc"
+
+    # AI
+    symlink_dotfile "aider/aider.conf.yml" "$HOME/.aider.conf.yml"
 }
 
 desktop_tasks() {
