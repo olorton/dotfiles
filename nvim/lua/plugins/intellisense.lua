@@ -7,59 +7,30 @@ return {
 
     -- Treesitter
     {
-        "nvim-treesitter/nvim-treesitter",
-        build = ":TSUpdate",
-        opts = {
-            -- 'ensure_installed' is now passed to the install function,
-            -- but we can keep it here to pass it manually in 'config'
-            ensure_installed = {
-                    "bash",
-                    "c",
-                    "cpp",
-                    "css",
-                    "diff",
-                    "dockerfile",
-                    "git_config",
-                    "gitignore",
-                    "go",
-                    "html",
-                    "htmldjango",
-                    "ini",
-                    "javascript",
-                    "jq",
-                    "json",
-                    "lua",
-                    "make",
-                    "markdown",
-                    "markdown_inline",
-                    "php",
-                    "python",
-                    "query",
-                    "regex",
-                    "rst",
-                    "rust",
-                    "sql",
-                    "terraform",
-                    "toml",
-                    "twig",
-                    "typescript",
-                    "vim",
-                    "vimdoc",
-                    "yaml",
-            },
-            highlight = {
-                enable = true,
-                disable = { "c", "rust" },
-                additional_vim_regex_highlighting = false,
-            },
-            -- Note: incremental_selection and indent might require
-            -- manual enablement in 'main' via autocmds, but let's
-            -- try passing them to the new setup first.
-            indent = { enable = true },
+        "romus204/tree-sitter-manager.nvim",
+        dependencies = {
+            -- Requires the official tree-sitter CLI to compile parsers on your system
+            -- Ensure 'tree-sitter' is installed via Homebrew, APT, Pacman, etc.
         },
-        config = function(_, opts)
-            require("nvim-treesitter.configs").setup(opts)
-        end,
+        config = function()
+            require("tree-sitter-manager").setup({
+                -- Default Options
+                -- ensure_installed = {}, -- list of parsers to install at the start of a neovim session
+                -- border = nil, -- border style for the window (e.g. "rounded", "single"), if nil, use the default border style defined by 'vim.o.winborder'. See :h 'winborder' for more info.
+                -- auto_install = false, -- if enabled, install missing parsers when editing a new file
+                -- highlight = true, -- treesitter highlighting is enabled by default
+                -- languages = {}, -- override or add new parser sources
+                -- parser_dir = vim.fn.stdpath("data") .. "/site/parser",
+                -- query_dir = vim.fn.stdpath("data") .. "/site/queries",
+                ensure_installed = {
+                    "bash", "c", "cpp", "css", "diff", "dockerfile", "git_config", "gitignore",
+                    "go", "html", "htmldjango", "ini", "javascript", "jq", "json", "lua", "make",
+                    "markdown", "markdown_inline", "php", "python", "query", "regex", "rst",
+                    "rust", "sql", "terraform", "toml", "twig", "typescript", "vim", "vimdoc", "yaml"
+                },
+                auto_install = true,
+            })
+        end
     },
 
     -- Autocompletion
