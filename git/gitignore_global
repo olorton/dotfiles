@@ -44,6 +44,10 @@ Thumbs.db
 .envrc
 
 
+# AI
+.aider.*
+
+
 # Stuff and Shit
 stuffandshit/*
 todo.txt
