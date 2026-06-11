@@ -77,7 +77,7 @@
 	st = stash
 	stp = stash pop
 	stl = stash list
-	fr = !git fetch origin && git rebase origin/master || git rebase origin/main
+	rbom = !git fetch origin && git rebase "origin/$(git remote show origin 2>/dev/null | grep HEAD | sed 's/.*: //')"
 	ls = log --pretty=format:"%C(yellow)%h\\ %ad%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --date=short
 	ll = log --pretty=format:"%C(yellow)%h%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --numstat
 	b = "!git for-each-ref --sort='-authordate' --format='%(authordate)%09%(objectname:short)%09%(refname)' refs/heads | sed -e 's-refs/heads/--'"
