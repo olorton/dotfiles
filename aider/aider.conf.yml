@@ -1,5 +1,5 @@
 ##########################################################
-# Sample .aider.conf.yml
+# .aider.conf.yml
 # This file lists *all* the valid configuration entries.
 # Place in your home dir, or at the root of your git repo.
 ##########################################################
@@ -18,7 +18,7 @@
 # Main model:
 
 ## Specify the model to use for the main chat
-#model: xxx
+model: lm_studio/qwen/qwen3-coder-30b
 
 ########################
 # API Keys and settings:
@@ -47,10 +47,9 @@
 ## Set an environment variable (to control API settings, can be used multiple times)
 #set-env: xxx
 ## Specify multiple values like this:
-#set-env:
-#  - xxx
-#  - yyy
-#  - zzz
+set-env:
+  - LM_STUDIO_API_BASE=http://localhost:1234/v1
+  - LM_STUDIO_API_KEY=dummy-api-key
 
 ## Set an API key for a provider (eg: --api-key provider=<key> sets PROVIDER_API_KEY=<key>)
 #api-key: xxx
@@ -70,7 +69,7 @@
 #model-settings-file: .aider.model.settings.yml
 
 ## Specify a file with context window and costs for unknown models
-#model-metadata-file: .aider.model.metadata.json
+model-metadata-file: ~/.aider.model.metadata.json
 
 ## Add a model alias (can be used multiple times)
 #alias: xxx
@@ -111,7 +110,7 @@
 #editor-edit-format: xxx
 
 ## Only work with models that have meta-data available (default: True)
-#show-model-warnings: true
+show-model-warnings: false
 
 ## Check if model accepts settings like reasoning_effort/thinking_tokens (default: True)
 #check-model-accepts-settings: true
@@ -210,7 +209,7 @@
 #git: true
 
 ## Enable/disable adding .aider* to .gitignore (default: True)
-#gitignore: true
+gitignore: false
 
 ## Enable/disable the addition of files listed in .gitignore to Aider's editing scope.
 #add-gitignore-files: false
@@ -225,7 +224,7 @@
 #auto-commits: true
 
 ## Enable/disable commits when repo is found dirty (default: True)
-#dirty-commits: true
+dirty-commits: false
 
 ## Attribute aider code changes in the git author name (default: True). If explicitly set to True, overrides --attribute-co-authored-by precedence.
 #attribute-author: xxx
@@ -234,13 +233,13 @@
 #attribute-committer: xxx
 
 ## Prefix commit messages with 'aider: ' if aider authored the changes (default: False)
-#attribute-commit-message-author: false
+attribute-commit-message-author: true
 
 ## Prefix all commit messages with 'aider: ' (default: False)
 #attribute-commit-message-committer: false
 
 ## Attribute aider edits using the Co-authored-by trailer in the commit message (default: True). If True, this takes precedence over default --attribute-author and --attribute-committer behavior unless they are explicitly set to True.
-#attribute-co-authored-by: true
+attribute-co-authored-by: false
 
 ## Enable/disable git pre-commit hooks with --no-verify (default: False)
 #git-commit-verify: false
