@@ -13,7 +13,6 @@
     "dictionary": "Packages/Language - English/en_GB.dic",
     "ignored_packages":
     [
-        "Dockerfile Syntax Highlighting",
         "Vintage",
     ],
     "added_words":

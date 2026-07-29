@@ -2,7 +2,6 @@
 	"bootstrapped": true,
 	"in_process_packages":
 	[
-		"Dockerfile Syntax Highlighting",
 	],
 	"installed_packages":
 	[
@@ -13,6 +12,8 @@
 		"Package Control",
 		"Pretty JSON",
 		"Pretty YAML",
+		"Python Output Format",
+		"PyYapf Python Formatter",
 		"Sass",
 		"SideBarEnhancements",
 		"Solarized Color Scheme",
