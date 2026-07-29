@@ -3,11 +3,11 @@ DOTFILES="$(builtin cd "$(dirname "$(readlink ~/.zshrc)")" && git rev-parse --sh
 export DOTFILES
 
 source "${DOTFILES}/zsh/vars"
-source "${DOTFILES}/zsh/local"
-source "${DOTFILES}/zsh/path"
 source "${DOTFILES}/zsh/aliases"
 source "${DOTFILES}/zsh/zsh-features"
 source "${DOTFILES}/zsh/3rd-party"
+source "${DOTFILES}/zsh/path"
+source "${DOTFILES}/zsh/local"
 source "${DOTFILES}/zsh/ssh-agent"
 source "${DOTFILES}/zsh/prompt"
 
