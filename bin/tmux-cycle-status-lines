@@ -1,0 +1,35 @@
+#!/usr/bin/env bash
+#
+# Cycle the tmux status bar between 1-5 lines tall, with only the last
+# line showing content (the rest left blank). Used to nudge the status
+# bar clear of the MacBook notch.
+
+current=$(tmux display-message -p '#{status}')
+
+case "$current" in
+off | on) current=1 ;;
+esac
+
+next=$(((current % 5) + 1))
+
+if [ "$next" -eq 1 ]; then
+  status_value="on"
+else
+  status_value="$next"
+fi
+
+tmux set-option -g status "$status_value"
+
+# Reset to the default status-format array so #{status-format[0]} below
+# gives the built-in content line, not a stale override from before.
+tmux set-option -ug status-format
+content=$(tmux display-message -p '#{status-format[0]}')
+
+last_index=$((next - 1))
+for i in 0 1 2 3 4; do
+  if [ "$i" -eq "$last_index" ]; then
+    tmux set-option -g "status-format[$i]" "$content"
+  else
+    tmux set-option -g "status-format[$i]" ""
+  fi
+done

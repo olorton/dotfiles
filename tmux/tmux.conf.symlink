@@ -74,6 +74,11 @@ set -g status-left-length 40
 
 # status bar position
 set-option -g status-position top
+# Assume no notch by default: single status line, no blank padding lines
+set -g status on
+
+# Cycle status bar height 1-5 lines (MacBook notch helper)
+bind C-n run-shell "$DOTFILES/bin/tmux-cycle-status-lines"
 
 # Simplify status bar display.
 set -g status-left '[#S]#{?pane_synchronized, #[bg=red]   !!!SYNC!!!   #[default],}'
