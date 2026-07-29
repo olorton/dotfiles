@@ -175,7 +175,8 @@ return {
                     "intelephense",
                     -- "jsonls",
                     "lua_ls",
-                    "pyright",
+                    "basedpyright",
+                    "ruff",
                     "ts_ls",
                     "html", -- hrsh7th/vscode-langservers-extracted (Includes css & json)
                 },
@@ -186,6 +187,86 @@ return {
                     function(server_name)
                         require("lspconfig")[server_name].setup({
                             root_dir = require("lspconfig").util.root_pattern(".git") or vim.loop.cwd(),
+                        })
+                    end,
+
+                    -- A special handler for basedpyright (Poetry environment detection & isolated subprojects)
+                    ["basedpyright"] = function()
+                        local lspconfig = require("lspconfig")
+                        local util = require("lspconfig.util")
+
+                        -- Find the nearest sub-project root containing pyproject.toml
+                        local function find_subproject_root(fname)
+                            return util.root_pattern("poetry.lock", "pyproject.toml")(fname)
+                                or util.find_git_ancestor(fname)
+                                or vim.loop.cwd()
+                        end
+
+                        -- Dynamically resolve the Poetry virtualenv Python path
+                        local function get_poetry_python_path(root_dir)
+                            local handle = io.popen("cd " .. vim.fn.shellescape(root_dir) .. " && poetry env info -p 2>/dev/null")
+                            if not handle then return nil end
+                            local result = handle:read("*a")
+                            handle:close()
+
+                            local env_path = vim.trim(result)
+                            if env_path ~= "" then
+                                if vim.fn.has("win32") == 1 then
+                                    return env_path .. "\\Scripts\\python.exe"
+                                else
+                                    return env_path .. "/bin/python"
+                                end
+                            end
+                            return nil
+                        end
+
+                        lspconfig.basedpyright.setup({
+                            root_dir = find_subproject_root,
+                            on_new_config = function(config, new_root_dir)
+                                local python_path = get_poetry_python_path(new_root_dir)
+                                if python_path then
+                                    config.settings = vim.tbl_deep_extend("force", config.settings or {}, {
+                                        python = {
+                                            pythonPath = python_path,
+                                        },
+                                    })
+                                end
+                            end,
+                            on_attach = function(client, bufnr)
+                                -- Disable BasedPyright's formatting to let Ruff handle it
+                                client.server_capabilities.documentFormattingProvider = false
+                                client.server_capabilities.documentRangeFormattingProvider = false
+                            end,
+                            settings = {
+                                basedpyright = {
+                                    analysis = {
+                                        autoSearchPaths = true,
+                                        useLibraryCodeForTypes = true,
+                                        diagnosticMode = "openFilesOnly", -- Prevents running heavy background checks on the entire monorepo
+                                        typeCheckingMode = "recommended",
+                                    },
+                                },
+                            },
+                        })
+                    end,
+
+                    -- A special handler for ruff
+                    ["ruff"] = function()
+                        local lspconfig = require("lspconfig")
+                        local util = require("lspconfig.util")
+
+                        local function find_subproject_root(fname)
+                            return util.root_pattern("poetry.lock", "pyproject.toml")(fname)
+                                or util.find_git_ancestor(fname)
+                                or vim.loop.cwd()
+                        end
+
+                        lspconfig.ruff.setup({
+                            root_dir = find_subproject_root,
+                            on_attach = function(client, bufnr)
+                                -- Disable hover so it doesn't conflict with BasedPyright's hover docstrings
+                                client.server_capabilities.hoverProvider = false
+                            end,
                         })
                     end,
 
