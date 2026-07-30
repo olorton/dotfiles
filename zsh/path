@@ -15,11 +15,10 @@ chk_cmd() {
 build_path() {
     local dir="$1"
 
-    # TODO If dir already in path, then remove it so we can add it at the front
-
     # Check if the directory exists
     if [[ -d "$dir" ]]; then
-        export PATH="$dir:$PATH" # Add the directory to the path
+        # Remove dir from path array if present, then prepend it
+        path=( "$dir" ${path#"$dir"} )
     fi
 
     return 0
