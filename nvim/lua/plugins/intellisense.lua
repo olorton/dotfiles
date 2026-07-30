@@ -243,7 +243,7 @@ return {
                                         autoSearchPaths = true,
                                         useLibraryCodeForTypes = true,
                                         diagnosticMode = "openFilesOnly", -- Prevents running heavy background checks on the entire monorepo
-                                        typeCheckingMode = "recommended",
+                                        typeCheckingMode = "standard",
                                     },
                                 },
                             },
