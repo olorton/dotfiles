@@ -1,18 +1,37 @@
 #!/usr/bin/env bash
 
 BLUE='\033[0;34m'
+YELLOW='\033[0;33m'
 NOFORMAT='\033[0m'
 
 msg() {
     echo >&2 -e "${1-}:: ${2-}${NOFORMAT}"
 }
 
+# An untracked symlink pointing outside the worktree isn't work in progress -
+# it's scaffolding (e.g. the .envrc and .python-version links slgitwt creates
+# from main/). Removing the worktree deletes the link, never its target.
+links_outside_worktree() {
+    local worktree=$1 link target dir
+    link="$worktree/$2"
+    [ -L "$link" ] || return 1
+    target=$(readlink "$link")
+    [[ $target = /* ]] || target="$(dirname "$link")/$target"
+    dir=$(cd "$(dirname "$target")" 2>/dev/null && pwd -P) || return 1
+    [[ "$dir/$(basename "$target")" != "$worktree"/* ]]
+}
+
 msg "${BLUE}" "Pruning unreachable objects..."
 git fetch --prune
 msg "${BLUE}" "Pruning done.\n"
 
-
-BRANCHES_TO_PRUNE=$(git branch -vv | grep ': gone]' | grep -v -E '\*' | awk '{print $1;}')
+# Branches whose upstream is gone, i.e. merged and deleted on the remote.
+# %(worktreepath) is empty unless the branch is checked out in a worktree, so
+# this behaves exactly as before in repos that don't use worktrees.
+CURRENT_BRANCH=$(git branch --show-current)
+BRANCHES_TO_PRUNE=$(git for-each-ref \
+    --format='%(refname:short)|%(upstream:track)|%(worktreepath)' refs/heads |
+    awk -F'|' -v current="$CURRENT_BRANCH" '$2 == "[gone]" && $1 != current')
 
 if [ -z "$BRANCHES_TO_PRUNE" ]; then
     msg "${BLUE}" "No branches to remove"
@@ -20,12 +39,59 @@ if [ -z "$BRANCHES_TO_PRUNE" ]; then
 fi
 
 msg "${BLUE}" "Branches to remove"
-echo "$BRANCHES_TO_PRUNE"
+echo "$BRANCHES_TO_PRUNE" | while IFS='|' read -r branch _ worktree; do
+    if [ -n "$worktree" ]; then
+        echo "$branch (worktree: $worktree)"
+    else
+        echo "$branch"
+    fi
+done
+
 read -p "Are you sure that you want to delete these branches? " -n 1 -r
+echo
 if [[ ! $REPLY =~ ^[Yy]$ ]]; then
     msg "${BLUE}" "Stopped.\n"
     exit 1
 fi
 
-echo "$BRANCHES_TO_PRUNE" | xargs -r git branch -D
+removed_worktree=false
+while IFS='|' read -r branch _ worktree; do
+    if [ -n "$worktree" ]; then
+        worktree_real=$(cd "$worktree" && pwd -P)
+        blocking=""
+        exempt=false
+        while IFS= read -r -d '' entry; do
+            if [ "${entry:0:2}" = "??" ] && links_outside_worktree "$worktree_real" "${entry:3}"; then
+                exempt=true
+                continue
+            fi
+            blocking+="$entry"$'\n'
+        done < <(git -C "$worktree" status --porcelain -z)
+
+        if [ -n "$blocking" ]; then
+            msg "${YELLOW}" "Skipping $branch: worktree has uncommitted changes ($worktree)"
+            while IFS= read -r change; do
+                [ -n "$change" ] && echo >&2 "   $change"
+            done <<<"$blocking"
+            continue
+        fi
+
+        # --force: git counts the exempted symlinks as untracked files and
+        # would refuse without it.
+        if [ "$exempt" = true ]; then
+            git worktree remove --force "$worktree" || continue
+        else
+            git worktree remove "$worktree" || continue
+        fi
+        removed_worktree=true
+    fi
+    # -D, not -d: we squash merge, so git can't see the commits in the default
+    # branch. The gone upstream is what tells us the branch was merged.
+    git branch -D "$branch"
+done <<<"$BRANCHES_TO_PRUNE"
+
+if [ "$removed_worktree" = true ]; then
+    git worktree prune
+fi
+
 msg "${BLUE}" "Done"
