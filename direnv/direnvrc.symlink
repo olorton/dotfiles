@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+_DIRENVRC_DIR="$(cd "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")" && pwd)"
+
 # This function is intended to be used as a direnv layout.
 # It sets up a poetry environment for the current project.
 layout_poetry() {
@@ -16,15 +18,47 @@ layout_poetry() {
         return 1
     fi
 
-    # Determine desired Python version.
+    # Determine desired Python version, in priority order:
+    #   1. An explicit .python-version file always wins.
+    #   2. Otherwise, ask resolve_python_version.py to find a version satisfying
+    #      the project's pyproject.toml/poetry.lock constraint — first among
+    #      versions already installed via pyenv (fast, no install prompt),
+    #      then among versions pyenv could install (slower, will prompt below).
+    #   3. If the constraint can't be determined or nothing satisfies it,
+    #      fall back to whatever the newest pyenv-installable release is (the
+    #      original behavior) so we always produce *some* answer.
     local desired_ver
     if [[ -f .python-version ]]; then
         desired_ver=$(cat .python-version)
     else
-        # If version not specified, use the latest version available.
-        # I expect this to fail the poetry install step if we have a
-        # restriction on the python version there.
-        desired_ver=$(pyenv install -l | grep -E '^\s*3[\.0-9]*$' | sort --version-sort | tail -n 1 | awk '{$1=$1};1')
+        local resolver="$_DIRENVRC_DIR/resolve_python_version.py"
+        local installed installable chosen
+
+        # Fast path: is there already a pyenv-installed version that satisfies
+        # the constraint? This is what lets `direnv reload` reuse an existing
+        # poetry environment instead of re-guessing a version each time.
+        installed=$(pyenv versions --bare | grep -E '^[0-9]+\.[0-9]+\.[0-9]+$')
+        chosen=$(python3 "$resolver" --pyproject pyproject.toml --poetry-lock poetry.lock --candidates "$installed" 2>/dev/null)
+        if [[ -n "$chosen" ]]; then
+            desired_ver="$chosen"
+            echo >&2 "No .python-version file; pyproject.toml's constraint is satisfied by already-installed Python $desired_ver"
+        else
+            # Nothing installed satisfies it — check what pyenv could install
+            # instead, so a fresh/bootstrap project still lands on a version
+            # compatible with its own constraint rather than "whatever's newest".
+            installable=$(pyenv install -l | grep -E '^\s*[0-9][\.0-9]*$' | awk '{$1=$1};1')
+            chosen=$(python3 "$resolver" --pyproject pyproject.toml --poetry-lock poetry.lock --candidates "$installable" 2>/dev/null)
+            if [[ -n "$chosen" ]]; then
+                desired_ver="$chosen"
+                echo >&2 "No .python-version file; will install Python $desired_ver to satisfy pyproject.toml's constraint"
+            else
+                # Resolver couldn't find or parse a constraint at all (e.g. no
+                # pyproject.toml/poetry.lock, or an unrecognized format).
+                # Last resort: just take the newest release pyenv knows about.
+                echo >&2 "Could not resolve a Python version satisfying pyproject.toml; defaulting to latest available"
+                desired_ver=$(pyenv install -l | grep -E '^\s*3[\.0-9]*$' | sort --version-sort | tail -n 1 | awk '{$1=$1};1')
+            fi
+        fi
     fi
     echo >&2 "Desired version: $desired_ver"
 
