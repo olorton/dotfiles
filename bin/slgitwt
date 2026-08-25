@@ -1,0 +1,97 @@
+#!/usr/bin/env bash
+
+# Exit immediately if a command exits with a non-zero status
+set -e
+
+# Get the directory where the script resides and find the 'main' directory
+SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
+MAIN_DIR="$SCRIPT_DIR/main"
+
+# Filenames to symlink from the main worktree into the other worktrees
+LINK_NAMES=(".envrc" ".python-version")
+
+if [ ! -d "$MAIN_DIR" ]; then
+    echo "Error: Main directory 'main' not found in: $SCRIPT_DIR"
+    exit 1
+fi
+
+echo "Scanning for ${LINK_NAMES[*]} files in: $MAIN_DIR"
+
+# Build the find expression: -name ".envrc" -o -name ".python-version" ...
+find_args=()
+for name in "${LINK_NAMES[@]}"; do
+    if [ ${#find_args[@]} -gt 0 ]; then
+        find_args+=("-o")
+    fi
+    find_args+=("-name" "$name")
+done
+
+# Get the list of relative paths of the matching files in the main worktree
+link_files=()
+while IFS= read -r -d '' file; do
+    link_files+=("${file#$MAIN_DIR/}")
+done < <(find "$MAIN_DIR" -type f \( "${find_args[@]}" \) -print0)
+
+# Check if we found any files
+if [ ${#link_files[@]} -eq 0 ]; then
+    echo "No ${LINK_NAMES[*]} files found in $MAIN_DIR"
+    exit 0
+fi
+
+echo "Found ${#link_files[@]} file(s) in main."
+
+# Iterate over all direct subdirectories in the same directory as this script
+found_targets=0
+for target_dir in "$SCRIPT_DIR"/*/; do
+    target_dir="${target_dir%/}"
+
+    # Ensure it is actually a directory
+    if [ ! -d "$target_dir" ]; then
+        continue
+    fi
+
+    # Skip main directory
+    if [ "$target_dir" = "$MAIN_DIR" ]; then
+        continue
+    fi
+
+    # Skip hidden directories (like .git, .gemini)
+    dir_name=$(basename "$target_dir")
+    if [[ "$dir_name" == .* ]]; then
+        continue
+    fi
+
+    found_targets=$((found_targets + 1))
+
+    echo "------------------------------------------------"
+    echo "Processing target worktree: $dir_name"
+    echo "------------------------------------------------"
+
+    for rel_path in "${link_files[@]}"; do
+        target_file="$target_dir/$rel_path"
+        target_subdir=$(dirname "$target_file")
+
+        # Check if the corresponding subdirectory exists in the target worktree
+        if [ ! -d "$target_subdir" ]; then
+            echo "⚠️  Skipping: Target directory does not exist yet: $rel_path"
+            continue
+        fi
+
+        # If a file or symlink already exists at the target, skip or handle safely
+        if [ -L "$target_file" ] || [ -e "$target_file" ]; then
+            echo "ℹ️  Skipped: Already exists: $rel_path"
+        else
+            # Create the symlink pointing back to the main file
+            main_file="$MAIN_DIR/$rel_path"
+            ln -s "$main_file" "$target_file"
+            echo "✅ Linked: $rel_path"
+        fi
+    done
+done
+
+echo "------------------------------------------------"
+if [ "$found_targets" -eq 0 ]; then
+    echo "No target worktree directories found to process."
+else
+    echo "Done! If any links were updated, don't forget to run 'direnv allow' inside your target worktree directories."
+fi
