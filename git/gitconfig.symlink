@@ -84,3 +84,4 @@
 	tl = for-each-ref --sort='*authordate' --format='%(taggerdate:short) | %(taggername) | %(tag) | %(contents:subject)' refs/tags
 	who = shortlog --numbered --summary --email --no-merges
 	nuke = !sh -c 'git branch -D $1 && git push origin :$1' -
+	wt = worktree

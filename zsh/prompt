@@ -5,6 +5,9 @@
 # - PWD shown
 # - Red background shown when the previous command exited with a non-0 status
 # - Current git branch shown, and coloured if on a dirty working tree
+# - In a worktree whose directory is named after its branch, the branch is
+#   highlighted in place within the path instead of getting its own segment,
+#   e.g. ~/dev/ark/main/tools with only `main` coloured
 # - New line added if PWD gets too long, an attempt to maintain a sensible
 #   prompt lenght
 
@@ -13,6 +16,13 @@ ZSH_PROMPT_SUFFIX=""
 GIT_SHOW_MISSING_UPSTREAM="no upstream?"
 GIT_SHOW_UNTRACKED_AS_DIRTY="false"
 PROMPT_SHOW_HOSTNAME="${PROMPT_SHOW_HOSTNAME-0}"
+
+# Escape text destined for PROMPT so a literal % in a path or ref is not taken
+# as a prompt escape. Needed because we build path chunks by hand rather than
+# leaving it all to %~.
+function prompt_escape() {
+    print -n "${1//\%/%%}"
+}
 
 function hostname_segment() {
     if [[ $PROMPT_SHOW_HOSTNAME -eq 0 ]]; then
@@ -25,10 +35,6 @@ function hostname_segment() {
     print -n "%{%K{black}%}%{%F{yellow}%} ${PROMPT_USE_HOSTNAME} "
 }
 
-function dir_segment() {
-    print -n "%(?.%{%K{blue}%}.%{%K{red}%})%{%F{white}%} %~ "
-}
-
 function parse_git_dirty() {
     local flags
     flags="--untracked-files=no"
@@ -38,7 +44,16 @@ function parse_git_dirty() {
     git status --porcelain $flags 2>/dev/null | wc -l | sed 's/^[[:space:]]*//;s/[[:space:]]*$//'
 }
 
-function git_prompt_info() {
+# Gather everything the dir and git segments need, once per prompt, so no git
+# command runs twice.
+function git_facts() {
+    _prompt_git_ref=""
+    _prompt_git_branch=""
+    _prompt_git_upstream=""
+    _prompt_git_root=""
+    _prompt_git_dirty=0
+    _prompt_git_merged=0
+
     # If we are not in a git repo
     if ! git rev-parse --git-dir &>/dev/null; then
         return 0
@@ -48,51 +63,103 @@ function git_prompt_info() {
     # - the current branch name
     # - the tag name if we are on a tag
     # - the short SHA of the current commit
-    local ref
-    ref=$(git symbolic-ref --short HEAD 2>/dev/null) ||
-        ref=$(git describe --tags --exact-match HEAD 2>/dev/null) ||
-        ref=$(git rev-parse --short HEAD 2>/dev/null) ||
-        return 0
+    _prompt_git_branch=$(git symbolic-ref --short HEAD 2>/dev/null) || _prompt_git_branch=""
+    if [[ -n $_prompt_git_branch ]]; then
+        _prompt_git_ref=$_prompt_git_branch
+    else
+        _prompt_git_ref=$(git describe --tags --exact-match HEAD 2>/dev/null) ||
+            _prompt_git_ref=$(git rev-parse --short HEAD 2>/dev/null) ||
+            _prompt_git_ref=""
+    fi
 
-    # Use global GIT_SHOW_UPSTREAM=1 for including upstream remote info
-    local upstream
+    if [[ "$(parse_git_dirty)" != "0" ]]; then
+        _prompt_git_dirty=1
+    fi
+
     if [[ -n $GIT_SHOW_MISSING_UPSTREAM ]]; then
-        upstream=$(git rev-parse --abbrev-ref --symbolic-full-name "@{upstream}" 2>/dev/null) &&
-            upstream="" || upstream=" %{%K{yellow}%}%{%F{black}%} (${GIT_SHOW_MISSING_UPSTREAM})"
+        git rev-parse --abbrev-ref --symbolic-full-name "@{upstream}" &>/dev/null ||
+            _prompt_git_upstream="${GIT_SHOW_MISSING_UPSTREAM}"
     fi
 
-    local dirty
-    dirty=""
-    local dirty_count
-    dirty_count=$(parse_git_dirty)
+    _prompt_git_root=$(git rev-parse --show-toplevel 2>/dev/null) || _prompt_git_root=""
 
-    if [[ $dirty_count -gt 0 ]]; then
-        dirty=" *"
+    # Merge the branch into the path when the worktree's directory is named
+    # after the branch it has checked out.
+    if [[ -n $_prompt_git_branch && -n $_prompt_git_root &&
+        ${_prompt_git_root:t} == $_prompt_git_branch ]]; then
+        _prompt_git_merged=1
     fi
-    echo "${ZSH_PROMPT_PREFIX}${ref}${upstream}${dirty}${ZSH_PROMPT_SUFFIX}"
+}
+
+function dir_segment() {
+    local bg
+    bg='%(?.%{%K{blue}%}.%{%K{red}%})%{%F{white}%}'
+
+    if [[ $_prompt_git_merged -eq 1 ]]; then
+        local disp root head leaf tail hl
+        # (D) abbreviates $HOME and named directories exactly as %~ does, but
+        # gives us a string we can colour one component of.
+        disp=${(D)PWD}
+        root=${(D)_prompt_git_root}
+        head=${root:h}
+        leaf=${root:t}
+
+        # Bail out to the plain segment unless the displayed path really is the
+        # worktree root plus a suffix, and the root has a parent left to show.
+        # The right hand sides are quoted so a glob character in a directory
+        # name is compared literally rather than as a pattern.
+        if [[ ${disp[1,${#root}]} == "$root" && $head != "." && $head != "$root" ]]; then
+            tail=${disp[$((${#root} + 1)),-1]}
+            [[ $head == "/" ]] && head=""  # avoid a doubled slash at the root
+
+            if [[ $_prompt_git_dirty -eq 0 ]]; then
+                hl='%{%K{green}%}%{%F{white}%}'
+            else
+                hl='%{%K{yellow}%}%{%F{black}%}'
+            fi
+
+            print -n "${bg} $(prompt_escape "${head}/")"
+            print -n "${hl}$(prompt_escape "$leaf")"
+            print -n "${bg}$(prompt_escape "$tail") "
+            return 0
+        fi
+    fi
+
+    print -n "${bg} %~ "
 }
 
 function git_segment() {
-    local -i working_tree_is_clean
-    working_tree_is_clean=0  # Assume clean by default
-    if [[ "$(parse_git_dirty)" != "0" ]]; then
-        working_tree_is_clean=1  # Set to dirty if parse_git_dirty returns non-zero
-    fi
-
+    local ref
     ref="$vcs_info_msg_0_"
-    if [[ -n "$ref" ]]; then
-        if [[ $working_tree_is_clean -eq 0 ]]; then
-            print -n "%{%K{green}%}%{%F{white}%} $(git_prompt_info) "
-        else
-            print -n "%{%K{yellow}%}%{%F{black}%} $(git_prompt_info) "
-        fi
-        # Stashes
-        c=$(git rev-list --walk-reflogs --count refs/stash 2>/dev/null)
-        [[ -n "$c" ]] && (
-            print -n "%{%K{blue}%}%{%F{white}%} $c stash "
-        )
+    if [[ -z "$ref" ]]; then
+        return 0
     fi
 
+    # When merged into the path segment the branch is already on screen, and
+    # its colour already says whether the tree is dirty.
+    if [[ $_prompt_git_merged -eq 0 && -n $_prompt_git_ref ]]; then
+        local dirty
+        dirty=""
+        if [[ $_prompt_git_dirty -gt 0 ]]; then
+            dirty=" *"
+        fi
+        local body
+        body="${ZSH_PROMPT_PREFIX}$(prompt_escape "$_prompt_git_ref")${dirty}${ZSH_PROMPT_SUFFIX}"
+        if [[ $_prompt_git_dirty -eq 0 ]]; then
+            print -n "%{%K{green}%}%{%F{white}%} ${body} "
+        else
+            print -n "%{%K{yellow}%}%{%F{black}%} ${body} "
+        fi
+    fi
+
+    if [[ -n $_prompt_git_upstream ]]; then
+        print -n "%{%K{yellow}%}%{%F{black}%} ($(prompt_escape "$_prompt_git_upstream")) "
+    fi
+
+    # Stashes
+    local c
+    c=$(git rev-list --walk-reflogs --count refs/stash 2>/dev/null)
+    [[ -n "$c" ]] && print -n "%{%K{blue}%}%{%F{white}%} $c stash "
 }
 
 function end_prompt() {
@@ -112,6 +179,7 @@ autoload -Uz vcs_info
 setopt PROMPT_SUBST                    # Enable command substitution in prompts
 function prompt_precmd() {
     vcs_info
+    git_facts
     PROMPT="%{%f%b%k%}$(hostname_segment)$(dir_segment)$(git_segment)%{%f%b%k%}$(end_prompt) "
 }
 

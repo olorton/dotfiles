@@ -3,17 +3,26 @@
 # Exit immediately if a command exits with a non-zero status
 set -e
 
-# Get the directory where the script resides and find the 'main' directory
-SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
-MAIN_DIR="$SCRIPT_DIR/main"
+# Find the directory containing the 'main' worktree by walking up from the current directory
+curr_dir="$(pwd)"
+BASE_DIR=""
+while [ "$curr_dir" != "/" ]; do
+    if [ -d "$curr_dir/main" ]; then
+        BASE_DIR="$curr_dir"
+        break
+    fi
+    curr_dir=$(dirname "$curr_dir")
+done
 
-# Filenames to symlink from the main worktree into the other worktrees
-LINK_NAMES=(".envrc" ".python-version")
-
-if [ ! -d "$MAIN_DIR" ]; then
-    echo "Error: Main directory 'main' not found in: $SCRIPT_DIR"
+if [ -z "$BASE_DIR" ]; then
+    echo "Error: Could not find parent directory containing 'main' starting from: $(pwd)"
     exit 1
 fi
+
+MAIN_DIR="$BASE_DIR/main"
+
+# Filenames to symlink from the main worktree into the other worktrees
+LINK_NAMES=(".envrc" ".python-version" "CLAUDE.md")
 
 echo "Scanning for ${LINK_NAMES[*]} files in: $MAIN_DIR"
 
@@ -40,9 +49,9 @@ fi
 
 echo "Found ${#link_files[@]} file(s) in main."
 
-# Iterate over all direct subdirectories in the same directory as this script
+# Iterate over all direct subdirectories in the current directory
 found_targets=0
-for target_dir in "$SCRIPT_DIR"/*/; do
+for target_dir in "$BASE_DIR"/*/; do
     target_dir="${target_dir%/}"
 
     # Ensure it is actually a directory
