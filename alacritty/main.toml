@@ -8,7 +8,7 @@ size = 11
 style = "normal"
 
 [font.normal]
-family = "Menlo"
+family = "MesloLGS Nerd Font"
 
 [[keyboard.bindings]]
 action = "Paste"

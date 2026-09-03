@@ -24,6 +24,7 @@ A reference of fonts I've previously used:
 
 - [DOSEGA](https://sourceforge.net/projects/dosega/)
 - [M+1m console font](http://sourceforge.jp/projects/mplus-fonts/downloads/62344/mplus-TESTFLIGHT-059.tar.xz/)
+- font-meslo-lg-nerd-font
 
 ## macOS fixes
 

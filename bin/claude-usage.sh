@@ -11,6 +11,7 @@ CACHE="$HOME/.cache/cc-usage.txt"
 LOCK="$HOME/.cache/cc-usage.lock"
 CREDS="${CC_CREDENTIALS:-$HOME/.claude/.credentials.json}"
 TTL="${CC_CACHE_TTL:-300}"
+CLAUDE_ICON=""
 
 get_mtime() {
     if [[ "$(uname -s)" == "Darwin" ]]; then
@@ -70,4 +71,4 @@ if [[ -z "$session" || -z "$weekly" ]]; then
     exit 1
 fi
 
-echo "* 5h: ${session}% | 7d: ${weekly}%" | tee "$CACHE"
+echo "${CLAUDE_ICON} 5h: ${session}% | 7d: ${weekly}%" | tee "$CACHE"
