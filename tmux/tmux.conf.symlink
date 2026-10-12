@@ -90,6 +90,9 @@ set -g status-right "#{?pane_synchronized, #[bg=red]   !!!SYNC!!!   #[default],}
 # Make C-J display a selectable list of sessions
 bind C-J choose-tree
 
+# Jump to last session
+bind - switch-client -l
+
 # Keep window names as I set them
 setw -g automatic-rename off
 
