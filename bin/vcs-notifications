@@ -1,0 +1,69 @@
+#!/usr/bin/env bash
+
+# TODO make this work with github too
+
+set -euo pipefail
+
+>&2 echo "testing..."
+
+conf_file="$HOME"/.config/vcs-notifications/config.sh
+last_update="$HOME"/.config/vcs-notifications/last_update.txt
+
+if [[ ! -f "$conf_file" ]]; then
+    >&2 echo "error: config file not found: $conf_file"
+    exit 1
+fi
+. "$conf_file"
+
+: "${GITLAB_API_CI_TOKEN:?must be set in $conf_file}"
+: "${GITLAB_PROJECT_ID:?must be set in $conf_file}"
+
+# GitLab username: GITLAB_USER (env or config.sh), else this macOS user
+gitlab_user="${GITLAB_USER:-$(id -un)}"
+
+# Default value, overriden by envvar in config.sh
+last_update_check_window_minutes=15
+
+# Function to fetch and display GitLab review data
+fetch_data() {
+    >&2 echo "fetching fresh data from gitlab api..."
+    local needs_my_review
+    local my_open_reviews
+
+    needs_my_review=$(curl --silent --header "PRIVATE-TOKEN: ${GITLAB_API_CI_TOKEN}" \
+        "https://gitlab.com/api/v4/projects/${GITLAB_PROJECT_ID}/merge_requests?state=opened&wip=no&reviewer_username=${gitlab_user}&updated_after=$(date -v -1w -u +"%Y-%m-%dT%H:%M:%SZ")" \
+        | jq length)
+    my_open_reviews=$(curl --silent --header "PRIVATE-TOKEN: ${GITLAB_API_CI_TOKEN}" \
+        "https://gitlab.com/api/v4/projects/${GITLAB_PROJECT_ID}/merge_requests?state=opened&author_username=${gitlab_user}" \
+        | jq length)
+
+    echo "GitLab reviews=$needs_my_review mine=$my_open_reviews" > $last_update
+}
+
+# Check if the variable is defined in the config file, otherwise use the default
+if [[ -n "${LAST_UPDATE_CHECK_WINDOW_MINUTES:-}" ]]; then
+    >&2 echo "overriding check frequency to : $LAST_UPDATE_CHECK_WINDOW_MINUTES"
+    last_update_check_window_minutes="${LAST_UPDATE_CHECK_WINDOW_MINUTES}"
+fi
+
+# Calculate the timestamp for the cutoff time
+cutoff_timestamp=$(date -v "-${last_update_check_window_minutes}M" +%s)
+>&2 echo "cutoff timestamp: $cutoff_timestamp"
+>&2 echo "current timestamp: $(date +%s)"
+
+# Get the last modification time of the file
+if [[ -f "$last_update" ]]; then
+    >&2 echo "cache file exists..."
+    last_modified_timestamp=$(stat -f "%m" -t "%s" "$last_update")
+    >&2 echo "last_modified_timestamp: $last_modified_timestamp"
+
+    # Check if the file was modified within the time window
+    if (( last_modified_timestamp < cutoff_timestamp )); then
+        >&2 echo "$last_modified_timestamp > $cutoff_timestamp"
+        fetch_data
+    fi
+else
+    fetch_data
+fi
+
+cat $last_update
