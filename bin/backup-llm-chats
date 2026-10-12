@@ -1,0 +1,54 @@
+#!/usr/bin/env bash
+
+# Exit immediately if a command exits with a non-zero status
+set -euo pipefail
+
+BACKUP_DIR="${HOME}/Backups/LLM-chats"
+GEMINI_SRC="${HOME}/.gemini"
+CLAUDE_SRC="${HOME}/.claude"
+
+echo "=== LLM Chat Backup Started at $(date) ==="
+
+# Check and backup Gemini
+if [ -d "$GEMINI_SRC" ]; then
+    echo "Backing up Gemini chats..."
+    mkdir -p "${BACKUP_DIR}/gemini"
+    # Note: Omit --delete so we keep history even if pruned locally
+    # Exclude lock files (*.lock or .lock) to prevent copying active lock state
+    if rsync -av --exclude="*.lock" --exclude=".lock" "${GEMINI_SRC}/" "${BACKUP_DIR}/gemini/"; then
+        echo "Gemini backup completed successfully."
+    else
+        CODE=$?
+        if [ "$CODE" -eq 24 ]; then
+            echo "Gemini backup completed with minor warnings (some files vanished during sync, exit code $CODE)."
+        else
+            echo "Warning: Gemini backup encountered issues (exit code $CODE). Continuing with Claude..." >&2
+        fi
+    fi
+else
+    echo "No Gemini source directory found at ${GEMINI_SRC}."
+fi
+
+echo ""
+
+# Check and backup Claude
+if [ -d "$CLAUDE_SRC" ]; then
+    echo "Backing up Claude chats..."
+    mkdir -p "${BACKUP_DIR}/claude"
+    # Note: Omit --delete so we keep history even if pruned locally
+    # Exclude lock files (*.lock or .lock) to prevent copying active lock state
+    if rsync -av --exclude="*.lock" --exclude=".lock" "${CLAUDE_SRC}/" "${BACKUP_DIR}/claude/"; then
+        echo "Claude backup completed successfully."
+    else
+        CODE=$?
+        if [ "$CODE" -eq 24 ]; then
+            echo "Claude backup completed with minor warnings (some files vanished during sync, exit code $CODE)."
+        else
+            echo "Warning: Claude backup encountered issues (exit code $CODE)." >&2
+        fi
+    fi
+else
+    echo "No Claude source directory found at ${CLAUDE_SRC}."
+fi
+
+echo "=== Backup Completed at $(date) ==="

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>com.oliverlorton.backup-llm-chats</string>
+    <key>ProgramArguments</key>
+    <array>
+        <string>/Users/oliver.lorton/dev/dotfiles/bin/backup-llm-chats</string>
+    </array>
+    <key>StartInterval</key>
+    <integer>21600</integer> <!-- Every 6 hours -->
+    <key>StandardOutPath</key>
+    <string>/tmp/com.oliverlorton.backup-llm-chats.stdout.log</string>
+    <key>StandardErrorPath</key>
+    <string>/tmp/com.oliverlorton.backup-llm-chats.stderr.log</string>
+</dict>
+</plist>
