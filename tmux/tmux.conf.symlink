@@ -93,6 +93,14 @@ bind C-J choose-tree
 # Jump to last session
 bind - switch-client -l
 
+# Move the current window to another session:
+#   prefix + M  prompts for a name and moves it to a (new) session
+#   prefix + m  picks an existing session from a list
+bind M command-prompt -p "Move window to new session:" \
+    "run-shell \"$DOTFILES/bin/tmux-move-window-to-session '%%' '#{window_id}'\""
+bind m choose-tree -Zs \
+    "run-shell \"$DOTFILES/bin/tmux-move-window-to-session '%%' '#{window_id}'\""
+
 # Keep window names as I set them
 setw -g automatic-rename off
 

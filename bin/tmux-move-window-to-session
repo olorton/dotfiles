@@ -1,0 +1,37 @@
+#!/usr/bin/env bash
+# Move a tmux window into a session, creating that session if needed.
+#
+# Usage: tmux-move-window-to-session <session-name> [source-window]
+#
+# Source window defaults to the current window. Creating a session normally
+# leaves a placeholder window behind, so we move ours in and then kill it.
+
+set -euo pipefail
+
+if [ $# -lt 1 ] || [ -z "$1" ]; then
+    tmux display-message "No session name given"
+    exit 0
+fi
+
+# choose-tree hands us a target spec ("=beta:") rather than a bare name
+target=$1
+target=${target#=}
+target=${target%:}
+# The key bindings pass #{window_id} explicitly: run-shell inherits a stale
+# TMUX_PANE and a bare display-message resolves against the most recently used
+# client, neither of which is reliably the window being moved.
+source=${2:-$(tmux display-message -p '#{window_id}')}
+
+if tmux has-session -t "=$target" 2>/dev/null; then
+    tmux move-window -s "$source" -t "$target:"
+    tmux display-message "Moved window to session $target"
+    exit 0
+fi
+
+tmux new-session -d -s "$target"
+placeholder=$(tmux list-windows -t "=$target" -F '#{window_id}')
+
+tmux move-window -s "$source" -t "$target:"
+tmux kill-window -t "$placeholder"
+
+tmux display-message "Moved window to new session $target"
