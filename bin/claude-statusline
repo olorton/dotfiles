@@ -1,0 +1,131 @@
+#!/bin/bash
+# Claude Code statusLine: cwd relative to ~/dev, branch (only if not already
+# implied by the path, e.g. a worktree dir named after its branch), then
+# model + effort + usage (context window % and 5h/7d rate-limit usage).
+
+input=$(cat)
+dir=$(echo "$input" | jq -r '.workspace.current_dir')
+cd "$dir" 2>/dev/null || cd "$HOME" 2>/dev/null
+
+model_name=$(echo "$input" | jq -r '.model.display_name // empty')
+effort=$(echo "$input" | jq -r '.effort.level // empty')
+ctx_pct=$(echo "$input" | jq -r '.context_window.used_percentage // empty')
+five_hour_pct=$(echo "$input" | jq -r '.rate_limits.five_hour.used_percentage // empty')
+five_hour_reset=$(echo "$input" | jq -r '.rate_limits.five_hour.resets_at // empty')
+seven_day_pct=$(echo "$input" | jq -r '.rate_limits.seven_day.used_percentage // empty')
+seven_day_reset=$(echo "$input" | jq -r '.rate_limits.seven_day.resets_at // empty')
+
+BLUE='\033[34m'
+CYAN='\033[36m'
+MAGENTA='\033[35m'
+GREEN='\033[32m'
+YELLOW='\033[33m'
+RED='\033[31m'
+RESET='\033[0m'
+
+# Prints a color escape to stdout based on how close a percentage is to its limit.
+pct_color() {
+    if awk "BEGIN{exit !($1 >= 80)}" </dev/null; then
+        printf '%s' "$RED"
+    elif awk "BEGIN{exit !($1 >= 50)}" </dev/null; then
+        printf '%s' "$YELLOW"
+    else
+        printf '%s' "$GREEN"
+    fi
+}
+
+# Formats a countdown of $1 seconds as e.g. "2d 4h", "3h 15m", "9m".
+format_countdown() {
+    local secs=$1
+    [ "$secs" -lt 0 ] && secs=0
+    local days=$((secs / 86400))
+    local hours=$(((secs % 86400) / 3600))
+    local mins=$(((secs % 3600) / 60))
+    if [ "$days" -gt 0 ]; then
+        printf "%dd %dh" "$days" "$hours"
+    elif [ "$hours" -gt 0 ]; then
+        printf "%dh %dm" "$hours" "$mins"
+    else
+        printf "%dm" "$mins"
+    fi
+}
+
+# Prints " <pct>% <label>", plus a "(resets in ...)" countdown once pct >= 90.
+print_limit() {
+    local label=$1 pct=$2 reset_at=$3
+    [ -z "$pct" ] && return
+    local color
+    color=$(pct_color "$pct")
+    printf " ${color}%s%% %s${RESET}" "$pct" "$label"
+    if [ -n "$reset_at" ] && awk "BEGIN{exit !($pct >= 90)}" </dev/null; then
+        local remaining
+        remaining=$((reset_at - $(date +%s)))
+        printf " ${color}(resets %s)${RESET}" "$(format_countdown "$remaining")"
+    fi
+}
+
+dev_root="$HOME/dev/"
+if [ "$dir" = "${dev_root%/}" ]; then
+    rel_dir="dev"
+elif [[ "$dir" == "$dev_root"* ]]; then
+    rel_dir="${dir#$dev_root}"
+elif [[ "$dir" == "$HOME"* ]]; then
+    # Avoid ${dir/#$HOME/~}: bash >=5's replacement text doesn't tilde-expand,
+    # so build the ~-relative path by hand instead.
+    rel_dir="~${dir#$HOME}"
+else
+    rel_dir="$dir"
+fi
+
+branch=""
+if git --no-optional-locks rev-parse --git-dir >/dev/null 2>&1; then
+    branch=$(git --no-optional-locks symbolic-ref --short HEAD 2>/dev/null)
+    if [ -z "$branch" ]; then
+        branch=$(git --no-optional-locks describe --tags --exact-match HEAD 2>/dev/null)
+        [ -z "$branch" ] && branch=$(git --no-optional-locks rev-parse --short HEAD 2>/dev/null)
+    fi
+fi
+
+printf "${BLUE}%s${RESET}" "$rel_dir"
+
+if [ -n "$branch" ] && [[ "$rel_dir" != *"$branch"* ]]; then
+    printf " ${CYAN}%s${RESET}" "$branch"
+fi
+
+printf " |"
+
+if [ -n "$model_name" ]; then
+    if [ -n "$effort" ]; then
+        printf " ${MAGENTA}%s (%s)${RESET}" "$model_name" "$effort"
+    else
+        printf " ${MAGENTA}%s${RESET}" "$model_name"
+    fi
+fi
+
+# Always show whichever rate limit (5h or 7d) is currently highest — these
+# are worth tracking even when low. Context window and the other rate limit
+# only show once they're independently getting close (>= 80%): unlike the
+# rate limits, ctx resets constantly, so a low value is just noise.
+if [ -n "$five_hour_pct" ] || [ -n "$seven_day_pct" ]; then
+    fh_cmp=${five_hour_pct:--1}
+    sd_cmp=${seven_day_pct:--1}
+    if awk "BEGIN{exit !($fh_cmp >= $sd_cmp)}" </dev/null; then
+        primary_label="5h"; primary_pct="$five_hour_pct"; primary_reset="$five_hour_reset"
+        secondary_label="7d"; secondary_pct="$seven_day_pct"; secondary_reset="$seven_day_reset"
+    else
+        primary_label="7d"; primary_pct="$seven_day_pct"; primary_reset="$seven_day_reset"
+        secondary_label="5h"; secondary_pct="$five_hour_pct"; secondary_reset="$five_hour_reset"
+    fi
+
+    print_limit "$primary_label" "$primary_pct" "$primary_reset"
+
+    if [ -n "$secondary_pct" ] && awk "BEGIN{exit !($secondary_pct >= 80)}" </dev/null; then
+        print_limit "$secondary_label" "$secondary_pct" "$secondary_reset"
+    fi
+fi
+
+if [ -n "$ctx_pct" ] && awk "BEGIN{exit !($ctx_pct >= 80)}" </dev/null; then
+    print_limit "ctx" "$ctx_pct" ""
+fi
+
+printf "\n"
