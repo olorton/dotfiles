@@ -17,8 +17,12 @@ if ! { [ -n "$TMUX" ]; }; then
 fi
 
 function precmd() {
-    if [[ "$(pwd | awk -F/ '{print $(NF-1)}')" == "dev" ]]; then
-        tmux rename-window -t"${TMUX_PANE}" "$(pwd | awk -F/ '{print $NF}')"
+    if [[ "${PWD:h}" == "$HOME/dev" ]]; then
+        tmux rename-window -t"${TMUX_PANE}" "${PWD:t}"
+    # Linked git worktree at ~/dev/<project>/<worktree>: its .git is a file
+    # pointing at <repo>/.git/worktrees/<name> (submodules point at .git/modules)
+    elif [[ "${PWD:h:h}" == "$HOME/dev" && -f "$PWD/.git" && "$(<$PWD/.git)" == "gitdir: "*/worktrees/* ]]; then
+        tmux rename-window -t"${TMUX_PANE}" "${PWD:h:t}/${PWD:t}"
     fi
     prompt_precmd
 }
