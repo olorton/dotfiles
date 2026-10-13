@@ -1,0 +1,28 @@
+{
+  "env": {
+    "CLAUDE_CODE_DISABLE_FEEDBACK_SURVEY": "1"
+  },
+  "hooks": {
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "afplay /System/Library/Sounds/Blow.aiff"
+          }
+        ]
+      }
+    ]
+  },
+  "statusLine": {
+    "type": "command",
+    "command": "~/dev/dotfiles/bin/claude-statusline"
+  },
+  "voice": {
+    "enabled": true,
+    "mode": "hold"
+  },
+  "skipWorkflowUsageWarning": true,
+  "theme": "auto",
+  "model": "opus"
+}

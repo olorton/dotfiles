@@ -122,3 +122,17 @@ alias vs="vagrant ssh"
 alias vu="vagrant up"
 
 # vim: ft=zsh
+
+# Claude Code: tracked defaults come from dotfiles via --settings (never written
+# to). /model and /effort save to ~/.claude/settings.json, so strip those keys
+# on launch to keep them session-only.
+claude() {
+    local user_settings="$HOME/.claude/settings.json"
+    if [[ -f $user_settings ]] && (( $+commands[jq] )); then
+        local tmp
+        tmp=$(mktemp) &&
+            jq 'del(.model, .modelSettings, .effortLevel)' "$user_settings" > "$tmp" &&
+            mv -f "$tmp" "$user_settings"
+    fi
+    command claude --settings "$DOTFILES/claude/settings.json" "$@"
+}
