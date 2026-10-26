@@ -137,8 +137,7 @@ set -g status-right-length 150
 set-window-option -g status-left " #S #{?pane_synchronized,#[bg=red]   !!!SYNC!!!   #[default] ,}"
 set-window-option -g status-left-style fg=black,bg=white
 
-# TODO sort out spacing in this status line
-set-window-option -g status-right "#($DOTFILES/bin/claude-usage.sh) #($DOTFILES/bin/git-push-check --status) #($DOTFILES/bin/currentlyplaying --trim 30) %H:%M:%S %Z %Y-%m-%d "
+set-window-option -g status-right "#($DOTFILES/bin/tmux-status-right #{window_width}) %H:%M:%S %Z %Y-%m-%d "
 set-window-option -g status-right-style fg=black,bg=white
 
 set-window-option -g window-status-format " #I: #W "

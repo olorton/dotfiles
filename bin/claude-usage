@@ -1,0 +1,89 @@
+#!/bin/bash
+#
+# Print the raw Claude 5h + 7d API usage JSON (from the oauth usage endpoint),
+# cached for $CC_CACHE_TTL seconds. Rendering is left to the caller, e.g.
+# tmux-status-right.
+#
+# stdout: the usage JSON, or the stale cache when a refresh fails (if any)
+# exit:   0 when the JSON is fresh, 1 when it is stale or missing
+# stderr: an error tag (No creds, Timeout, Bad response, API Rate limited,
+#         Error) when the last refresh failed
+#
+# Although heavily modified, this was based on:
+#   https://gist.github.com/vildanbina/af6b1186fa529093bdd5d61bdf6d7b33
+
+set -euo pipefail
+
+CACHE="$HOME/.cache/cc-usage.json"
+LOCK="$HOME/.cache/cc-usage.lock"
+ERR="$HOME/.cache/cc-usage.err"
+CREDS="${CC_CREDENTIALS:-$HOME/.claude/.credentials.json}"
+TTL="${CC_CACHE_TTL:-300}"
+
+get_mtime() {
+    if [[ "$(uname -s)" == "Darwin" ]]; then
+        stat -f '%m' "$1" 2>/dev/null || echo 0
+    else
+        stat -c '%Y' "$1" 2>/dev/null || echo 0
+    fi
+}
+
+# Serve the stale cache (if any), record the error tag and fail
+fail() {
+    [[ -f "$CACHE" ]] && cat "$CACHE"
+    echo "$1" | tee "$ERR" >&2
+    exit 1
+}
+
+# Return cached if fresh
+if [[ -f "$CACHE" ]]; then
+    age=$(($(date +%s) - $(get_mtime "$CACHE")))
+    [[ $age -lt $TTL ]] && cat "$CACHE" && exit 0
+fi
+
+# Rate limit API calls. The cache is past its TTL here, so a refresh within
+# the last minute failed: the cache (if any) is stale. Repeat that error.
+if [[ -f "$LOCK" ]]; then
+    age=$(($(date +%s) - $(get_mtime "$LOCK")))
+    [[ $age -lt 60 ]] && { [[ -f "$CACHE" ]] && cat "$CACHE"; [[ -f "$ERR" ]] && cat "$ERR" >&2; exit 1; }
+fi
+touch "$LOCK"
+
+# Get token
+token=""
+if [[ -f "$CREDS" ]]; then
+    token=$(jq -r '.claudeAiOauth.accessToken // empty' "$CREDS" 2>/dev/null)
+elif [[ "$(uname -s)" == "Darwin" ]]; then
+    # On macOS, Claude Code stores credentials in the Keychain
+    creds_json=$(security find-generic-password -s "Claude Code-credentials" -w 2>/dev/null) || true
+    if [[ -n "${creds_json:-}" ]]; then
+        token=$(echo "$creds_json" | jq -r '.claudeAiOauth.accessToken // empty' 2>/dev/null)
+    fi
+fi
+[[ -z "$token" ]] && fail "No creds"
+
+# Fetch usage
+resp=$(curl -s --max-time 5 \
+    "https://api.anthropic.com/api/oauth/usage" \
+    -H "Authorization: Bearer $token" \
+    -H "anthropic-beta: oauth-2025-04-20" \
+    -H "User-Agent: claude-code/0.2.29" \
+    -H "Content-Type: application/json" 2>/dev/null) || true
+
+[[ -z "$resp" ]] && fail "Timeout"
+
+# Not JSON (e.g. an HTML gateway error)
+if ! echo "$resp" | jq -e . >/dev/null 2>&1; then
+    fail "Bad response"
+fi
+
+if ! echo "$resp" | jq -e '(.five_hour.utilization | numbers) and (.seven_day.utilization | numbers)' >/dev/null 2>&1; then
+    err_type=$(echo "$resp" | jq -r '.error.type // empty' 2>/dev/null) || true
+    if [[ "$err_type" == "rate_limit_error" ]]; then
+        fail "API Rate limited"
+    fi
+    fail "Error"
+fi
+
+rm -f "$ERR"
+echo "$resp" | jq -c . | tee "$CACHE"

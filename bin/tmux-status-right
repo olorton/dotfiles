@@ -1,0 +1,141 @@
+#!/usr/bin/env bash
+#
+# Render the tmux status-right segments (Claude usage, dirty repos, current
+# track) as one line with tmux style tags. The data comes from claude-usage,
+# git-push-check and currentlyplaying; all presentation lives here.
+#
+# Usage: tmux-status-right [window_width]
+
+bin_dir="$(dirname "$0")"
+window_width="${1:-120}"
+
+# Claude usage: two stacked braille progress bars (top: 5h session, bottom: 7d
+# weekly), 8 characters wide. The icon and bars sit on the tmux window tab
+# colour, so the empty part of the bars is visible, and the dots change colour
+# near the limit. When the usage can't be refreshed, the bars show the cached
+# values and a red disconnected icon and the error tag sit before the (also
+# red) Claude icon.
+DISCONNECTED_ICON="󱘖"
+CLAUDE_ICON=""
+# Background matches the tmux window tabs (status-bg); foregrounds are from
+# Everforest Light (the Alacritty theme): bg0, orange, red
+BLOCK_BG="${CC_BLOCK_BG:-#666666}"
+BAR_FG="${CC_BAR_FG:-#fffbef}"
+WARN_PCT=80
+WARN_FG="#f57d26"
+CRIT_PCT=95
+CRIT_FG="#f85552"
+
+GIT_ICON=""
+
+# Number of filled dot columns (0-16) for a percentage; any usage shows >= 1
+bar_cols() {
+    local n=$((($1 * 16 + 50) / 100))
+    [[ $n -lt 1 && $1 -gt 0 ]] && n=1
+    [[ $n -gt 16 ]] && n=16
+    echo "$n"
+}
+
+# Render two 16-column bars into 8 braille chars (U+2800 + dot bitmask).
+# Top bar uses dot rows 1-2, bottom bar dot rows 3-4.
+braille_bars() {
+    local top bottom i v out=""
+    top=$(bar_cols "$1")
+    bottom=$(bar_cols "$2")
+    for ((i = 0; i < 8; i++)); do
+        v=0
+        [[ $top -gt $((2 * i)) ]] && v=$((v | 0x03))
+        [[ $top -gt $((2 * i + 1)) ]] && v=$((v | 0x18))
+        [[ $bottom -gt $((2 * i)) ]] && v=$((v | 0x44))
+        [[ $bottom -gt $((2 * i + 1)) ]] && v=$((v | 0xA0))
+        # UTF-8 encode by hand, as bash 3.2 printf has no \u
+        out+=$(printf "\\xE2\\x$(printf '%X' $((0xA0 + (v >> 6))))\\x$(printf '%X' $((0x80 + (v & 0x3F))))")
+    done
+    echo "$out"
+}
+
+claude_segment() {
+    local err_file usage rc err session weekly peak bar_fg icon_fg icons
+    err_file=$(mktemp)
+    usage=$("$bin_dir/claude-usage" 2>"$err_file")
+    rc=$?
+    err=$(head -n 1 "$err_file")
+    rm -f "$err_file"
+
+    # No usage data at all (not even a stale cache): just show the error
+    if [[ -z "$usage" ]]; then
+        [[ -n "$err" ]] && echo "[$err]"
+        return
+    fi
+
+    session=$(echo "$usage" | jq -r '.five_hour.utilization | floor')
+    weekly=$(echo "$usage" | jq -r '.seven_day.utilization | floor')
+
+    # Both bars share each character, so colour them together by the higher value
+    peak=$((session > weekly ? session : weekly))
+    bar_fg="$BAR_FG"
+    if [[ $peak -ge $CRIT_PCT ]]; then
+        bar_fg="$CRIT_FG"
+    elif [[ $peak -ge $WARN_PCT ]]; then
+        bar_fg="$WARN_FG"
+    fi
+
+    # Stale cached values: mark the icons, but keep colouring the bars as usual
+    icon_fg="$BAR_FG"
+    icons="$CLAUDE_ICON"
+    if [[ $rc -ne 0 ]]; then
+        icon_fg="$CRIT_FG"
+        icons="$DISCONNECTED_ICON ${err:+$err }$CLAUDE_ICON"
+    fi
+
+    echo "#[bg=${BLOCK_BG},fg=${icon_fg}] ${icons} #[fg=${bar_fg}]$(braille_bars "$session" "$weekly")#[default]"
+}
+
+git_segment() {
+    local count
+    count=$("$bin_dir/git-push-check" --status 2>/dev/null)
+    if [[ "${count:-0}" -gt 0 ]]; then
+        echo "${GIT_ICON} ${count}"
+    fi
+}
+
+music_segment() {
+    local track status artist track_number title max_width play_state output
+    track=$("$bin_dir/currentlyplaying")
+    [[ -z "$track" ]] && return
+    {
+        read -r status
+        read -r artist
+        read -r track_number
+        title=$(cat)
+    } <<<"$track"
+
+    # Leave room for the rest of the status line; keep at least a short title
+    max_width=$((window_width - 80))
+    [[ $max_width -lt 10 ]] && max_width=10
+    if [ -n "$track_number" ]; then
+        track_number="${track_number}."
+    fi
+    if [ "$status" = "playing" ]; then
+        play_state=">"
+    else
+        play_state="||"
+    fi
+    output="$play_state $artist $track_number $title"
+
+    # Only show the song title if we are over $max_width characters
+    if [ "${#output}" -ge $max_width ]; then
+        output="${title:0:$max_width-1}… $play_state"
+    fi
+    # Unquoted to collapse runs of whitespace; no globbing of the title
+    set -f
+    echo $output
+    set +f
+}
+
+# Single spaces between the segments that have something to show
+line=""
+for segment in "$(claude_segment)" "$(git_segment)" "$(music_segment)"; do
+    [[ -n "$segment" ]] && line+="${line:+ }${segment}"
+done
+echo "$line"

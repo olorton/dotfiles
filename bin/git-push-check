@@ -1,8 +1,14 @@
 #!/usr/bin/env bash
+#
+# List the repos in ~/dev with uncommitted changes (that have a remote).
+#   --status  print just the count, cached for $GIT_PUSH_CHECK_TTL seconds
+#   --list    also show each repo's changes
+
+CACHE="$HOME/.cache/git-push-check-count"
+TTL="${GIT_PUSH_CHECK_TTL:-10}"
 
 current_dir="$(dirname "$(realpath "$0")")"
 dev_dir=$(realpath "$current_dir/../..")
-status_icon=""
 
 count_only=false
 list_status=false
@@ -13,19 +19,35 @@ elif [ "$1" == "--list" ]; then
     list_status=true
 fi
 
+get_mtime() {
+    if [[ "$(uname -s)" == "Darwin" ]]; then
+        stat -f '%m' "$1" 2>/dev/null || echo 0
+    else
+        stat -c '%Y' "$1" 2>/dev/null || echo 0
+    fi
+}
+
+# Return the cached count if fresh
+if [ "$count_only" = true ] && [ -f "$CACHE" ]; then
+    age=$(($(date +%s) - $(get_mtime "$CACHE")))
+    [ "$age" -lt "$TTL" ] && cat "$CACHE" && exit 0
+fi
+
 count=0
 
 for dir in "$dev_dir"/*; do
     if [ -d "$dir/.git" ]; then
         cd "$dir" || continue
         repo_name=$(basename "$dir")
-        if [ -n "$(git status --porcelain)" ] && [ -n "$(git remote)" ]; then
+        # --no-optional-locks: this runs from the tmux status line, so never
+        # take index.lock and clash with git commands run in the repo
+        if [ -n "$(git --no-optional-locks status --porcelain 2>/dev/null)" ] && [ -n "$(git remote)" ]; then
             if [ "$count_only" = true ]; then
                 ((count++))
             else
                 if [ "$list_status" = true ]; then
                     echo -e "\e[7m$repo_name\e[0m"
-                    git status --porcelain
+                    git --no-optional-locks status --porcelain
                 else
                     echo "$repo_name"
                 fi
@@ -34,6 +56,8 @@ for dir in "$dev_dir"/*; do
     fi
 done
 
-if [ "$count_only" = true ] && [ "$count" -gt 0 ]; then
-    echo " ${status_icon} ${count} "
+if [ "$count_only" = true ]; then
+    mkdir -p "$(dirname "$CACHE")"
+    echo "$count" >"$CACHE.$$" && mv "$CACHE.$$" "$CACHE"
+    echo "$count"
 fi
