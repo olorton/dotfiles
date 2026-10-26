@@ -22,7 +22,7 @@ fi
 MAIN_DIR="$BASE_DIR/main"
 
 # Filenames to symlink from the main worktree into the other worktrees
-LINK_NAMES=(".envrc" ".python-version" "CLAUDE.md")
+LINK_NAMES=(".envrc" ".python-version" "CLAUDE.local.md" "settings.local.json")
 
 echo "Scanning for ${LINK_NAMES[*]} files in: $MAIN_DIR"
 
@@ -35,10 +35,16 @@ for name in "${LINK_NAMES[@]}"; do
     find_args+=("-name" "$name")
 done
 
-# Get the list of relative paths of the matching files in the main worktree
+# Get the list of relative paths of the matching files in the main worktree,
+# skipping any tracked by git (symlinking those would clash with the branch's own copy)
 link_files=()
 while IFS= read -r -d '' file; do
-    link_files+=("${file#$MAIN_DIR/}")
+    rel_path="${file#$MAIN_DIR/}"
+    if git -C "$MAIN_DIR" ls-files --error-unmatch -- "$rel_path" >/dev/null 2>&1; then
+        echo "ℹ️  Skipping tracked file: $rel_path"
+        continue
+    fi
+    link_files+=("$rel_path")
 done < <(find "$MAIN_DIR" -type f \( "${find_args[@]}" \) -print0)
 
 # Check if we found any files
@@ -79,6 +85,11 @@ for target_dir in "$BASE_DIR"/*/; do
     for rel_path in "${link_files[@]}"; do
         target_file="$target_dir/$rel_path"
         target_subdir=$(dirname "$target_file")
+
+        # .claude/ is untracked, so create it if needed; the parent must already exist
+        if [ "$(basename "$target_subdir")" = ".claude" ] && [ -d "$(dirname "$target_subdir")" ]; then
+            mkdir -p "$target_subdir"
+        fi
 
         # Check if the corresponding subdirectory exists in the target worktree
         if [ ! -d "$target_subdir" ]; then
