@@ -70,7 +70,7 @@ bind -n S-Right swap-window -t +1
 set -g display-panes-time 1200
 
 # status bar stuff
-set -g status-left-length 40
+set -g status-left-length 60
 
 # status bar position
 set-option -g status-position top
@@ -79,10 +79,6 @@ set -g status on
 
 # Cycle status bar height 1-5 lines (MacBook notch helper)
 bind C-n run-shell "$DOTFILES/bin/tmux-cycle-status-lines"
-
-# Simplify status bar display.
-set -g status-left '[#S]#{?pane_synchronized, #[bg=red]   !!!SYNC!!!   #[default],}'
-set -g status-right "#{?pane_synchronized, #[bg=red]   !!!SYNC!!!   #[default],}#[fg=yellow]#(~/.dotfiles/bin/currentlyplaying --trim 30)#[default] %I:%M %p "
 
 # # Easy return to Vim from tmux runner zoom runner pane
 # bind C-p run "(tmux display-message -p '#{pane_current_command}' | grep -iqE '(^|\/)vim$' && tmux send-keys ':VtrZoomRunnerPane' 'C-m') || tmux send-keys 'C-c' && tmux select-pane -l"
@@ -138,7 +134,7 @@ bind -r C-y select-layout main-vertical
 
 set -g status-right-length 150
 
-set-window-option -g status-left " #S "
+set-window-option -g status-left " #S #{?pane_synchronized,#[bg=red]   !!!SYNC!!!   #[default] ,}"
 set-window-option -g status-left-style fg=black,bg=white
 
 # TODO sort out spacing in this status line
