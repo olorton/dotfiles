@@ -18,7 +18,7 @@
 # Main model:
 
 ## Specify the model to use for the main chat
-model: lm_studio/qwen/qwen3-coder-30b
+model: lm_studio/froggeric/qwen3.6-27b-mlx
 
 ########################
 # API Keys and settings:
@@ -80,7 +80,7 @@ model-metadata-file: ~/.aider.model.metadata.json
 #  - zzz
 
 ## Set the reasoning_effort API parameter (default: not set)
-#reasoning-effort: xxx
+#reasoning-effort: low
 
 ## Set the thinking token budget for models that support it. Use 0 to disable. (default: not set)
 #thinking-tokens: xxx
