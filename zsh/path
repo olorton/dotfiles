@@ -28,8 +28,10 @@ build_path() {
 chk_cmd "brew" && build_path "/usr/local/bin"
 chk_cmd "brew" && build_path "/usr/local/sbin"
 # Ruby
+build_path "/usr/local/opt/ruby/bin"
+build_path "/opt/homebrew/opt/ruby/bin"
+# After the Homebrew Ruby dirs, so Gem.user_dir comes from that Ruby, not the system one
 chk_cmd "ruby" && build_path "$(ruby -e 'puts Gem.user_dir')/bin"
-chk_cmd "ruby" && build_path "/usr/local/opt/ruby/bin"
 # Python
 build_path "$PYENV_ROOT/bin"
 chk_cmd "pyenv" && eval "$(pyenv init --path)"
