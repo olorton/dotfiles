@@ -41,6 +41,8 @@ build_path "$HOME/.poetry/bin"
 build_path "$HOME/.cargo/bin"
 # Go
 chk_cmd "go" && build_path "$(go env GOPATH)/bin" || build_path "/usr/local/go/bin"
+# LM Studio CLI (lms)
+build_path "$HOME/.lmstudio/bin"
 # My stuff
 build_path "$DOTFILES/bin"
 build_path "$HOME/bin"
